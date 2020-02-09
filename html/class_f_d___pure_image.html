@@ -81,17 +81,21 @@ Inheritance diagram for FD_PureImage:</div>
   <img src="class_f_d___pure_image.png" usemap="#FD_5FPureImage_map" alt=""/>
   <map id="FD_5FPureImage_map" name="FD_5FPureImage_map">
 <area href="class_f_d___image.html" title="The FD_Image class, manages all types of visual information." alt="FD_Image" shape="rect" coords="0,0,96,24"/>
+<area href="class_f_d___resizable.html" title="The class that allows other classes to be notified of changes in resolution." alt="FD_Resizable" shape="rect" coords="106,0,202,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8b3c66bd1f3561ac1b6a18b089cea35a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___pure_image.html#a8b3c66bd1f3561ac1b6a18b089cea35a">FD_PureImage</a> (SDL_Texture *<a class="el" href="class_f_d___image.html#a98252b2ba34127142d3281dd7f38133f">texture</a>)</td></tr>
-<tr class="memdesc:a8b3c66bd1f3561ac1b6a18b089cea35a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a>.  <a href="class_f_d___pure_image.html#a8b3c66bd1f3561ac1b6a18b089cea35a">More...</a><br /></td></tr>
-<tr class="separator:a8b3c66bd1f3561ac1b6a18b089cea35a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85877322e66640e9f41d3732e6cce757"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___pure_image.html#a85877322e66640e9f41d3732e6cce757">FD_PureImage</a> (SDL_Renderer *renderer, Uint32 <a class="el" href="class_f_d___image.html#ad1bcccb5d96a258ba9032003dd76429e">width</a>, Uint32 <a class="el" href="class_f_d___image.html#a1da134b2698b5eae779748dce8ba151f">height</a>, std::vector&lt; <a class="el" href="fd__image_manager_8hpp.html#a0503e4239e744f91f15e277919b1a5e0">FD_PureElement</a> &gt; elements)</td></tr>
+<tr class="memdesc:a85877322e66640e9f41d3732e6cce757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a>.  <a href="class_f_d___pure_image.html#a85877322e66640e9f41d3732e6cce757">More...</a><br /></td></tr>
+<tr class="separator:a85877322e66640e9f41d3732e6cce757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a740acc3502236f5da8d687ded4d9327a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___pure_image.html#a740acc3502236f5da8d687ded4d9327a">~FD_PureImage</a> ()</td></tr>
 <tr class="memdesc:a740acc3502236f5da8d687ded4d9327a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a>.  <a href="class_f_d___pure_image.html#a740acc3502236f5da8d687ded4d9327a">More...</a><br /></td></tr>
 <tr class="separator:a740acc3502236f5da8d687ded4d9327a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae975ef9997afbf33ea4ad1a5feae978f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___pure_image.html#ae975ef9997afbf33ea4ad1a5feae978f">resized</a> (int <a class="el" href="class_f_d___image.html#ad1bcccb5d96a258ba9032003dd76429e">width</a>, int <a class="el" href="class_f_d___image.html#a1da134b2698b5eae779748dce8ba151f">height</a>)</td></tr>
+<tr class="memdesc:ae975ef9997afbf33ea4ad1a5feae978f"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the window is resized, the video device is lost - this circumvents that issue.  <a href="class_f_d___pure_image.html#ae975ef9997afbf33ea4ad1a5feae978f">More...</a><br /></td></tr>
+<tr class="separator:ae975ef9997afbf33ea4ad1a5feae978f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_f_d___image"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_f_d___image')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_f_d___image.html">FD_Image</a></td></tr>
 <tr class="memitem:a6fc4b9809723c434cba8960d61b01aaa inherit pub_methods_class_f_d___image"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___image.html#a6fc4b9809723c434cba8960d61b01aaa">FD_Image</a> (const <a class="el" href="class_f_d___image.html#ae655a70c818fbacf9bc4378d2ec452c9">ImageType</a> <a class="el" href="class_f_d___image.html#a1eb563fd6b46ae24c2bf1177d8c5ca0c">type</a>)</td></tr>
 <tr class="memdesc:a6fc4b9809723c434cba8960d61b01aaa inherit pub_methods_class_f_d___image"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_f_d___image.html" title="The FD_Image class, manages all types of visual information.">FD_Image</a>.  <a href="class_f_d___image.html#a6fc4b9809723c434cba8960d61b01aaa">More...</a><br /></td></tr>
@@ -175,9 +179,10 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a> class, specialises the image for custom renderered texture. </p>
+<p>If the texture given to this class has the SDL_TEXTUREACCESS_RENDER flag, add this class to the appropriate <a class="el" href="class_f_d___window.html" title="The Fluxdrive wrapper for SDL_Window.">FD_Window</a>'s resizable list. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8b3c66bd1f3561ac1b6a18b089cea35a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b3c66bd1f3561ac1b6a18b089cea35a">&#9670;&nbsp;</a></span>FD_PureImage()</h2>
+<a id="a85877322e66640e9f41d3732e6cce757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85877322e66640e9f41d3732e6cce757">&#9670;&nbsp;</a></span>FD_PureImage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -185,20 +190,47 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">FD_PureImage::FD_PureImage </td>
           <td>(</td>
-          <td class="paramtype">SDL_Texture *&#160;</td>
-          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Uint32&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Uint32&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="fd__image_manager_8hpp.html#a0503e4239e744f91f15e277919b1a5e0">FD_PureElement</a> &gt;&#160;</td>
+          <td class="paramname"><em>elements</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Constructs a <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a>. </p>
+<p>You should add this image to the resizable list unless you aren't planning on resizing the window.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texture</td><td>The texture for the image. </td></tr>
+    <tr><td class="paramname">renderer</td><td>The renderer to use to construct the texture. </td></tr>
+    <tr><td class="paramname">width</td><td>The width of the made texture. </td></tr>
+    <tr><td class="paramname">height</td><td>The height of the made texture. </td></tr>
+    <tr><td class="paramname">elements</td><td>The elements to render.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="fd__image_manager_8hpp.html#a0503e4239e744f91f15e277919b1a5e0" title="This allows the FD_PureImage to re-draw itself by storing the components seperately.">FD_PureElement</a> </dd></dl>
 
 </div>
 </div>
@@ -218,6 +250,54 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroys the <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a>. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae975ef9997afbf33ea4ad1a5feae978f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae975ef9997afbf33ea4ad1a5feae978f">&#9670;&nbsp;</a></span>resized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FD_PureImage::resized </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When the window is resized, the video device is lost - this circumvents that issue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>The new width of the window. </td></tr>
+    <tr><td class="paramname">height</td><td>The new height of the window. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_f_d___resizable.html#af0bdd90b2c9f338721077b53cfd1443e">FD_Resizable</a>.</p>
 
 </div>
 </div>

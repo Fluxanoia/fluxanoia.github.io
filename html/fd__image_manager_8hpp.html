@@ -83,6 +83,7 @@ $(function() {
 <code>#include &lt;SDL_image.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="fd__paths_8hpp_source.html">fd_paths.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="fd__registry_8hpp_source.html">fd_registry.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="fd__resizable_8hpp_source.html">../display/fd_resizable.hpp</a>&quot;</code><br />
 </div>
 <p><a href="fd__image_manager_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -100,6 +101,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___text_image.html">FD_TextImage</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="class_f_d___text_image.html" title="The FD_TextImage class, specialises the image to work with text.">FD_TextImage</a> class, specialises the image to work with text.  <a href="class_f_d___text_image.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_d___pure_element__.html">FD_PureElement_</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This allows the <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a> to re-draw itself by storing the components seperately.  <a href="struct_f_d___pure_element__.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___pure_image.html">FD_PureImage</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a> class, specialises the image for custom renderered texture.  <a href="class_f_d___pure_image.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -115,6 +119,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a075f9664b842f3112910b3d7f18c2ff2"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fd__image_manager_8hpp.html#a075f9664b842f3112910b3d7f18c2ff2">FD_ImageRegister</a></td></tr>
 <tr class="memdesc:a075f9664b842f3112910b3d7f18c2ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The data type of the image register value.  <a href="fd__image_manager_8hpp.html#a075f9664b842f3112910b3d7f18c2ff2">More...</a><br /></td></tr>
 <tr class="separator:a075f9664b842f3112910b3d7f18c2ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0503e4239e744f91f15e277919b1a5e0"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct_f_d___pure_element__.html">FD_PureElement_</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fd__image_manager_8hpp.html#a0503e4239e744f91f15e277919b1a5e0">FD_PureElement</a></td></tr>
+<tr class="memdesc:a0503e4239e744f91f15e277919b1a5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This allows the <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a> to re-draw itself by storing the components seperately.  <a href="fd__image_manager_8hpp.html#a0503e4239e744f91f15e277919b1a5e0">More...</a><br /></td></tr>
+<tr class="separator:a0503e4239e744f91f15e277919b1a5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The file containing the classes relating to image management. </p>
@@ -148,6 +155,22 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The data type of the image register value. </p>
+
+</div>
+</div>
+<a id="a0503e4239e744f91f15e277919b1a5e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0503e4239e744f91f15e277919b1a5e0">&#9670;&nbsp;</a></span>FD_PureElement</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="struct_f_d___pure_element__.html">FD_PureElement_</a>  <a class="el" href="fd__image_manager_8hpp.html#a0503e4239e744f91f15e277919b1a5e0">FD_PureElement</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This allows the <a class="el" href="class_f_d___pure_image.html" title="The FD_PureImage class, specialises the image for custom renderered texture.">FD_PureImage</a> to re-draw itself by storing the components seperately. </p>
 
 </div>
 </div>
