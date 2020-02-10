@@ -78,8 +78,9 @@ $(function() {
 <div class="textblock"><code>#include &quot;<a class="el" href="fd__scene_8hpp_source.html">../../display/fd_scene.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="fd__window_8hpp_source.html">../../display/fd_window.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="fd__camera_set_8hpp_source.html">../../display/fd_cameraSet.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="fd__object_group_8hpp_source.html">../../object/fd_objectGroup.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="fd__state_manager_8hpp_source.html">../../state/fd_stateManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="fd__object_group_8hpp_source.html">../../object/fd_objectGroup.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="fd__text_8hpp_source.html">../../object/ui/fd_text.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="fd__button_manager_8hpp_source.html">../../object/ui/fd_buttonManager.hpp</a>&quot;</code><br />
 </div>
 <p><a href="fd__testing_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -90,6 +91,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___testing_1_1_f_d___camera_test_state.html">FD_Testing::FD_CameraTestState</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___testing_1_1_f_d___event_test_state.html">FD_Testing::FD_EventTestState</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___testing_1_1_f_d___audio_test_state.html">FD_Testing::FD_AudioTestState</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -99,7 +104,9 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a9c40c38cd9f169f03862c0f183448c91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_d___testing.html#a9c40c38cd9f169f03862c0f183448c91">FD_Testing::FD_TestStates</a> { <a class="el" href="namespace_f_d___testing.html#a9c40c38cd9f169f03862c0f183448c91a6123307e121784939ec143fe43175ed1">FD_Testing::FD_TEST_CHOICE_STATE</a>, 
-<a class="el" href="namespace_f_d___testing.html#a9c40c38cd9f169f03862c0f183448c91a57de27aa77d17ec1167d21c76f23e7d5">FD_Testing::FD_TEST_CAMERA_STATE</a>
+<a class="el" href="namespace_f_d___testing.html#a9c40c38cd9f169f03862c0f183448c91a57de27aa77d17ec1167d21c76f23e7d5">FD_Testing::FD_TEST_CAMERA_STATE</a>, 
+<a class="el" href="namespace_f_d___testing.html#a9c40c38cd9f169f03862c0f183448c91ac2e0b0da5118c7bfc6cf459c351af2af">FD_Testing::FD_TEST_EVENT_STATE</a>, 
+<a class="el" href="namespace_f_d___testing.html#a9c40c38cd9f169f03862c0f183448c91ad1c561a318d0d75f6f955e6c6759936d">FD_Testing::FD_TEST_AUDIO_STATE</a>
  }</td></tr>
 <tr class="separator:a9c40c38cd9f169f03862c0f183448c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c8ba7fb8b9d2fe96d0244a5d244f769"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_f_d___testing.html#a9c8ba7fb8b9d2fe96d0244a5d244f769">FD_Testing::FD_TestRegisters</a> { <a class="el" href="namespace_f_d___testing.html#a9c8ba7fb8b9d2fe96d0244a5d244f769a0e6dda5ba73e4c65bd7f736da23fb287">FD_Testing::FD_IMAGE_BACKGROUND</a>, 

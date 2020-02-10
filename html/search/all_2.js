@@ -8,7 +8,7 @@ var searchData=
   ['center_5fx_42',['center_x',['../class_f_d___object.html#a78d826195d6d3e6df40b58a8262aa773',1,'FD_Object']]],
   ['center_5fy_43',['center_y',['../class_f_d___object.html#aedd5240a7b2273e224f260b2a5c040e1',1,'FD_Object']]],
   ['changetext_44',['changeText',['../class_f_d___text_image.html#ab183f963e0d2357f57108dab36964137',1,'FD_TextImage::changeText()'],['../class_f_d___text.html#a55456edf212de04675735fe2b11b256d',1,'FD_Text::changeText()']]],
-  ['clear_45',['clear',['../class_f_d___input_set.html#aa50da0ba664465bbe2245b9bbe647ced',1,'FD_InputSet']]],
+  ['clear_45',['clear',['../class_f_d___input_set.html#aa50da0ba664465bbe2245b9bbe647ced',1,'FD_InputSet::clear()'],['../class_f_d___event_listener.html#add7989e7c293baf01e33326aef702805',1,'FD_EventListener::clear()']]],
   ['close_46',['close',['../namespace_f_d___main.html#a833e3a2682c1d495828ecc4bd42ac8d2',1,'FD_Main']]],
   ['closed_47',['closed',['../class_f_d___loopable.html#a450c183ce7f1f63dbbcc0e3b62a46d08',1,'FD_Loopable::closed()'],['../class_f_d___state.html#a1bb093c35631bc4c4ea23007fe6108c3',1,'FD_State::closed()']]],
   ['code_48',['code',['../struct_f_d___input_event__.html#a17d3c85e4a812eb90476b76aee9c0853',1,'FD_InputEvent_']]],
