@@ -6,7 +6,7 @@ var searchData=
   ['deletefont_53',['deleteFont',['../class_f_d___image_manager.html#a2f4ef67c40e4f9daef1d81525619a4a7',1,'FD_ImageManager']]],
   ['deleteimage_54',['deleteImage',['../class_f_d___image_manager.html#ac7fe2388700529b01aa79f1bb11e4ff6',1,'FD_ImageManager::deleteImage(const FD_ImageRegister reg)'],['../class_f_d___image_manager.html#a1086175543fe77063f1e12a2d1d918b2',1,'FD_ImageManager::deleteImage(const std::shared_ptr&lt; FD_Font &gt; font, const std::string text, const SDL_Colour colour={ 255, 255, 255, 255 })'],['../class_f_d___image_manager.html#a3fd343d916059e8af015173fa8a86c25',1,'FD_ImageManager::deleteImage(const std::shared_ptr&lt; FD_Font &gt; font, const std::string prefix, const std::string text, const std::string suffix, const SDL_Colour colour={ 255, 255, 255, 255 })']]],
   ['deletemusic_55',['deleteMusic',['../class_f_d___audio_manager.html#ab7c4114e4168fa59f6a980db841289af',1,'FD_AudioManager']]],
-  ['deletesoundeffect_56',['deleteSoundEffect',['../class_f_d___audio_manager.html#ae159cffbc729ee99efe23d2efc410c4a',1,'FD_AudioManager']]],
+  ['deletesoundeffect_56',['deleteSoundEffect',['../class_f_d___audio_manager.html#afad7269e60845ddbc1d68a291b5c9b63',1,'FD_AudioManager']]],
   ['delim_57',['delim',['../namespace_f_d___serialisation.html#a147405b74d342bf4f136b511466d848e',1,'FD_Serialisation']]],
   ['deserialise_58',['deserialise',['../class_f_d___input.html#ae15a75fd98280cfac824b0a5305c100d',1,'FD_Input']]],
   ['destination_59',['destination',['../struct_f_d___tween_action__.html#abe723521d21f44f12197ceb5b5f1f95e',1,'FD_TweenAction_::destination()'],['../class_f_d___tween.html#ad972e829c0823b9b48a1d9ba6ec0884b',1,'FD_Tween::destination()']]],
