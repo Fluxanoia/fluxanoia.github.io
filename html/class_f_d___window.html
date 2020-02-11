@@ -113,11 +113,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5ec9d0522ac587cd219eacbd3f45824a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___window.html#a5ec9d0522ac587cd219eacbd3f45824a">isFullscreen</a> () const</td></tr>
 <tr class="memdesc:a5ec9d0522ac587cd219eacbd3f45824a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the window is fullscreen or not.  <a href="class_f_d___window.html#a5ec9d0522ac587cd219eacbd3f45824a">More...</a><br /></td></tr>
 <tr class="separator:a5ec9d0522ac587cd219eacbd3f45824a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf6684045fa2f4de925e683c5d3ad56"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___window.html#a4cf6684045fa2f4de925e683c5d3ad56">getWindowedWidth</a> () const</td></tr>
+<tr class="memdesc:a4cf6684045fa2f4de925e683c5d3ad56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the width of the window when it's not fullscreen.  <a href="class_f_d___window.html#a4cf6684045fa2f4de925e683c5d3ad56">More...</a><br /></td></tr>
+<tr class="separator:a4cf6684045fa2f4de925e683c5d3ad56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d52d8fa3741be6d34ac54e8e804a5c1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___window.html#a7d52d8fa3741be6d34ac54e8e804a5c1">getWindowedHeight</a> () const</td></tr>
+<tr class="memdesc:a7d52d8fa3741be6d34ac54e8e804a5c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the height of the window when it's not fullscreen.  <a href="class_f_d___window.html#a7d52d8fa3741be6d34ac54e8e804a5c1">More...</a><br /></td></tr>
+<tr class="separator:a7d52d8fa3741be6d34ac54e8e804a5c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22fd0989beff67e2ffc84fdf6d9129dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___window.html#a22fd0989beff67e2ffc84fdf6d9129dd">getWidth</a> () const</td></tr>
-<tr class="memdesc:a22fd0989beff67e2ffc84fdf6d9129dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the width of the window.  <a href="class_f_d___window.html#a22fd0989beff67e2ffc84fdf6d9129dd">More...</a><br /></td></tr>
+<tr class="memdesc:a22fd0989beff67e2ffc84fdf6d9129dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current width of the window.  <a href="class_f_d___window.html#a22fd0989beff67e2ffc84fdf6d9129dd">More...</a><br /></td></tr>
 <tr class="separator:a22fd0989beff67e2ffc84fdf6d9129dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7279cedd603f40975cea5d0e06e65180"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___window.html#a7279cedd603f40975cea5d0e06e65180">getHeight</a> () const</td></tr>
-<tr class="memdesc:a7279cedd603f40975cea5d0e06e65180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the height of the window.  <a href="class_f_d___window.html#a7279cedd603f40975cea5d0e06e65180">More...</a><br /></td></tr>
+<tr class="memdesc:a7279cedd603f40975cea5d0e06e65180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current height of the window.  <a href="class_f_d___window.html#a7279cedd603f40975cea5d0e06e65180">More...</a><br /></td></tr>
 <tr class="separator:a7279cedd603f40975cea5d0e06e65180"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cec848fd74cf2d42bf7697fcf23c335"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_d___window.html#a9cec848fd74cf2d42bf7697fcf23c335">getScreenWidth</a> () const</td></tr>
 <tr class="memdesc:a9cec848fd74cf2d42bf7697fcf23c335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the width of the screen.  <a href="class_f_d___window.html#a9cec848fd74cf2d42bf7697fcf23c335">More...</a><br /></td></tr>
@@ -249,7 +255,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the height of the window. </p>
+<p>Returns the current height of the window. </p>
+<p>If the window is fullscreen, this returns the screen height.</p>
 <dl class="section return"><dt>Returns</dt><dd>The height of the window. </dd></dl>
 
 </div>
@@ -329,8 +336,49 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the width of the window. </p>
+<p>Returns the current width of the window. </p>
+<p>If the window is fullscreen, this returns the screen width.</p>
 <dl class="section return"><dt>Returns</dt><dd>The width of the window. </dd></dl>
+
+</div>
+</div>
+<a id="a7d52d8fa3741be6d34ac54e8e804a5c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d52d8fa3741be6d34ac54e8e804a5c1">&#9670;&nbsp;</a></span>getWindowedHeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FD_Window::getWindowedHeight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the height of the window when it's not fullscreen. </p>
+<dl class="section return"><dt>Returns</dt><dd>The height of the window when it's not fullscreen. </dd></dl>
+
+</div>
+</div>
+<a id="a4cf6684045fa2f4de925e683c5d3ad56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cf6684045fa2f4de925e683c5d3ad56">&#9670;&nbsp;</a></span>getWindowedWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FD_Window::getWindowedWidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the width of the window when it's not fullscreen. </p>
+<dl class="section return"><dt>Returns</dt><dd>The width of the window when it's not fullscreen. </dd></dl>
 
 </div>
 </div>
