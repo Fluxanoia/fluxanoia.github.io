@@ -9,6 +9,6 @@ var searchData=
   ['errorttf_72',['errorTTF',['../namespace_f_d___handling.html#ae05798347452fba38bea8241111e3161',1,'FD_Handling']]],
   ['exists_73',['exists',['../class_f_d___file.html#a80cc76abd7a9109dfa5b7549d782c965',1,'FD_File']]],
   ['exit_74',['exit',['../class_f_d___button.html#ab8615804b80dff4d7b886c31305648bd',1,'FD_Button::exit()'],['../class_f_d___dropdown_button.html#a8472342b96a3b4dea006c5ab1e751d40',1,'FD_DropdownButton::exit()']]],
-  ['extrude_75',['extrude',['../class_f_d___image.html#a49aa2c719e153ed92f8ad17a8f9a4c28',1,'FD_Image']]],
+  ['extrude_75',['extrude',['../namespace_f_d___maths.html#aab1d096fbf4fe4927041a1078d45c6c9',1,'FD_Maths::extrude(const SDL_Rect rect, const int size)'],['../namespace_f_d___maths.html#abcbe3481c1178e9704695caf38cc5337',1,'FD_Maths::extrude(const FD_Rect rect, const double size)']]],
   ['extrusion_76',['extrusion',['../class_f_d___image.html#a9abba889e6b7132bff5c1d1af8e65f40',1,'FD_Image']]]
 ];
