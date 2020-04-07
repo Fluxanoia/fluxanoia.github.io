@@ -1,0 +1,281 @@
+/*************************************************/
+/******************** IMPORTS ********************/
+/*************************************************/
+
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+/*************************************************/
+/******************* BOX SIZING ******************/
+/*************************************************/
+
+/* Ensures that padding and border are included in the 
+ * total width and height of the elements */
+* {
+    box-sizing: border-box;
+}
+
+/*************************************************/
+/******************* KEYFRAMES *******************/
+/*************************************************/
+
+/* The keyframes for the rainbow background animation */
+@keyframes rainbow-animate {
+    0%    { background-color: #ff9afb; }
+    12.5% { background-color: #e3c3ff; }
+    25%   { background-color: #c3dfff; }
+    37.5% { background-color: #c3ffed; }
+    50%   { background-color: #c3ffc7; }
+    62.5% { background-color: #fdffc3; }
+    75%   { background-color: #ffdac3; }
+    87.5% { background-color: #ffdac3; }
+    100%  { background-color: #ff9afb; }
+}
+
+/*************************************************/
+/*************** RESPONSIVE DESIGN ***************/
+/*************************************************/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    flux-title {
+        font-size: 10vw;
+        text-shadow: 0.7vw 0.7vw #000000;
+        background-size: 32px 32px;
+    }
+    @keyframes scroll-animate {
+        0%   { background-position: 0px 0px; }
+        100% { background-position: 32px 32px; }
+    }
+    flux-nav {
+      display: block;
+    }
+    .flux-item {
+        display: block;
+    }
+    flux-content {
+        font-size: 16.2px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    flux-title {
+        font-size: 10vw;
+        text-shadow: 0.7vw 0.7vw #000000;
+        background-size: 5.2vw 5.2vw;
+    }
+    @keyframes scroll-animate {
+        0%   { background-position: 0px 0px; }
+        100% { background-position: 5.2vw 5.2vw; }
+    }
+    flux-nav {
+        display: block;
+    }
+    .flux-item {
+        display: block;
+    }
+    flux-content {
+        font-size: calc(12px + 0.7vw);
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    flux-nav {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+    .flux-item {
+        display: inline-block;
+        width: 30%;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    flux-title {
+        font-size: 99.2px;
+        text-shadow: 6.944px 6.944px #000000;
+        background-size: 51.584px 51.584px;
+    }
+    @keyframes scroll-animate {
+      0%   { background-position: 0px 0px; }
+      100% { background-position: 51.584px 51.584px; }
+    }
+    flux-content {
+        font-size: 18.944px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
+
+/*************************************************/
+/******************** CLASSES ********************/
+/*************************************************/
+
+/* The style of the body */
+body {
+    /* Default background colour */
+    background-color: #282828;
+    /* Animation */
+    animation-name: rainbow-animate;
+    animation-duration: 20s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    /* Scrollbars */
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* Text */
+    color: #ffffff;
+    word-wrap: break-word;
+}
+
+/* Hyperlink editting */
+a {
+    color: #ffffff;
+}
+a.flux-button {
+    text-decoration: none;
+    cursor: auto;
+}  
+
+/* The main content box */
+flux-main {
+    display: block;
+    /* Background, border and, shadow */
+    background-color: #282828;
+    border-color: #ffffff;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px 6px rgba(40, 40, 40, 0.4); 
+    /* Margin and padding */
+    margin: 0px auto;
+    padding: 0px;
+    /* Width */
+    width: 80vw;
+    max-width: 720px;
+    /* Font */
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+/* The title box */
+flux-title {
+    display: block;
+    /* Background and its animation */
+    background-image: url(pattern.png);
+    background-position: 0px 0px;
+    background-repeat: repeat;
+    animation-name: scroll-animate;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    /* Border */
+    border-bottom: 3px solid #ffffff;
+    border-radius: 10px;
+    /* Margin and padding */
+    padding: 0px;
+    padding-bottom: 20px;
+    margin: 0px;
+    margin-bottom: 10px;
+    /* Text and font */
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    word-wrap: break-word;
+}
+
+/* The border between content */
+flux-divider {
+    display: block;
+    content: none;
+    /* Padding */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* Border */
+    border-bottom: 3px solid #ffffff;
+}
+
+/* The navbar item style */
+flux-nav {
+  justify-content: stretch;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-inline-start: 0px;
+}
+
+/* The navbar item style */
+.flux-item {
+  /* Border */
+  border-color: #ffffff;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 15px;
+  /* Margin */
+  margin: 0px auto;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  /* Text and font */
+  text-align: center;
+}
+.flux-item:hover {
+  background-color: #ffffff;
+  color: #282828;
+}
+.flux-item.force-hover {
+    background-color: #ffffff;
+    color: #282828;
+}
+
+/* The main paragraph style */
+flux-content {
+    display: block;
+    /* Padding */
+    padding-top: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    /* Font */
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.flux-large-element {
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+}
+
+/* The small footer text */
+flux-footer {
+    display: block;
+    /* Background */
+    background-color: #282828;
+    /* Border */
+    border-color: #ffffff;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    /* Text and font */
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Fredoka One', sans-serif;
+    word-wrap: break-word;
+    /* Margin and padding */
+    margin: 0px auto;
+    margin-top: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* Width */
+    width: 80vw;
+    max-width: 720px;
+}
