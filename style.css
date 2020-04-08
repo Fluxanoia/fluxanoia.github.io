@@ -167,7 +167,7 @@ flux-main {
 flux-title {
     display: block;
     /* Background and its animation */
-    background-image: url(pattern.png);
+    background-image: url(res/pattern.png);
     background-position: 0px 0px;
     background-repeat: repeat;
     animation-name: scroll-animate;
