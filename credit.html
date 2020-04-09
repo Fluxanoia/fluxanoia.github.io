@@ -7,7 +7,7 @@
     <!-- Include the stylesheet -->
     <link rel="stylesheet" href="style.css">
     <!-- Adds the favicon -->
-    <link rel="shortcut icon" href="fav/favicon.ico">
+	<link rel="shortcut icon" href="fav/favicon.ico">
 	<link rel="icon" sizes="16x16 32x32 64x64" href="fav/favicon.ico">
 	<link rel="icon" type="image/png" sizes="196x196" href="fav/favicon-192.png">
 	<link rel="icon" type="image/png" sizes="160x160" href="fav/favicon-160.png">
@@ -31,23 +31,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- The body -->
     <body>
+        <a href="index.html" class="flux-button"><flux-title>Fluxanoia</flux-title></a>
+        <flux-nav>
+            <a href="projects.html" class="flux-button flux-item">Projects</a>
+            <a href="http://github.com/Fluxanoia" class="flux-button flux-item">Github</a>
+            <a href="discord.html" class="flux-button flux-item">Discord</a>
+        </flux-nav>
         <flux-main>
-            <a href="index.html" class="flux-button">
-                <flux-title>Credit</flux-title>
-            </a>
-            <flux-nav>
-                <a href="projects.html" class="flux-button flux-item">Projects</a>
-                <a href="http://github.com/Fluxanoia" class="flux-button flux-item">Github</a>
-                <a href="discord.html" class="flux-button flux-item">Discord</a>
-            </flux-nav>
             <flux-content>
                 Website theme inspired by <a href="http://joeaquiare.com">joeaquiare.com</a>.
             </flux-content>
         </flux-main>
-        <flux-main style="text-align: center;
-            padding: 10px;
-            margin-top: 10px;">
-            Copyright © 2020 Fluxanoia
+        <flux-main style="text-align: center;">
+            <flux-content>Copyright © 2020 Fluxanoia</flux-content>
         </flux-main>
     </body>
 </html>
