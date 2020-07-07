@@ -32,6 +32,19 @@
     100%  { background-color: #ff9afb; }
 }
 
+/* The keyframes for the rainbow colour animation */
+@keyframes rainbow-animate-element {
+    0%    { color: #f872f4; }
+    12.5% { color: #c077ff; }
+    25%   { color: #67abf8; }
+    37.5% { color: #5effcf; }
+    50%   { color: #6bff74; }
+    62.5% { color: #ffed49; }
+    75%   { color: #ffbc50; }
+    87.5% { color: #ff853a; }
+    100%  { color: #f872f4; }
+}
+
 /*************************************************/
 /*************** RESPONSIVE DESIGN ***************/
 /*************************************************/
@@ -334,6 +347,15 @@ flux-footer {
 }
 .flux-item.force-wide {
     width: 100%;
+}
+
+/* Anything coloured rainbow */
+.flux-rainbow {
+    /* Animation */
+    animation-name: rainbow-animate-element;
+    animation-duration: 20s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
 }
 
 /* Zooming images */
