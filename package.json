@@ -7,7 +7,7 @@
     "email": "contact@fluxanoia.co.uk",
     "url": "https://www.fluxanoia.co.uk"
   },
-  "homepage": "https://fluxanoia.github.io/",
+  "homepage": "https://www.fluxanoia.co.uk",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "gh-pages": "^3.1.0",
