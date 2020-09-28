@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { History, LocationState } from 'history';
+import React, { useEffect, useState } from "react";
+import { History, LocationState, Location } from 'history';
 import { Route, Switch, Link, withRouter } from "react-router-dom";
 
 import Contact from "./components/Contact";
@@ -10,18 +10,16 @@ import NotFound from "./components/NotFound";
 import Projects from "./components/Projects";
 
 type AppProps = {
-    history : History<LocationState>
+    history : History<LocationState>,
+    location: Location<LocationState>;
 }
 function App(props : AppProps) {
     const processLocation = (loc : string) => {
         if (loc === "/") return "home";
         return loc.slice(1);
     }
-    const [location, setLocation] = useState(
-        processLocation(window.location.pathname));
-    props.history.listen((location, _action) => {
-        setLocation(processLocation(location.pathname))
-    });
+    const [location, setLocation] = useState(processLocation(props.location.pathname));
+    useEffect(() => setLocation(processLocation(props.location.pathname)), [props]);
 
     const renderLink = (name : string) => {
         const displayName = name;
