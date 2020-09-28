@@ -1,0 +1,23 @@
+$bg-colour: #252525;
+$accent-colour: #3B3B3B;
+$highlight-colour: #7B7B7B;
+$text-colour: #FFFFFF;
+
+$primary-colour-r: 249;
+$primary-colour-g: 139;
+$primary-colour-b: 170;
+$primary-colour: rgb(
+    $primary-colour-r,
+    $primary-colour-g,
+    $primary-colour-b
+);
+$primary-colour-faded: rgba(
+    $primary-colour-r,
+    $primary-colour-g,
+    $primary-colour-b,
+    0.75
+);
+
+$win-highlight: rgba(0, 255, 59, 0.36);
+$lose-highlight: rgba(255, 28, 0, 0.36);
+$active-highlight: rgba(0, 134, 255, 0.36);
