@@ -1,37 +1,221 @@
 @import "./colours.scss";
 
+// --- Variables --- //
+
+$title-size: 100px;
+$title-container-scale: 1.5;
+$title-border: 2px;
+
+$border-size: 5px;
+
+$max-width: 800px;
+
+// --- Keyframes --- //
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rainbow-text {
+    0%    { color: #f872f4; }
+    12.5% { color: #c077ff; }
+    25%   { color: #67abf8; }
+    37.5% { color: #5effcf; }
+    50%   { color: #6bff74; }
+    62.5% { color: #ffed49; }
+    75%   { color: #ffbc50; }
+    87.5% { color: #ff853a; }
+    100%  { color: #f872f4; }
+}
+
+// --- Sizing --- //
+
 * {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-}
-h1 {
-    font-weight: 900;
-}
-h2 {
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
 }
+h1 {
+    font-size: 40px;
+}
+h2 {
+    font-size: 32px;
+}
 h3 {
-    font-weight: 500;
+    font-size: 24px;
 }
 h4 {
-    font-weight: 400;
+    font-size: 16px;
 }
-p, ol, ul, li {
-    font-size: 18px;
-    font-weight: 300;
+@media (max-width: 768px) {
+    * {
+        font-size: 18px;
+    }
+    .navbar {
+        flex-direction: column;
+    }
+    .navbar-item {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+    .main-container {
+        width: 90%;
+    }
+    .inline-img {
+        width: 200px;
+    }
 }
-
 @media (min-width: 768px) {
     * {
-        font-size: 16px;
+        font-size: 20px;
     }
-    h1 {
-        font-size: 32px;
+    .navbar {
+        margin: auto;
+        width: 90%;
+        padding-left: 0;
+        padding-right: 0;
+        flex-direction: row;
+    }
+    .navbar-item {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .main-container {
+        width: 60%;
+    }
+    .inline-img {
+        width: 250px;
     }
 }
 
+// --- HTML Objects --- //
+
 body {
-    color: $text-colour;
     background-color: $bg-colour;
+    color: $text-colour;
+}
+
+a {
+    color: $text-colour;
+    text-decoration: underline;
+
+    &:hover {
+        color: $text-colour;
+    }
+}  
+
+// --- Integral CSS Classes --- //
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    background-color: $bg-colour;
+
+    @mixin app-bg($state, $state-colour) {
+        &.#{$state} { background-color: $state-colour; }
+    }
+    @include app-bg(home, $home-colour);
+    @include app-bg(projects, $projects-colour);
+    @include app-bg(discord, $discord-colour);
+    @include app-bg(contact, $contact-colour);
+    @include app-bg(cv, $cv-colour);
+
+    transition: background-color 1s;
+}
+
+.title {
+    display: block;
+
+    text-shadow: 
+        $title-border 0 0 #000, 
+        -$title-border 0 0 #000, 
+        0 $title-border 0 #000, 
+        0 -$title-border 0 #000,
+        (-$title-border / 2) (-$title-border / 2) 0 #000,
+        ($title-border / 2) ($title-border / 2) 0 #000,
+        ($title-border / 2) (-$title-border / 2) 0 #000,
+        (-$title-border / 2) ($title-border / 2) 0 #000,
+        ($title-border) ($title-border) 0 #000,
+        ($title-border * 2) ($title-border * 2) 0 #000;
+
+    text-align: center;
+    font-size: $title-size;
+    font-family: 'Fredoka One';
+    word-wrap: break-word;
+    text-decoration: none;
+    
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.panel {
+    background-color: $panel-colour;
+    border-color: $text-colour;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 16px;
+    box-shadow: 0px 0px 20px 6px rgba(40, 40, 40, 0.4); 
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    max-width: $max-width;
+}
+
+.navbar-item {
+    @extend .panel;
+
+    flex-grow: 1;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover, &.force-hover {
+        font-weight: 700;
+        color: $panel-colour;
+        background-color: $text-colour;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+.main-container {
+    @extend .panel;
+
+    max-width: $max-width;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// --- Other CSS Classes --- //
+
+.divider {
+    display: block;
+    content: none;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #ffffff;
+}
+
+.rainbow-text {
+    animation-name: rainbow-text;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.inline-img {
+    border-radius: 16px;
+    float: left;
+}
+
+.vertical-fill {
+    flex-grow: 1;
 }
