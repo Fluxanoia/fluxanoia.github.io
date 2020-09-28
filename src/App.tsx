@@ -15,8 +15,10 @@ type AppProps = {
 }
 function App(props : AppProps) {
     const processLocation = (loc : string) => {
-        if (loc === "/") return "home";
-        return loc.slice(1);
+        let output = (loc === "/") ? "home" : loc.slice(1);
+        document.title = "Fluxanoia | " + ((output.length < 4) 
+            ? output.toUpperCase() : output.charAt(0).toUpperCase() + output.slice(1));
+        return output;
     }
     const [location, setLocation] = useState(processLocation(props.location.pathname));
     useEffect(() => setLocation(processLocation(props.location.pathname)), [props]);

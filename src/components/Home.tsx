@@ -11,7 +11,7 @@ export default function Home() {
             </p>
             <p>
                 I am currently working on the beginnings of my third-year project as well
-                as Fluxdrive, Cardmaster and, this website (more details on the projects page).
+                as Cardmaster and this website (more details on the projects page).
             </p>
             <p className="mb-0">
                 My CV and other information is available <Link to="/cv">here</Link>.

@@ -36,6 +36,8 @@ export default function Projects() {
 
             <div className="d-flex justify-content-center mb-2" dangerouslySetInnerHTML={{ __html: cardmaster }} />
 
+            { renderProject(`www.fluxanoia.co.uk`, `This website is built on React with Typescript and hosted on GitHub Pages.`) }
+
             { renderProject(`Legacy Downloads`, `For nostalgia's sake, here are some links
                 to projects that are no longer being worked on:`)}
             
