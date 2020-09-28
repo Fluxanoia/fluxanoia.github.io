@@ -40,11 +40,11 @@
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && copy CNAME build",
     "build:ci": "cross-env CI=true yarn build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "yarn run build && copy CNAME build && gh-pages -b master -d build"
+    "deploy": "gh-pages -b master -d build"
   },
   "browserslist": {
     "production": [
