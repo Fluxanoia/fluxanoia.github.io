@@ -8,6 +8,7 @@
     "url": "https://www.fluxanoia.co.uk"
   },
   "homepage": "https://www.fluxanoia.co.uk",
+  "license" : "SEE LICENSE IN license.md",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "gh-pages": "^3.1.0",
