@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
@@ -9,12 +8,9 @@ export default function Home() {
                 I'm Tyler, a second-year Maths and Computer Scientist at the University of Bristol.
                 This website is the home of my various programming projects.
             </p>
-            <p>
+            <p className="mb-0">
                 I am currently working on the beginnings of my third-year project as well
                 as Cardmaster and this website (more details on the projects page).
-            </p>
-            <p className="mb-0">
-                My CV and other information is available <Link to="/cv">here</Link>.
             </p>
         </div>
     );

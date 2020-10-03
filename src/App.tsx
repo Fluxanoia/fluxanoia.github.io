@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { History, LocationState, Location } from 'history';
 import { Route, Switch, Link, withRouter } from "react-router-dom";
 
-import Contact from "./components/Contact";
 import CV from "./components/CV";
 import Discord from "./components/Discord";
 import Home from "./components/Home";
@@ -41,9 +40,9 @@ function App(props : AppProps) {
             <div className="navbar">
                 { renderLink("Home") }
                 { renderLink("Projects") }
-                { renderLink("Discord") }
-                { renderLink("Contact") }
+                { renderLink("CV") }
                 { renderExternalLink("GitHub", "https://github.com/Fluxanoia") }
+                { renderLink("Discord") }
             </div>
             <div className="main-container p-3 my-2">
                 <Switch>
@@ -51,7 +50,6 @@ function App(props : AppProps) {
                   <Route path="/home" component={ Home } />
                   <Route path="/projects" component={ Projects } />
                   <Route path="/discord" component={ Discord } />
-                  <Route path="/contact" component={ Contact } />
                   <Route path="/cv" component={ CV } />
                   <Route component={ NotFound } />
                 </Switch>
