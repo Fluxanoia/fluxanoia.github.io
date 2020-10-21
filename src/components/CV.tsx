@@ -25,7 +25,7 @@ export default function CV() {
     return (
         <>
             <p>
-                My CV is available <a href="https://github.com/Fluxanoia/Curriculum-Vitae/raw/master/Curriculum%20Vitae/CV.pdf">
+                My CV is available <a href="https://github.com/Fluxanoia/Curriculum-Vitae/raw/master/Curriculum%20Vitae/main.pdf">
                 here</a>. However, due to the nature of it, I can't fit all my education and
                 experience on it - so I have added it all below for those interested.
             </p>
@@ -37,8 +37,17 @@ export default function CV() {
             { renderTitle("Experience") }
             
             { renderCVRecord(
+                `Academic Tutor`,
+                `University of Bristol, Oct 2020 to Jun 2021`,
+                `I support two groups of first year Computer Scientists as a tutor, going through
+                weekly problem sheets and taking questions about the course and its content.
+                This opportunity has developed my independence as a leader and developed my 
+                ability to convey ideas to other people in a digestable way.`
+            ) }
+
+            { renderCVRecord(
                 `General Officer of the Computer Science Society`,
-                `University of Bristol, Jun 2020 to May 2021`,
+                `University of Bristol, Jun 2020 to Jun 2021`,
                 `I work to support the society wherever I may be needed, 
                 as well as organising internal talks.`
             ) }
@@ -53,7 +62,7 @@ export default function CV() {
 
             { renderCVRecord(
                 `Teaching Assistant`,
-                `University of Bristol, Jan 2020 to Jun 2020`,
+                `University of Bristol, Jan 2020 to Jun 2021`,
                 `I worked as teaching assistant on a Java programming
                 unit for Masters conversion students.`
             ) }
