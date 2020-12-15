@@ -8,6 +8,8 @@ import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Projects from "./components/Projects";
 
+import Study from "./components/Study";
+
 type AppProps = {
     history : History<LocationState>,
     location: Location<LocationState>;
@@ -41,8 +43,8 @@ function App(props : AppProps) {
                 { renderLink("Home") }
                 { renderLink("Projects") }
                 { renderLink("CV") }
+                { renderLink("Study") }
                 { renderExternalLink("GitHub", "https://github.com/Fluxanoia") }
-                { renderLink("Discord") }
             </div>
             <div className="main-container p-3 my-2">
                 <Switch>
@@ -51,6 +53,7 @@ function App(props : AppProps) {
                   <Route path="/projects" component={ Projects } />
                   <Route path="/discord" component={ Discord } />
                   <Route path="/cv" component={ CV } />
+                  <Route path="/study" component={ Study } />
                   <Route component={ NotFound } />
                 </Switch>
             </div> 

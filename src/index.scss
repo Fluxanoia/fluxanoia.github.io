@@ -122,6 +122,7 @@ a {
     @include app-bg(discord, $discord-colour);
     @include app-bg(contact, $contact-colour);
     @include app-bg(cv, $cv-colour);
+    @include app-bg(study, $study-colour);
 
     transition: background-color 1s;
 }
