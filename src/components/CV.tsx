@@ -13,7 +13,7 @@ export default function CV() {
     ) => {
         return ( 
             <>
-            <h3>&#8226; <span className="rainbow-text">
+            <h3>&#8226; <span className="accent-text">
                 { title }
             </span></h3>
                 <h4 className="ml-3">{ time_loc }</h4>
@@ -107,8 +107,9 @@ export default function CV() {
                 `My average score for each year is below,
                 followed by the weighting of that year in parentheses:`,
                 <ul className="mb-0">
-                    <li>First Year - 83.25% (0%)</li>
-                    <li>Second Year - 84.25% (25%)</li>
+                    <li>First Year - 83% (0%)</li>
+                    <li>Second Year - 81% (25%)</li>
+                    <li>Third Year (January Examinations) - 79% (75%)</li>
                 </ul>
             ) }
 
@@ -119,7 +120,7 @@ export default function CV() {
                 <ul className="mb-0">
                     <li>A* in MEI Maths (A2)</li>
                     <li>A* in MEI Further Maths (A2)</li>
-                    <li>A in MEI OCR B Physics (A2)</li>
+                    <li>A in OCR B Physics (A2)</li>
                     <li>A in AQA Computer Science (AS)</li>
                 </ul>
             ) }

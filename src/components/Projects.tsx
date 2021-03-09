@@ -12,7 +12,7 @@ export default function Projects() {
     const renderProject = (title : string, text : string) => {
         return (
             <>
-                <h2 className="rainbow-text">{ title }</h2>
+                <h2 className="accent-text">{ title }</h2>
                 <p className="mx-2">
                     { text }
                 </p>

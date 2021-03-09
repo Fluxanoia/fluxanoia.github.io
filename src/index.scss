@@ -97,13 +97,8 @@ body {
 }
 
 a {
-    color: $text-colour;
     text-decoration: underline;
-
-    &:hover {
-        color: $text-colour;
-    }
-}  
+}
 
 // --- Integral CSS Classes --- //
 
@@ -116,6 +111,13 @@ a {
 
     @mixin app-bg($state, $state-colour) {
         &.#{$state} { background-color: $state-colour; }
+        &.#{$state} a { 
+            color: $state-colour;
+            &:hover {
+                color: $state-colour;
+            }
+        }
+        &.#{$state} .accent-text { color: $state-colour; }
     }
     @include app-bg(home, $home-colour);
     @include app-bg(projects, $projects-colour);
@@ -148,8 +150,10 @@ a {
     word-wrap: break-word;
     text-decoration: none;
     
+    color: $text-colour !important;
     &:hover {
         text-decoration: none;
+        color: $text-colour !important;
     }
 }
 
@@ -171,13 +175,15 @@ a {
 .navbar-item {
     @extend .panel;
 
+    color: $text-colour !important;
+
     flex-grow: 1;
     text-align: center;
     text-decoration: none;
 
     &:hover, &.force-hover {
         font-weight: 700;
-        color: $panel-colour;
+        color: $panel-colour !important;
         background-color: $text-colour;
         text-decoration: none;
         cursor: pointer;

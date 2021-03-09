@@ -2,12 +2,12 @@ import React from "react";
 
 export default function Home() {
     const createPdfLink = (file : string, text : string) => {
-        return <a className="rainbow-text" target="_blank" rel="noopener noreferrer" href={ file }>
+        return <a target="_blank" rel="noopener noreferrer" href={ file }>
             { text }
         </a>
     }
     const emailLink = () => {
-        return <a className="rainbow-text" href="mailto:kc18859@bristol.ac.uk">
+        return <a href="mailto:kc18859@bristol.ac.uk">
             kc18859@bristol.ac.uk
         </a>
     }
