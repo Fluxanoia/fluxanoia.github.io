@@ -39,38 +39,41 @@ export default function CV() {
             { renderCVRecord(
                 `Academic Tutor`,
                 `University of Bristol, Oct 2020 to Jun 2021`,
-                `I support two groups of first year Computer Scientists as a tutor, going through
+                `I support two groups of first year computer scientists as a tutor, going through
                 weekly problem sheets and taking questions about the course and its content.
-                This opportunity has developed my independence as a leader and developed my 
-                ability to convey ideas to other people in a digestable way.`
+                This opportunity has developed my independence, leadership, and my 
+                ability to convey ideas to other people in an easily digestable way.`
             ) }
 
             { renderCVRecord(
-                `General Officer of the Computer Science Society`,
+                `Academic Talks Officer for the Computer Science Society`,
                 `University of Bristol, Jun 2020 to Jun 2021`,
-                `I work to support the society wherever I may be needed, 
-                as well as organising internal talks.`
+                `I organise internal talks for the society, as well as supporting the 
+                society wherever I may be needed.`
             ) }
 
             { renderCVRecord(
                 `Software Developer Intern`,
                 `Ghyston, Aug 2020`,
-                `Over the internship, I learnt more about Git and web technologies like
-                Typescript, React, SQL and C# backend development in the context of
-                team development.`
+                `Over the course of the internship, we built a fantasy NBA league 
+                single-page app in pairs using React with Typescript, SQL, and C#.
+                Users could input bets with virtual currency
+                and view their current/projected scores on the global leaderboards
+                or create their own subsets of player groups called leagues.`
             ) }
 
             { renderCVRecord(
                 `Teaching Assistant`,
                 `University of Bristol, Jan 2020 to Jun 2021`,
-                `I worked as teaching assistant on a Java programming
-                unit for Masters conversion students.`
+                `I work as teaching assistant on a Java programming
+                unit for Masters conversion students, as well as
+                a first-year algorithms unit.`
             ) }
 
             { renderCVRecord(
                 `President of the Maths and Computer Science Society`,
                 `University of Bristol, Nov 2019 to Jun 2020`,
-                `I founded and became the president of the Maths and
+                `I founded and was the president of the Maths and
                 Computer Science society, running many internal talks for
                 all interested.`
             ) }

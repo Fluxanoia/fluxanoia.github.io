@@ -26,8 +26,8 @@ export default function Projects() {
                 I'm currently working on a few projects:          
             </p>
             
-            { renderProject(`Helix`, `This is my third year project, which will
-                be a graphing software. It is being written in Python.`) }
+            { renderProject(`Helix`, `This is a graphing software, built for education as
+            part of my final-year project. It is being written in Python.`) }
 
             { renderProject(`Cardmaster`, `This is a game I'm working on when I can,
                 it started out in Java, migrated to C++ with SDL and is now on the
