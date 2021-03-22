@@ -59,7 +59,7 @@ function App(props : AppProps) {
             </div> 
             <div className="vertical-fill"></div>
             <div className="main-container text-center mb-2">
-                Copyright © 2020 Fluxanoia 
+                Copyright © 2021 Fluxanoia 
             </div> 
         </div>
     );
