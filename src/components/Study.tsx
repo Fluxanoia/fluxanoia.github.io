@@ -18,34 +18,19 @@ export default function Home() {
             <p>
                 Information about the study is available in the participant information sheet { 
                     createPdfLink("res/ParticipationInformation.pdf", " here") 
-                }, but a brief description follows (this does not act as a replacement for
-                reading the information sheet).
+                }, in summary, it will be a short (20-30 minute) task involving using some graphing
+                software.
             </p>
             <p>
-                The study consists of two stages, of which you can participate in both, one of,
-                or neither of them. The first is a short survey about your experience with
-                graphing software. The second is a short task involving using some graphing
-                software to be released at a later date.
-            </p>
-            <p>
-                The consent forms for the study are below, make sure you choose the correct
-                form based on your age. Note that if you are under 18 years old, you
-                NEED your school's approval. Please send the signed consent form to {
-                    emailLink()
-                } with the subject 'URGENT: Graphing Study'.
-            </p>
-            <p className="text-center">
-                { createPdfLink("res/ConsentFormAdults.pdf", 
-                    "Consent Form for those 18 years old or older") }
-            </p>
-            <p className="text-center">
-                { createPdfLink("res/ConsentFormYoungPeople.pdf", 
-                    "Consent Form for those under 18 years old") }
+                Please send the signed consent form to { emailLink() } with the subject
+                'URGENT: Graphing Study'. Here are the consent forms for those { 
+                    createPdfLink("res/ConsentFormAdults.pdf", "18 years old or older") 
+                } and those { 
+                    createPdfLink("res/ConsentFormYoungPeople.pdf", "under 18 years old")
+                }.
             </p>
             <p className="mb-0">
-                We invite any questions, you are welcome to send them to {
-                    emailLink()
-                } with the subject 'URGENT: Graphing Study'.
+                You are welcome to send any questions you have to { emailLink() }.
             </p>
         </div>
     );

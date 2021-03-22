@@ -5,7 +5,7 @@ export default function CV() {
         return <h1 className="text-center">{ title }</h1>;
     }
 
-    const renderCVRecord = (
+    const renderCvRecord = (
         title : string,
         time_loc : string,
         desc : string,
@@ -36,7 +36,7 @@ export default function CV() {
             <div className="divider" />
             { renderTitle("Experience") }
             
-            { renderCVRecord(
+            { renderCvRecord(
                 `Academic Tutor`,
                 `University of Bristol, Oct 2020 to Jun 2021`,
                 `I support two groups of first year computer scientists as a tutor, going through
@@ -45,14 +45,14 @@ export default function CV() {
                 ability to convey ideas to other people in an easily digestable way.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `Academic Talks Officer for the Computer Science Society`,
                 `University of Bristol, Jun 2020 to Jun 2021`,
                 `I organise internal talks for the society, as well as supporting the 
                 society wherever I may be needed.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `Software Developer Intern`,
                 `Ghyston, Aug 2020`,
                 `Over the course of the internship, we built a fantasy NBA league 
@@ -62,7 +62,7 @@ export default function CV() {
                 or create their own subsets of player groups called leagues.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `Teaching Assistant`,
                 `University of Bristol, Jan 2020 to Jun 2021`,
                 `I work as teaching assistant on a Java programming
@@ -70,7 +70,7 @@ export default function CV() {
                 a first-year algorithms unit.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `President of the Maths and Computer Science Society`,
                 `University of Bristol, Nov 2019 to Jun 2020`,
                 `I founded and was the president of the Maths and
@@ -78,14 +78,14 @@ export default function CV() {
                 all interested.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `Open Day Steward`,
                 `University of Bristol, Jun 2019 to Sep 2019`,
                 `I worked three separate days across June and September 
                 helping the University run the open days.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `Student Ambassador`,
                 `King's College London Maths School, Jul 2019`,
                 `I worked as a student ambassador during the KCLMS Physics+ 
@@ -93,7 +93,7 @@ export default function CV() {
                 into A Level physics.`
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `Volunteer Student Ambassador`,
                 `King's College London Maths School, Jul 2018`,
                 `I worked as a volunteer student ambassador during the KCLMS 
@@ -104,7 +104,7 @@ export default function CV() {
             <div className="divider" />
             { renderTitle("Education") }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `University of Bristol`,
                 `Maths and Computer Science BSc, Sep 2018 to Jun 2021`,
                 `My average score for each year is below,
@@ -116,7 +116,7 @@ export default function CV() {
                 </ul>
             ) }
 
-            { renderCVRecord(
+            { renderCvRecord(
                 `King's College London Maths School (KCLMS)`,
                 `Sep 2016 to June 2018`,
                 `I left KCLMS with the following qualifications:`,
