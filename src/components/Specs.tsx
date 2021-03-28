@@ -1,5 +1,7 @@
 import React from "react";
+import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
+export const specsPageInfo : PageInfo = getLocalPageInfo(Specs, "Specs", false);
 export default function Specs() {
     const renderTable = (content : JSX.Element) => {
         return (

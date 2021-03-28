@@ -1,10 +1,9 @@
 import React from "react";
+import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
-export default function CV() {
-    const renderTitle = (title : string) => {
-        return <h1 className="text-center">{ title }</h1>;
-    }
-
+export const cvPageInfo : PageInfo = getLocalPageInfo(Cv, "CV", true);
+export default function Cv() {
+    const renderTitle = (title : string) => <h1 className="text-center">{ title }</h1>;
     const renderCvRecord = (
         title : string,
         time_loc : string,
@@ -12,13 +11,14 @@ export default function CV() {
         elem? : JSX.Element
     ) => {
         return ( 
-            <>
-            <h3>&#8226; <span className="accent-text">
-                { title }
-            </span></h3>
+            <div className="mb-4">
+                <h3>&#8226; <span className="accent-text">{ title }</span></h3>
                 <h4 className="ml-3">{ time_loc }</h4>
-                <p className="mx-4">{ desc }{ elem }</p>
-            </>
+                <div className="mx-4">
+                    <p className="mb-0">{ desc }</p>
+                    { elem }
+                </div>
+            </div>
         );
     }
 

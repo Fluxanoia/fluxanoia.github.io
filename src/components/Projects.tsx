@@ -1,5 +1,7 @@
 import React from "react";
+import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
+export const projectsPageInfo : PageInfo = getLocalPageInfo(Projects, "Projects", true);
 export default function Projects() {
     const cardmaster = `
         <iframe frameborder="0" src="https://itch.io/embed/718461?dark=true" width="552" height="167">

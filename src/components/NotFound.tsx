@@ -1,11 +1,12 @@
 import React from "react";
+import { PageInfo, getNotFoundPageInfo } from "../utils/pageInfo";
 
+export const notFoundPageInfo : PageInfo = getNotFoundPageInfo(NotFound);
 export default function NotFound() {
-    const renderParagraph = (text : string) => <p className="text-center my-2">{ text }</p>;
     return ( 
         <>
-            { renderParagraph("Oops, did you take a wrong turn?") }
-            { renderParagraph("We couldn't find anything at this URL.") }
+            <p className="text-center my-2">Oops, did you take a wrong turn?</p>
+            <p className="text-center my-2">We couldn't find anything at this URL.</p>
         </>
     );
 }

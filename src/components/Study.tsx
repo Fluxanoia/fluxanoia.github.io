@@ -1,6 +1,8 @@
 import React from "react";
+import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
-export default function Home() {
+export const studyPageInfo : PageInfo = getLocalPageInfo(Study, "Study", true);
+export default function Study() {
     const createPdfLink = (file : string, text : string) => {
         return <a target="_blank" rel="noopener noreferrer" href={ file }>
             { text }

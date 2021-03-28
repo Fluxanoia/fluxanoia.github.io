@@ -1,5 +1,7 @@
 import React from "react";
+import { PageInfo, getHomePageInfo } from "../utils/pageInfo";
 
+export const homePageInfo : PageInfo = getHomePageInfo(Home);
 export default function Home() {
     return (
         <div>
