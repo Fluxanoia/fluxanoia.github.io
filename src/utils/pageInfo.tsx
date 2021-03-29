@@ -44,8 +44,8 @@ export const createLocalPageInfo = (
     home : boolean,
     notFound : boolean,
 ) : PageInfo => {
-    if (link === undefined) link = "/" + name.toLowerCase();
-    return createPageInfo(component, name, true, link, onNavbar, home, notFound);
+    return createPageInfo(component, name, true, link ?? "/" + name.toLowerCase(),
+        onNavbar, home, notFound);
 };
 export const createExternalPageInfo = (name : string, link : string) : PageInfo => {
     return createPageInfo(() => <></>, name, false, link, true);

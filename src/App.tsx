@@ -12,67 +12,65 @@ import { projectsPageInfo } from "./components/Projects";
 import { specsPageInfo } from "./components/Specs";
 import { studyPageInfo } from "./components/Study";
 
+const githubPageInfo : PageInfo = createExternalPageInfo("GitHub", "https://github.com/Fluxanoia") 
+const pageInfos : Array<PageInfo> = [
+    homePageInfo,
+    projectsPageInfo,
+    cvPageInfo,
+    studyPageInfo,
+    specsPageInfo,
+    discordPageInfo,
+    notFoundPageInfo,
+    githubPageInfo,
+];
+
 type AppProps = {
     history  : History<LocationState>,
     location : Location<LocationState>;
 }
-function App(props : AppProps) {
-    const githubPageInfo : PageInfo = createExternalPageInfo(
-        "GitHub", "https://github.com/Fluxanoia") 
-    const pageInfos : PageInfo[] = [
-        homePageInfo,
-        projectsPageInfo,
-        cvPageInfo,
-        studyPageInfo,
-        specsPageInfo,
-        discordPageInfo,
-        notFoundPageInfo,
-        githubPageInfo,
-    ];
-
+const App = (props : AppProps) => {
     const getNotFoundPageIndex : (() => number) = useCallback(
-        () => pageInfos.findIndex((pageInfo : PageInfo) => pageInfo.notFound), [pageInfos]);
+        () => { 
+            return pageInfos.findIndex((pageInfo : PageInfo) => pageInfo.notFound);
+        }, []);
     const getCurrentPageIndex : (() => number) = useCallback(
         () => {
-            let currentPageIndex = pageInfos.findIndex((pageInfo : PageInfo) : boolean => {
-                return pageInfo.link === props.location.pathname;
-            });
+            let currentPageIndex = pageInfos.findIndex(
+                (pageInfo : PageInfo) => pageInfo.link === props.location.pathname);
             return (currentPageIndex < 0) ? getNotFoundPageIndex() : currentPageIndex;
-        }, [props, pageInfos, getNotFoundPageIndex]);
+        }, [props, getNotFoundPageIndex]);
     const [pageIndex, setPageIndex] = useState<number>(getCurrentPageIndex());
 
     useEffect(() => {
-        setPageIndex(getCurrentPageIndex());
-        document.title = "Fluxanoia | " + pageInfos[pageIndex].name;
-    }, [pageInfos, pageIndex, getCurrentPageIndex]);
+        let currentPageIndex = getCurrentPageIndex();
+        document.title = "Fluxanoia | " + pageInfos[currentPageIndex].name;
+        setPageIndex(currentPageIndex);
+    }, [pageIndex, getCurrentPageIndex]);
 
-    const getTitle = () => {
+    const renderTitle = () => {
         const currentPage : PageInfo = pageInfos[pageIndex];
-        return (currentPage.onNavbar || currentPage.notFound) ? "Fluxanoia" : currentPage.name;
+        return (<Link className="title" to="/">
+            { (currentPage.onNavbar || currentPage.notFound) ? "Fluxanoia" : currentPage.name }
+        </Link>);
     };
     const renderNavbarButton = (pageInfo : PageInfo, index : number) => {
+        if (!pageInfo.onNavbar) console.error("Rendering as navbar button illegally.")
         const key = "link-" + pageInfo.name;
-        if (!pageInfo.onNavbar) return <React.Fragment key={ key } />;
+        let className = "navbar-item";
         if (pageInfo.local) {
-            const className = "navbar-item " + ((pageIndex === index) ? "force-hover" : "");
-            return <Link
-                key={ key }
-                className={ className }
-                to={ pageInfo.link }>
-                    { pageInfo.name }
-                </Link>;
+            className += (pageIndex === index) ? " force-hover" : "";
+            return (<Link key={ key } className={ className } to={ pageInfo.link }>
+                { pageInfo.name }
+            </Link>);
         } else {
-            return <a 
-                key={ key }    
-                className="navbar-item"
-                href={ pageInfo.link }>
-                    { pageInfo.name }
-                </a>;
+            return (<a key={ key } className={ className } href={ pageInfo.link }>
+                { pageInfo.name }
+            </a>);
         }
     }
     const renderRoute = (pageInfo : PageInfo) => {
-        const key = "route-" + pageInfo.name;
         if (!pageInfo.local) console.error("Rendering external route.")
+        const key = "route-" + pageInfo.name;
         if (pageInfo.notFound) return <Route key={ key } component={ pageInfo.component } />;
         return <Route
             key={ key }
@@ -81,15 +79,17 @@ function App(props : AppProps) {
             component={ pageInfo.component } />;
     }
 
+    const navbarInfos = pageInfos.filter((pageInfo : PageInfo) => pageInfo.onNavbar);
+    const routeInfos = pageInfos.filter((pageInfo : PageInfo) => pageInfo.local);
     return (
         <div className={ `app ` + pageInfos[pageIndex].tag }>
-            <Link className="title" to="/">{ getTitle() }</Link>
+            { renderTitle() }
             <div className="navbar">
-                { pageInfos.map(renderNavbarButton) }
+                { navbarInfos.map(renderNavbarButton) }
             </div>
             <div className="main-container p-3 my-2">
                 <Switch>
-                    { pageInfos.filter((pageInfo : PageInfo) => pageInfo.local).map(renderRoute) }
+                    { routeInfos.map(renderRoute) }
                 </Switch>
             </div> 
             <div className="vertical-fill"></div>

@@ -3,17 +3,6 @@ import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
 export const studyPageInfo : PageInfo = getLocalPageInfo(Study, "Study", true);
 export default function Study() {
-    const createPdfLink = (file : string, text : string) => {
-        return <a target="_blank" rel="noopener noreferrer" href={ file }>
-            { text }
-        </a>
-    }
-    const emailLink = () => {
-        return <a href="mailto:kc18859@bristol.ac.uk">
-            kc18859@bristol.ac.uk
-        </a>
-    }
-
     return (
         <div>
             <p>Thank you for taking interest in my study!</p>
@@ -36,4 +25,15 @@ export default function Study() {
             </p>
         </div>
     );
+}
+
+const createPdfLink = (file : string, text : string) => {
+    return <a target="_blank" rel="noopener noreferrer" href={ file }>
+        { text }
+    </a>
+}
+const emailLink = () => {
+    return <a href="mailto:kc18859@bristol.ac.uk">
+        kc18859@bristol.ac.uk
+    </a>
 }

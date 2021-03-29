@@ -1,33 +1,15 @@
 import React from "react";
 import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
+const cvUrl : string = "https://github.com/Fluxanoia/Curriculum-Vitae/raw/master/Curriculum%20Vitae/main.pdf";
+
 export const cvPageInfo : PageInfo = getLocalPageInfo(Cv, "CV", true);
 export default function Cv() {
-    const renderTitle = (title : string) => <h1 className="text-center">{ title }</h1>;
-    const renderCvRecord = (
-        title : string,
-        time_loc : string,
-        desc : string,
-        elem? : JSX.Element
-    ) => {
-        return ( 
-            <div className="mb-4">
-                <h3>&#8226; <span className="accent-text">{ title }</span></h3>
-                <h4 className="ml-3">{ time_loc }</h4>
-                <div className="mx-4">
-                    <p className="mb-0">{ desc }</p>
-                    { elem }
-                </div>
-            </div>
-        );
-    }
-
     return (
         <>
             <p>
-                My CV is available <a href="https://github.com/Fluxanoia/Curriculum-Vitae/raw/master/Curriculum%20Vitae/main.pdf">
-                here</a>. However, due to the nature of it, I can't fit all my education and
-                experience on it - so I have added it all below for those interested.
+                My CV is available <a href={ cvUrl }>here</a>. However, I can't fit all my
+                education and experience on it - so I have added it all below for those interested.
             </p>
             <p>
                 References are available upon request.
@@ -128,5 +110,24 @@ export default function Cv() {
                 </ul>
             ) }
         </>
+    );
+}
+
+const renderTitle = (title : string) => <h1 className="text-center">{ title }</h1>;
+const renderCvRecord = (
+    title : string,
+    timeAndLocation : string,
+    description : string,
+    children? : React.ReactNode,
+) => {
+    return ( 
+        <div className="mb-4">
+            <h3>&#8226; <span className="accent-text">{ title }</span></h3>
+            <h4 className="ml-3">{ timeAndLocation }</h4>
+            <div className="mx-4">
+                <p className="mb-0">{ description }</p>
+                { children }
+            </div>
+        </div>
     );
 }

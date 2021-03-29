@@ -3,29 +3,6 @@ import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
 
 export const specsPageInfo : PageInfo = getLocalPageInfo(Specs, "Specs", false);
 export default function Specs() {
-    const renderTable = (content : JSX.Element) => {
-        return (
-            <table className="mb-2">
-                <colgroup>
-                   <col className="w-25" />
-                   <col className=""/>
-                </colgroup>
-                <tbody>
-                    { content }
-                </tbody>
-            </table>
-        );
-    }
-    const renderRow = (part : string, name : string) => {
-        return (
-            <tr>
-                <td className="text-right ">{ part }</td>
-                <td style={{width: "20px"}}></td>
-                <td className="text-left">{ name }</td>
-            </tr>
-        );
-    }
-
     return (
         <>
             <h2 className="accent-text">Computer Specs</h2>
@@ -52,5 +29,28 @@ export default function Specs() {
                 </>) 
             }
         </>
+    );
+}
+
+const renderTable = (content : JSX.Element) => {
+    return (
+        <table className="mb-2">
+            <colgroup>
+               <col className="w-25" />
+               <col className=""/>
+            </colgroup>
+            <tbody>
+                { content }
+            </tbody>
+        </table>
+    );
+}
+const renderRow = (part : string, name : string) => {
+    return (
+        <tr>
+            <td className="text-right ">{ part }</td>
+            <td style={{width: "20px"}}></td>
+            <td className="text-left">{ name }</td>
+        </tr>
     );
 }
