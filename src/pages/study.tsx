@@ -1,7 +1,11 @@
 import React from "react";
-import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
+import Page from "./pages";
 
-export const studyPageInfo : PageInfo = getLocalPageInfo(Study, "Study", true);
+export const studyPage : Page = new Page(Study, {
+    accentColour: "#9bff97",
+    name: "Study",
+    onNavbar: true,
+});
 export default function Study() {
     return (
         <div>

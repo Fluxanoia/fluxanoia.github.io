@@ -17,7 +17,8 @@
     "noEmit": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "jsx": "react"
+    "jsx": "react",
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src/**/*"

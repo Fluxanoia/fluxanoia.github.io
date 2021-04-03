@@ -1,24 +1,66 @@
 import React from "react";
-import { getLocalPageInfo, PageInfo } from "../utils/pageInfo";
+import styled from "styled-components";
+import SectionTitle from "../components/sectionTitle";
+import { spacing1, spacing2, spacing4 } from "../utils/dimensions";
+import Page from "./pages";
 
 const cvUrl : string = "https://github.com/Fluxanoia/Curriculum-Vitae/raw/master/Curriculum%20Vitae/main.pdf";
 
-export const cvPageInfo : PageInfo = getLocalPageInfo(Cv, "CV", true);
+export const cvPage : Page = new Page(Cv, {
+    accentColour: "#ca89ff",
+    name: "CV",
+    onNavbar: true,
+});
 export default function Cv() {
+    const bulleted = (text : string) => (<>&#8226; &nbsp; { text } <br /></>);
+
+    const renderRecord = (
+        title : string,
+        timeAndLocation : string,
+        description : string,
+        children? : React.ReactNode,
+    ) => {
+        return ( 
+            <RecordContainer>
+                <RecordTitleContainer>
+                    &#8226; &nbsp;
+                    <RecordTitleTextContainer className="accent">
+                        { title }
+                    </RecordTitleTextContainer>
+                </RecordTitleContainer>
+                <TimeAndLocationContainer>
+                    { timeAndLocation }
+                </TimeAndLocationContainer>
+                <RecordContentContainer>
+                    <RecordTextContainer>
+                        { description }
+                    </RecordTextContainer>
+                    { children }
+                </RecordContentContainer>
+            </RecordContainer>
+        );
+    }
+
     return (
         <>
-            <p>
+            <PreambleContainer>
                 My CV is available <a href={ cvUrl }>here</a>. However, I can't fit all my
                 education and experience on it - so I have added it all below for those interested.
-            </p>
-            <p>
+                <br /><br />
                 References are available upon request.
-            </p>
+            </PreambleContainer>
             
-            <div className="divider" />
-            { renderTitle("Experience") }
+            <SectionTitle>Experience</SectionTitle>
             
-            { renderCvRecord(
+            { renderRecord(
+                `Software Developer Intern`,
+                `Ghyston, March 2021`,
+                `I spent a week at Ghyston, working on issues with their website. I fixed
+                bugs in Internet Explorer 11 and prototyped a smart header to assist
+                navigation on longer pages.`
+            ) }
+
+            { renderRecord(
                 `Academic Tutor`,
                 `University of Bristol, Oct 2020 to Jun 2021`,
                 `I support two groups of first year computer scientists as a tutor, going through
@@ -27,14 +69,14 @@ export default function Cv() {
                 ability to convey ideas to other people in an easily digestable way.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `Academic Talks Officer for the Computer Science Society`,
                 `University of Bristol, Jun 2020 to Jun 2021`,
                 `I organise internal talks for the society, as well as supporting the 
                 society wherever I may be needed.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `Software Developer Intern`,
                 `Ghyston, Aug 2020`,
                 `Over the course of the internship, we built a fantasy NBA league 
@@ -44,7 +86,7 @@ export default function Cv() {
                 or create their own subsets of player groups called leagues.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `Teaching Assistant`,
                 `University of Bristol, Jan 2020 to Jun 2021`,
                 `I work as teaching assistant on a Java programming
@@ -52,7 +94,7 @@ export default function Cv() {
                 a first-year algorithms unit.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `President of the Maths and Computer Science Society`,
                 `University of Bristol, Nov 2019 to Jun 2020`,
                 `I founded and was the president of the Maths and
@@ -60,14 +102,14 @@ export default function Cv() {
                 all interested.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `Open Day Steward`,
                 `University of Bristol, Jun 2019 to Sep 2019`,
                 `I worked three separate days across June and September 
                 helping the University run the open days.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `Student Ambassador`,
                 `King's College London Maths School, Jul 2019`,
                 `I worked as a student ambassador during the KCLMS Physics+ 
@@ -75,7 +117,7 @@ export default function Cv() {
                 into A Level physics.`
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `Volunteer Student Ambassador`,
                 `King's College London Maths School, Jul 2018`,
                 `I worked as a volunteer student ambassador during the KCLMS 
@@ -83,51 +125,56 @@ export default function Cv() {
                 problem solving and mathematical skills.`
             ) }
             
-            <div className="divider" />
-            { renderTitle("Education") }
+            <SectionTitle>Education</SectionTitle>
 
-            { renderCvRecord(
+            { renderRecord(
                 `University of Bristol`,
                 `Maths and Computer Science BSc, Sep 2018 to Jun 2021`,
                 `My average score for each year is below,
                 followed by the weighting of that year in parentheses:`,
-                <ul className="mb-0">
-                    <li>First Year - 83% (0%)</li>
-                    <li>Second Year - 81% (25%)</li>
-                    <li>Third Year (January Examinations) - 79% (75%)</li>
-                </ul>
+                <BulletedContainer>
+                    { bulleted(`First Year - 83% (0%)`) }
+                    { bulleted(`Second Year - 81% (25%)`) }
+                    { bulleted(`Third Year (January Examinations) - 79% (75%)`) }
+                </BulletedContainer>
             ) }
 
-            { renderCvRecord(
+            { renderRecord(
                 `King's College London Maths School (KCLMS)`,
                 `Sep 2016 to June 2018`,
                 `I left KCLMS with the following qualifications:`,
-                <ul className="mb-0">
-                    <li>A* in MEI Maths (A2)</li>
-                    <li>A* in MEI Further Maths (A2)</li>
-                    <li>A in OCR B Physics (A2)</li>
-                    <li>A in AQA Computer Science (AS)</li>
-                </ul>
+                <BulletedContainer>
+                    { bulleted(`A* in MEI Maths (A2)`) }
+                    { bulleted(`A* in MEI Further Maths (A2)`) }
+                    { bulleted(`A in OCR B Physics (A2)`) }
+                    { bulleted(`A in AQA Computer Science (AS)`) }
+                </BulletedContainer>
             ) }
         </>
     );
 }
 
-const renderTitle = (title : string) => <h1 className="text-center">{ title }</h1>;
-const renderCvRecord = (
-    title : string,
-    timeAndLocation : string,
-    description : string,
-    children? : React.ReactNode,
-) => {
-    return ( 
-        <div className="mb-4">
-            <h3>&#8226; <span className="accent-text">{ title }</span></h3>
-            <h4 className="ml-3">{ timeAndLocation }</h4>
-            <div className="mx-4">
-                <p className="mb-0">{ description }</p>
-                { children }
-            </div>
-        </div>
-    );
-}
+const PreambleContainer = styled.p``;
+
+const BulletedContainer = styled.p`
+    margin: 0 ${spacing2};
+`;
+
+const RecordContainer = styled.div`
+    margin-bottom: ${spacing2};
+`;
+
+const RecordTitleContainer = styled.h3`
+    margin-bottom: ${spacing1};
+`;
+const RecordTitleTextContainer = styled.span``;
+
+const TimeAndLocationContainer = styled.h4`
+    margin-left: ${spacing4};
+`;
+
+const RecordContentContainer = styled.p`
+    margin: 0 ${spacing4};
+`;
+
+const RecordTextContainer = styled.p``;

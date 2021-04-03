@@ -1,102 +1,126 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { History, LocationState, Location } from 'history';
-import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { Switch, withRouter } from "react-router-dom";
+import styled from 'styled-components';
+import { bgTransitionTime, GlobalStyling } from "./utils/globalStyling";
+import Page from "./pages/pages";
+import Title from "./components/title";
+import Footer from "./components/footer";
+import { containerStyling } from "./utils/colours";
+import { ifLarge, mainContainerSizeSettings, spacing2, spacing3 } from "./utils/dimensions";
+import { homePage } from "./pages/home";
+import { notFoundPage } from "./pages/notFound";
+import { projectsPage } from "./pages/projects";
+import { cvPage } from "./pages/cv";
+import { studyPage } from "./pages/study";
+import { discordPage } from "./pages/discord";
+import { specsPage } from "./pages/specs";
+import { githubPage } from "./pages/external";
 
-import { PageInfo, createExternalPageInfo } from "./utils/pageInfo";
+const pages : Array<Page> = [
+    homePage,
+    projectsPage,
+    cvPage,
+    studyPage,
+    githubPage,
+    discordPage,
+    specsPage,
 
-import { cvPageInfo } from "./components/CV";
-import { discordPageInfo } from "./components/Discord";
-import { homePageInfo } from "./components/Home";
-import { notFoundPageInfo } from "./components/NotFound";
-import { projectsPageInfo } from "./components/Projects";
-import { specsPageInfo } from "./components/Specs";
-import { studyPageInfo } from "./components/Study";
-
-const githubPageInfo : PageInfo = createExternalPageInfo("GitHub", "https://github.com/Fluxanoia") 
-const pageInfos : Array<PageInfo> = [
-    homePageInfo,
-    projectsPageInfo,
-    cvPageInfo,
-    studyPageInfo,
-    specsPageInfo,
-    discordPageInfo,
-    notFoundPageInfo,
-    githubPageInfo,
+    notFoundPage,
 ];
+const getNotFoundIndex = () => pages.findIndex(p => p.isNotFound());
+const getCurrentIndex = (link : string) => {
+    let currentPageIndex = pages.findIndex(p => p.hasLink(link));
+    return (currentPageIndex < 0) ? getNotFoundIndex() : currentPageIndex;
+};
 
 type AppProps = {
     history  : History<LocationState>,
     location : Location<LocationState>;
 }
 const App = (props : AppProps) => {
-    const getNotFoundPageIndex : (() => number) = useCallback(
-        () => { 
-            return pageInfos.findIndex((pageInfo : PageInfo) => pageInfo.notFound);
-        }, []);
-    const getCurrentPageIndex : (() => number) = useCallback(
-        () => {
-            let currentPageIndex = pageInfos.findIndex(
-                (pageInfo : PageInfo) => pageInfo.link === props.location.pathname);
-            return (currentPageIndex < 0) ? getNotFoundPageIndex() : currentPageIndex;
-        }, [props, getNotFoundPageIndex]);
-    const [pageIndex, setPageIndex] = useState<number>(getCurrentPageIndex());
+    const [pageIndex, setPageIndex] = useState<number>(getCurrentIndex(props.location.pathname));
 
     useEffect(() => {
-        let currentPageIndex = getCurrentPageIndex();
-        document.title = "Fluxanoia | " + pageInfos[currentPageIndex].name;
+        let currentPageIndex = getCurrentIndex(props.location.pathname);
+        document.title = "Fluxanoia | " + pages[currentPageIndex].getName();
         setPageIndex(currentPageIndex);
-    }, [pageIndex, getCurrentPageIndex]);
+    }, [props, pageIndex]);
 
-    const renderTitle = () => {
-        const currentPage : PageInfo = pageInfos[pageIndex];
-        return (<Link className="title" to="/">
-            { (currentPage.onNavbar || currentPage.notFound) ? "Fluxanoia" : currentPage.name }
-        </Link>);
-    };
-    const renderNavbarButton = (pageInfo : PageInfo, index : number) => {
-        if (!pageInfo.onNavbar) console.error("Rendering as navbar button illegally.")
-        const key = "link-" + pageInfo.name;
-        let className = "navbar-item";
-        if (pageInfo.local) {
-            className += (pageIndex === index) ? " force-hover" : "";
-            return (<Link key={ key } className={ className } to={ pageInfo.link }>
-                { pageInfo.name }
-            </Link>);
-        } else {
-            return (<a key={ key } className={ className } href={ pageInfo.link }>
-                { pageInfo.name }
-            </a>);
-        }
+    const renderNavbarButton = (page : Page, index : number) => {
+        if (!page.isOnNavbar) console.error("Rendering as navbar button illegally.")
+        return page.getButton(pageIndex === index);
     }
-    const renderRoute = (pageInfo : PageInfo) => {
-        if (!pageInfo.local) console.error("Rendering external route.")
-        const key = "route-" + pageInfo.name;
-        if (pageInfo.notFound) return <Route key={ key } component={ pageInfo.component } />;
-        return <Route
-            key={ key }
-            path={ pageInfo.link }
-            exact={ pageInfo.home }
-            component={ pageInfo.component } />;
+    const renderRoute = (page : Page) => {
+        if (!page.isLocal()) console.error("Rendering external route.")
+        return page.getRoute();
     }
 
-    const navbarInfos = pageInfos.filter((pageInfo : PageInfo) => pageInfo.onNavbar);
-    const routeInfos = pageInfos.filter((pageInfo : PageInfo) => pageInfo.local);
+    const accentColour = pages[pageIndex].getColour();
+    const navbarButtons = pages.filter((page : Page) => page.isOnNavbar()).map(renderNavbarButton);
+    const routes = pages.filter((page : Page) => page.isLocal()).map(renderRoute);
     return (
-        <div className={ `app ` + pageInfos[pageIndex].tag }>
-            { renderTitle() }
-            <div className="navbar">
-                { navbarInfos.map(renderNavbarButton) }
-            </div>
-            <div className="main-container p-3 my-2">
+        <AppContainer>
+            <GlobalStyling bgColour={ accentColour } />
+            <Title page={ pages[pageIndex] } />
+            <Navbar>
+                { navbarButtons }
+            </Navbar>
+            <MainContainer accentColour={ accentColour }>
                 <Switch>
-                    { routeInfos.map(renderRoute) }
+                    { routes }
                 </Switch>
-            </div> 
-            <div className="vertical-fill"></div>
-            <div className="main-container text-center mb-2">
-                Copyright © 2021 Fluxanoia 
-            </div> 
-        </div>
+            </MainContainer> 
+            <Spacer />
+            <Footer />
+        </AppContainer>
     );
 }
 export default withRouter(App);
+
+const AppContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+`;
+
+const Navbar = styled.nav`
+    ${mainContainerSizeSettings}
+    ${ifLarge} {
+        width: 90%;
+    }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    div {
+        flex: 1 0 0;
+    }
+
+    ${ifLarge} {
+        flex-direction: row;
+    }
+`;
+
+const MainContainer = styled.div<{ accentColour : string }>`
+    ${containerStyling}
+    ${mainContainerSizeSettings}
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    padding: ${spacing3};
+    margin-top: ${spacing2};
+    margin-bottom: ${spacing2};
+
+    a, .accent {
+        color: ${props => props.accentColour};
+        transition: color ${bgTransitionTime};
+    }
+`;
+
+const Spacer = styled.div`
+    flex-grow: 1;
+`;
