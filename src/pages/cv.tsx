@@ -54,7 +54,7 @@ export default function Cv() {
             
             { renderRecord(
                 `Software Developer Intern`,
-                `Ghyston, March 2021`,
+                `Ghyston, Mar 2021`,
                 `I spent a week at Ghyston, working on issues with their website. I fixed
                 bugs in Internet Explorer 11 and prototyped a smart header to assist
                 navigation on longer pages.`
@@ -141,7 +141,7 @@ export default function Cv() {
 
             { renderRecord(
                 `King's College London Maths School (KCLMS)`,
-                `Sep 2016 to June 2018`,
+                `Sep 2016 to Jun 2018`,
                 `I left KCLMS with the following qualifications:`,
                 <BulletedContainer>
                     { bulleted(`A* in MEI Maths (A2)`) }
