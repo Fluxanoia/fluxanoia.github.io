@@ -16,6 +16,7 @@ import { studyPage } from "./pages/study";
 import { discordPage } from "./pages/discord";
 import { specsPage } from "./pages/specs";
 import { githubPage } from "./pages/external";
+import { teelaiPage } from "./pages/teelai";
 
 const pages : Array<Page> = [
     homePage,
@@ -24,6 +25,7 @@ const pages : Array<Page> = [
     studyPage,
     githubPage,
     discordPage,
+    teelaiPage,
     specsPage,
 
     notFoundPage,
