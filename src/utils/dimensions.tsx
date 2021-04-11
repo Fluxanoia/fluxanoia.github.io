@@ -6,6 +6,12 @@ export const spacing2 = '16px';
 export const spacing3 = '24px';
 export const spacing4 = '32px';
 
+export const cvSpacing0 = '0.5mm';
+export const cvSpacing1 = '1mm';
+export const cvSpacing2 = '2mm';
+export const cvSpacing3 = '4mm';
+export const cvSpacing4 = '8mm';
+
 export const ifSmall = '@media (max-width: 768px)';
 export const ifLarge = '@media (min-width: 768px)';
 

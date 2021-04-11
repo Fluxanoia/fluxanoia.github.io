@@ -12,3 +12,7 @@ export const containerStyling = `
 export const defaultBgColour = '#9c9c9c';
 
 export const textColour = '#FFFFFF';
+
+export const cvColour1 = '#e2387c';
+export const cvColour2 = '#661d3a';
+export const cvTextColour = '#333333';

@@ -22,7 +22,7 @@ export default function Button(props : ButtonProps) {
         );
     } else {
         return (
-            <a style={ linkStyling } href={ props.href }>
+            <a style={ linkStyling } target="_blank" rel="noopener noreferrer" href={ props.href }>
                 { button }
             </a>
         );

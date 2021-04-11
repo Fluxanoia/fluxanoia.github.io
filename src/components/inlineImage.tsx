@@ -19,7 +19,7 @@ export default function InlineImage({ path, alt, side } : InlineImageProps) {
 const smallWidth = `200px`;
 const largeWidth = `250px`;
 
-const ImageContainer = styled.div<{ side : Side }>`
+const ImageContainer = styled.span<{ side : Side }>`
     float: ${props => props.side};
 
     width: ${smallWidth};

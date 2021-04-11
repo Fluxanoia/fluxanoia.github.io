@@ -1,10 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import SectionTitle from "../components/sectionTitle";
-import { spacing1, spacing2, spacing4 } from "../utils/dimensions";
-import Page from "./pages";
-
-const cvUrl : string = "https://github.com/Fluxanoia/Curriculum-Vitae/raw/master/Curriculum%20Vitae/main.pdf";
+import SectionTitle from "../../components/sectionTitle";
+import { spacing1, spacing2, spacing4 } from "../../utils/dimensions";
+import Page from "../pages";
+import { cvFilePath } from "./cvPdf";
 
 export const cvPage : Page = new Page(Cv, {
     accentColour: "#ca89ff",
@@ -44,8 +44,9 @@ export default function Cv() {
     return (
         <>
             <PreambleContainer>
-                My CV is available <a href={ cvUrl }>here</a>. However, I can't fit all my
-                education and experience on it - so I have added it all below for those interested.
+                My CV is available to view and download <Link to={ cvFilePath }>here</Link>.
+                However, I can't fit all my education and experience on it, so I have added it all
+                below for those interested.
                 <br /><br />
                 References are available upon request.
             </PreambleContainer>
@@ -55,9 +56,9 @@ export default function Cv() {
             { renderRecord(
                 `Software Developer Intern`,
                 `Ghyston, Mar 2021`,
-                `I spent a week at Ghyston, working on issues with their website. I fixed
-                bugs in Internet Explorer 11 and prototyped a smart header to assist
-                navigation on longer pages.`
+                `I worked on issues with Ghyston's website, fixing bugs with
+                Internet Explorer 11 and prototyping a smart header to assist navigation on
+                longer pages.`
             ) }
 
             { renderRecord(
@@ -173,7 +174,7 @@ const TimeAndLocationContainer = styled.h4`
     margin-left: ${spacing4};
 `;
 
-const RecordContentContainer = styled.p`
+const RecordContentContainer = styled.div`
     margin: 0 ${spacing4};
 `;
 

@@ -11,12 +11,12 @@ import { ifLarge, mainContainerSizeSettings, spacing2, spacing3 } from "./utils/
 import { homePage } from "./pages/home";
 import { notFoundPage } from "./pages/notFound";
 import { projectsPage } from "./pages/projects";
-import { cvPage } from "./pages/cv";
+import { cvPage } from "./pages/cv/cvPage";
 import { studyPage } from "./pages/study";
 import { discordPage } from "./pages/discord";
 import { specsPage } from "./pages/specs";
 import { githubPage } from "./pages/external";
-import { teelaiPage } from "./pages/teelai";
+import { cvPdfPage } from "./pages/cv/cvPdf";
 
 const pages : Array<Page> = [
     homePage,
@@ -25,8 +25,9 @@ const pages : Array<Page> = [
     studyPage,
     githubPage,
     discordPage,
-    teelaiPage,
     specsPage,
+
+    cvPdfPage,
 
     notFoundPage,
 ];
@@ -58,9 +59,13 @@ const App = (props : AppProps) => {
         return page.getRoute();
     }
 
+    const routes = pages.filter((page : Page) => page.isLocal()).map(renderRoute);
+    if (pages[pageIndex].isIndependent()) {
+        return (<Switch>{ routes }</Switch>);
+    }
+
     const accentColour = pages[pageIndex].getColour();
     const navbarButtons = pages.filter((page : Page) => page.isOnNavbar()).map(renderNavbarButton);
-    const routes = pages.filter((page : Page) => page.isLocal()).map(renderRoute);
     return (
         <AppContainer>
             <GlobalStyling bgColour={ accentColour } />
@@ -117,7 +122,7 @@ const MainContainer = styled.div<{ accentColour : string }>`
     margin-top: ${spacing2};
     margin-bottom: ${spacing2};
 
-    a, .accent {
+    a, .a, .accent {
         color: ${props => props.accentColour};
         transition: color ${bgTransitionTime};
     }

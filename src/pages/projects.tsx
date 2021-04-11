@@ -38,8 +38,9 @@ export default function Projects() {
         <>
             { renderProject(
                 `Helix`, 
-                `This is a graphing software, built for education as
-                part of my final-year project. It is being written in Python.`
+                `This is a graphing tool built for education as part of my final-year
+                project. It is written in Python using matplotlib and sympy
+                for plotting and mathematical processing.`
             ) }
 
             { renderProject(

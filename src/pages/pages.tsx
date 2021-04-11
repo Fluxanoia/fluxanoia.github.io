@@ -22,7 +22,8 @@ type PageProps = {
     link? : string,
 
     local? : boolean,
-
+    independent? : boolean,
+    
     onNavbar? : boolean,
     home? : boolean,
     notFound? : boolean,
@@ -35,6 +36,7 @@ export default class Page {
         this.component = component;
         props.accentColour = props.accentColour ?? defaultBgColour;
         props.local = props.local ?? true;
+        props.independent = props.independent ?? false;
         props.onNavbar = props.onNavbar ?? false;
         props.home = props.home ?? false;
         props.notFound = props.notFound ?? false;
@@ -57,7 +59,7 @@ export default class Page {
         return <Route
             key={ key }
             path={ this.props.link }
-            exact={ this.props.home }
+            exact
             component={ this.component } />;
     }
     
@@ -70,6 +72,7 @@ export default class Page {
     public isOnNavbar() { return this.props.onNavbar; }
     public isHome() { return this.props.home; }
     public isNotFound() { return this.props.notFound; }
+    public isIndependent() { return this.props.independent; }
 };
 
 const ButtonContainer = styled.div`
