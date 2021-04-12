@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineGithub } from "react-icons/ai";
+import { AiOutlineGithub, AiFillPhone } from "react-icons/ai";
 import { BiGlobe } from "react-icons/bi";
 import { SiMailDotRu } from "react-icons/si";
 import { FiMapPin } from "react-icons/fi";
@@ -35,6 +35,7 @@ export default function CvHeader() {
             <LinksContainer>
                 { createLink(<BiGlobe />, "fluxanoia.co.uk") }
                 { createLink(<SiMailDotRu />, "contact@fluxanoia.co.uk") }
+                { createLink(<AiFillPhone />, "+447468 417 670", true) }
                 { createLink(<AiOutlineGithub />, "github.com/Fluxanoia") }
                 { createLink(<FiMapPin />, "Bristol and London, UK", true) }
             </LinksContainer>
