@@ -13,16 +13,23 @@ export default function Helix() {
                 Thank you for taking interest in the study!
                 <br /><br />
                 The task for the study is available {
-                    createPdfLink("res/Task.pdf", " here") 
+                    createPdfLink("res/Task.pdf", "here") 
                 }, once you are done please fill out the { surveyLink() }.
                 <br /><br />
                 You can download Helix for 64-bit Windows { windowsLink() }, for other operating
                 systems, please see the instructions on the { otherOsLink() }.
                 <br /><br />
                 More detailed information about the study is available on 
-                the { githubLink() } repo and on the participation sheet { 
+                the { githubLink() } repository and on the participation sheet { 
                     createPdfLink("res/ParticipationInformation.pdf", " here") 
                 }, and you are welcome to send any questions you have to { emailLink() }.
+                <br /><br />
+                If you wish to be contacted with a link to the paper once it is finished,
+                contact me at { emailLink() } and I will add you to the mailing list. This
+                abides by the data policies in the {
+                    createPdfLink("res/ParticipationInformation.pdf",
+                        "Participation Information sheet")
+                }.
             </p>
         </div>
     );
