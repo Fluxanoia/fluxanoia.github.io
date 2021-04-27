@@ -6,7 +6,7 @@ import Page from "./pages";
 export const notFoundPage : Page = new Page(NotFound, {
     accentColour: "#9c9c9c",
 
-    name: "NotFound",
+    name: "Not Found",
     link: "",
 
     notFound: true,

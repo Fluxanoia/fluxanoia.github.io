@@ -14,7 +14,7 @@ const playlistWidget = `
 `;
 
 export const teelaiPage : Page = new Page(Teelai, {
-    accentColour: "#E05263",
+    accentColour: "#FF74D9",
     name: "Teelai",
 });
 export default function Teelai() {

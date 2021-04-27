@@ -17,6 +17,7 @@ import { discordPage } from "./pages/discord";
 import { specsPage } from "./pages/specs";
 import { githubPage } from "./pages/external";
 import { cvPdfPage } from "./pages/cv/cvPdf";
+import { teelaiPage } from "./pages/teelai";
 
 const pages : Array<Page> = [
     homePage,
@@ -26,6 +27,7 @@ const pages : Array<Page> = [
     githubPage,
     discordPage,
     specsPage,
+    teelaiPage,
 
     cvPdfPage,
 
