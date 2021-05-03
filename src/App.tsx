@@ -12,7 +12,6 @@ import { homePage } from "./pages/home";
 import { notFoundPage } from "./pages/notFound";
 import { projectsPage } from "./pages/projects";
 import { cvPage } from "./pages/cv/cvPage";
-import { helixPage } from "./pages/helix";
 import { discordPage } from "./pages/discord";
 import { specsPage } from "./pages/specs";
 import { githubPage } from "./pages/external";
@@ -23,7 +22,6 @@ const pages : Array<Page> = [
     homePage,
     projectsPage,
     cvPage,
-    helixPage,
     githubPage,
     discordPage,
     specsPage,

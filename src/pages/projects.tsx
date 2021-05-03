@@ -4,6 +4,8 @@ import SectionTitle from "../components/sectionTitle";
 import { spacing2 } from "../utils/dimensions";
 import Page from "./pages";
 
+const helixUrl = `https://github.com/Fluxanoia/Helix`;
+
 const cardmasterWidget = `
     <iframe frameborder="0" src="https://itch.io/embed/718461?dark=true" width="552" height="167">
         <a href="https://fluxanoia.itch.io/cardmaster">
@@ -38,9 +40,17 @@ export default function Projects() {
         <>
             { renderProject(
                 `Helix`, 
-                `This is a graphing tool built for education as part of my final-year
-                project. It is written in Python using matplotlib and sympy
-                for plotting and mathematical processing.`
+                <>
+                    {
+                        `This is a graphing tool built for education as part of my final-year
+                        project. It is written in Python using matplotlib and sympy
+                        for plotting and mathematical processing. It can be found on my `
+                    }
+                    <a href={ helixUrl }>GitHub</a>
+                    {
+                        `.`
+                    } 
+                </>
             ) }
 
             { renderProject(
@@ -70,7 +80,11 @@ export default function Projects() {
     );
 }
 
-const renderProject = (title : string, text : string, children? : React.ReactNode) => (
+const renderProject = (
+    title : string,
+    text : string | JSX.Element,
+    children? : React.ReactNode
+) => (
     <ProjectContainer>
         <SectionTitle accent>
             { title }
