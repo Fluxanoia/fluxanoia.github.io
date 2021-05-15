@@ -5,6 +5,7 @@ export const spacing1 = '8px';
 export const spacing2 = '16px';
 export const spacing3 = '24px';
 export const spacing4 = '32px';
+export const spacing5 = '64px';
 
 export const cvSpacing0 = '0.5mm';
 export const cvSpacing1 = '1mm';

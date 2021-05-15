@@ -6,6 +6,7 @@ import { SpotifyAuth, Scopes } from "react-spotify-auth";
 import { spacing2 } from "../utils/dimensions";
 import Page from "./pages";
 import Button from "../components/button";
+import FluxifyApp from "../components/fluxify/fluxifyApp";
 
 const spotifyCookieName = "spotifyAuthToken";
 const scopes = [
@@ -37,9 +38,7 @@ export default function Fluxify() {
         setFoundToken(undefined);
     }
 
-    console.log(cookieToken);
     const token = cookieToken ?? foundToken;
-
     const hasWindow = typeof window !== "undefined";
     const redirectUri = hasWindow ? window.location.href : "https://fluxanoia.co.uk/fluxify";
     return (
@@ -48,9 +47,7 @@ export default function Fluxify() {
             <SpotifyApiContext.Provider value={ token }>
                 {
                     <>
-                        <TextContainer>
-                            You're logged in!
-                        </TextContainer>
+                        <FluxifyApp />
                         <ButtonContainer key={ "spotify-log-out" }>
                             <Button href={ `/fluxify` } onClick={ logOut }>
                                 { "Log-out" }
