@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { defaultBgColour, textColour } from "./colours";
+import { containerColour, containerStyling, defaultBgColour, textColour } from "./colours";
 import { ifLarge, spacing2 } from "./dimensions";
 import { normalise } from "./normalise";
 
@@ -12,6 +12,26 @@ export const mainFontSettings = `
     font-family: ${mainFont}, sans-serif;
     font-weight: 700;
     line-height: 1.5;
+`;
+
+export const buttonHoverStyling = `
+    color: ${containerColour};
+    background-color: ${textColour};
+`;
+export const buttonStyling = `
+    ${containerStyling}
+    ${mainFontSettings}
+
+    display: block;
+    width: 100%;
+    color: ${textColour};
+    background-color: ${containerColour};
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        ${buttonHoverStyling}
+    }
 `;
 
 export const bgTransitionTime = `1s`;
@@ -31,6 +51,10 @@ export const GlobalStyling = createGlobalStyle<{ bgColour? : string }>`
     body {
         background-color: ${props => props.bgColour ?? defaultBgColour};
         transition: background-color ${bgTransitionTime};
+    }
+
+    button {
+        ${buttonStyling}
     }
 
     h1, h2, h3, h4, h5, h6, p {

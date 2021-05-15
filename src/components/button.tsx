@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { containerColour, containerStyling, textColour } from "../utils/colours";
+import { buttonHoverStyling } from "../utils/globalStyling";
 
 type ButtonProps = {
     href : string;
     forceHover? : boolean;
+    onClick? : () => void;
     children? : React.ReactNode;
 }
 export default function Button(props : ButtonProps) {
@@ -16,13 +17,19 @@ export default function Button(props : ButtonProps) {
     );
     if (props.href.startsWith(`/`)) {
         return (
-            <Link style={ linkStyling } to={ props.href }>
+            <Link style={ linkStyling } to={ props.href } onClick={ props.onClick }>
                 { button }
             </Link>
         );
     } else {
         return (
-            <a style={ linkStyling } target="_blank" rel="noopener noreferrer" href={ props.href }>
+            <a
+                style={ linkStyling }
+                target="_blank"
+                rel="noopener noreferrer"
+                href={ props.href }
+                onClick={ props.onClick }
+            >
                 { button }
             </a>
         );
@@ -34,20 +41,6 @@ const linkStyling = {
     cursor: 'auto',
 };
 
-const hoverStyling = `
-    color: ${containerColour};
-    background-color: ${textColour};
-    cursor: pointer;
-`;
-const ButtonContainer = styled.div<{ forceHover : boolean }>`
-    ${containerStyling}
-
-    color: ${textColour};
-    background-color: ${containerColour};
-    text-align: center;
-    
-    &:hover {
-        ${hoverStyling}
-    }
-    ${props => props.forceHover ? hoverStyling : ``}
+const ButtonContainer = styled.button<{ forceHover : boolean }>`
+    ${props => props.forceHover ? buttonHoverStyling : ``}
 `;

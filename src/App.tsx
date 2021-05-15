@@ -17,6 +17,7 @@ import { specsPage } from "./pages/specs";
 import { githubPage } from "./pages/external";
 import { cvPdfPage } from "./pages/cv/cvPdf";
 import { teelaiPage } from "./pages/teelai";
+import { fluxifyPage } from "./pages/fluxify";
 
 const pages : Array<Page> = [
     homePage,
@@ -28,6 +29,8 @@ const pages : Array<Page> = [
     teelaiPage,
 
     cvPdfPage,
+
+    fluxifyPage,
 
     notFoundPage,
 ];
