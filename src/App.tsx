@@ -15,7 +15,7 @@ import { cvPage } from "./pages/cv/cvPage";
 import { discordPage } from "./pages/discord";
 import { specsPage } from "./pages/specs";
 import { githubPage } from "./pages/external";
-import { cvPdfPage } from "./pages/cv/cvPdf";
+import { cvTyler } from "./pages/cv/cvTyler";
 import { teelaiPage } from "./pages/teelai";
 import { fluxifyPage } from "./pages/fluxify";
 
@@ -28,7 +28,7 @@ const pages : Array<Page> = [
     specsPage,
     teelaiPage,
 
-    cvPdfPage,
+    cvTyler,
 
     fluxifyPage,
 

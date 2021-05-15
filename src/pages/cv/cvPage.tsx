@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SectionTitle from "../../components/sectionTitle";
 import { spacing1, spacing2, spacing4 } from "../../utils/dimensions";
 import Page from "../pages";
-import { cvFilePath } from "./cvPdf";
+import { cvFilePath } from "./cvTyler";
 
 export const cvPage : Page = new Page(Cv, {
     accentColour: "#ca89ff",

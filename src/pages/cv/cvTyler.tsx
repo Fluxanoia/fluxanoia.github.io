@@ -12,8 +12,8 @@ import { cvSpacing2, cvSpacing3, spacing1, spacing2 } from "../../utils/dimensio
 import CvTitle from "../../components/cv/cvTitle";
 import { Link } from "react-router-dom";
 
-export const cvFilePath = "/cv/pdf";
-export const cvPdfPage : Page = new Page(CvPdf, {
+export const cvFilePath = "/cv/tyler";
+export const cvTyler : Page = new Page(CvPdf, {
     name: "CV",
     link: cvFilePath,
     independent: true,
