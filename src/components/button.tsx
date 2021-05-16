@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { buttonHoverStyling } from "../utils/globalStyling";
 
 type ButtonProps = {
-    href : string;
+    href : string | undefined;
     forceHover? : boolean;
+    newTab? : boolean;
     onClick? : () => void;
     children? : React.ReactNode;
 }
@@ -15,7 +16,7 @@ export default function Button(props : ButtonProps) {
             { props.children }
         </ButtonContainer>
     );
-    if (props.href.startsWith(`/`)) {
+    if (props.href && props.href.startsWith(`/`)) {
         return (
             <Link style={ linkStyling } to={ props.href } onClick={ props.onClick }>
                 { button }
@@ -25,7 +26,7 @@ export default function Button(props : ButtonProps) {
         return (
             <a
                 style={ linkStyling }
-                target="_blank"
+                target={ props.newTab ? "_blank" : "_self" }
                 rel="noopener noreferrer"
                 href={ props.href }
                 onClick={ props.onClick }

@@ -3,3 +3,4 @@
 /src/*.d.ts
 /.yarn
 /.vscode
+*.env

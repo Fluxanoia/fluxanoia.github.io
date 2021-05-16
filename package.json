@@ -8,7 +8,6 @@
   "repository": "https://github.com/Fluxanoia/fluxanoia.github.io.git",
   "license": "SEE LICENSE IN license.md",
   "dependencies": {
-    "@types/js-cookie": "^2.2.6",
     "bootstrap": "^4.3.1",
     "gh-pages": "^3.1.0",
     "jquery": ">=3.5.0",
@@ -26,15 +25,15 @@
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
-    "react-spotify-api": "^3.0.0",
-    "react-spotify-auth": "^1.3.3",
     "react-to-pdf": "^0.0.13",
     "reactstrap": "^8.0.0",
     "rimraf": "^2.6.2",
+    "spotify-api.js": "^8.0.0",
     "styled-components": "^5.2.3",
     "typescript": "^3.5.2"
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.135",
     "@types/node": "^12.0.12",
     "@types/react": "^16.8.23",

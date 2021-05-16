@@ -14,7 +14,6 @@ export const externalPage = (name : string, link : string) => {
     })
 }
 
-
 type PageProps = {
     accentColour? : string;
     
