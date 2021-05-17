@@ -1,10 +1,7 @@
 import Cookies from "js-cookie";
 import { parse } from "query-string";
-import React, { useState } from "react";
-import Button from "../button";
+import { useState } from "react";
 
-const spotifyCookieId = "spotifyAuthToken";
-const accessTokenId = "access_token";
 const scopes = [
     `playlist-modify-public`,
     `playlist-read-private`,
@@ -18,7 +15,7 @@ const scopes = [
 export const getRedirect = (w : Window) => {
     return (typeof w !== "undefined") ? w.location.href : "https://fluxanoia.co.uk/fluxify";
 }
-const getAuthUrl = (w : Window) => {
+export const getAuthUrl = (w : Window) => {
     return (
         `https://accounts.spotify.com/authorize?response_type=token` +
         `&client_id=${process.env.REACT_APP_SPOTIFY_PUBLIC}` +
@@ -28,7 +25,7 @@ const getAuthUrl = (w : Window) => {
     )
 }
 
-const removeHash = (w : Window) => {
+export const removeHash = (w : Window) => {
     if (typeof w !== "undefined") {
         var scroll_v, scroll_h, loc = w.location;
         if ("pushState" in w.history)
@@ -44,46 +41,41 @@ const removeHash = (w : Window) => {
 }
 
 const getHashToken = (w : Window) => {
-    if (typeof w !== "undefined") {
+    const cookie = process.env.REACT_APP_SPOTIFY_COOKIE;
+    const accessTokenName = process.env.REACT_APP_SPOTIFY_ACCESS_TOKEN_KEY;
+    if (typeof w !== "undefined" && cookie && accessTokenName) {
         const hash = parse(w.location.hash);
-        if (accessTokenId in hash) {
-            const data = hash[accessTokenId];
+        if (accessTokenName in hash) {
+            const data = hash[accessTokenName];
             if (data && !(data instanceof Array)) {
-                Cookies.remove(spotifyCookieId);
-                Cookies.set(spotifyCookieId, data);
+                Cookies.remove(cookie);
+                Cookies.set(cookie, data);
                 return data;
             }
         }
     }
     return null;
 };
-const getCookieToken = () => {
-    return Cookies.get(spotifyCookieId) ?? null;
+export const getCookieToken = () => {
+    const cookie = process.env.REACT_APP_SPOTIFY_COOKIE;
+    return cookie ? Cookies.get(cookie) ?? null : null;
 };
 
-export default function useSpotifyAuth(logoutCallback : () => void) 
-    : [string | null, () => void, JSX.Element, JSX.Element] {
+export default function useSpotifyAuth() 
+    : [string | null, () => void, React.Dispatch<React.SetStateAction<(() => void)[]>>] {
     const [hashToken, setHashToken] = useState(getHashToken(window));
     const [cookieToken, setCookieToken] = useState(getCookieToken());
+    const [logoutCallbacks, setLogoutCallbacks] = useState<Array<() => void>>([]);
+
+    removeHash(window);
 
     const logout = () => {
-        Cookies.remove(spotifyCookieId);
-        removeHash(window);
+        const cookie = process.env.REACT_APP_SPOTIFY_COOKIE;
+        if (cookie) Cookies.remove(cookie);
         setHashToken(getHashToken(window));
         setCookieToken(getCookieToken());
-        logoutCallback();
+        for (const f of logoutCallbacks) f();
     }
 
-    const loginButton = (
-        <Button href={ getAuthUrl(window) }>
-            Log-in with Spotify
-        </Button>        
-    );
-    const logoutButton = (
-        <Button href={ undefined } onClick={ logout }>
-            { "Log-out" }
-        </Button>
-    );
-
-    return [hashToken ?? cookieToken, logout, loginButton, logoutButton];
+    return [hashToken ?? cookieToken, logout, setLogoutCallbacks];
 }
