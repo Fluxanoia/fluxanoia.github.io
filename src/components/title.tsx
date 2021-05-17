@@ -13,9 +13,11 @@ export default function Title({ page } : TitleProps) {
         titleText = page.getName();
     }
     return (
-        <TextContainer to="/">
-            { titleText }
-        </TextContainer>
+        <TitleContainer>
+            <TextContainer to="/">
+                { titleText }
+            </TextContainer>
+        </TitleContainer>
     );
 }
         
@@ -42,23 +44,22 @@ const getTitleShadow = () => {
     return shadows.map(s => s + ' 0 ' + colour).join();
 }
 
+const TitleContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+`;
 const TextContainer = styled(Link)`
-    display: block;
+    max-width: ${mainContainerWidth};
 
     text-shadow: ${getTitleShadow()};
 
     ${titleFontSettings}
-    font-size: 80px;
-    text-align: center;
-    word-wrap: break-word;
     text-decoration: none !important;
-
-    max-width: ${mainContainerWidth};
-    margin-left: auto;
-    margin-right: auto;
-
     color: ${textColour} !important;
 
+    font-size: 80px;
     ${ifLarge} {
         font-size: 100px;
     }

@@ -102,6 +102,7 @@ const renderProject = (
 const WidgetContainer = styled.div`
     display: flex;
     justify-content: center;
+    overflow: hidden;
     margin-bottom: ${spacing2};
 `;
 

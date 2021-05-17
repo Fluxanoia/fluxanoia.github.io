@@ -125,6 +125,8 @@ const MainContainer = styled.div<{ accentColour : string }>`
     margin-top: ${spacing2};
     margin-bottom: ${spacing2};
 
+    word-break: break-word;
+
     a, .a, .accent {
         color: ${props => props.accentColour};
         transition: color ${bgTransitionTime};

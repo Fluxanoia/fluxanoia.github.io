@@ -5,7 +5,7 @@ import { BsMusicNoteBeamed } from "react-icons/bs";
 import { containerColour, textColour } from "../../utils/colours";
 
 type ImageOptions = {
-    size? : string;
+    sizingCss? : string,
     rounded? : boolean,
 }
 export const getSpotifyImage = (images : Array<Image>, options? : ImageOptions) => {
@@ -22,8 +22,11 @@ export const getSpotifyImage = (images : Array<Image>, options? : ImageOptions) 
 }
 const getImageStyling = (options : ImageOptions) => {
     return (`
-        width: ${options.size ?? `64px`};
-        height: ${options.size ?? `64px`};
+        ${ options.sizingCss ?? `
+            width: 64px;
+            height: 64px;
+        ` }
+        
         ${ options.rounded ? `border-radius: 16px;` : `` }
     `);
 }

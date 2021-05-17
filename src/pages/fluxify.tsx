@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { ifSmall, spacing1, spacing2 } from "../utils/dimensions";
+import { ifSuperSmall, spacing2 } from "../utils/dimensions";
 import Page from "./pages";
-import { Playlist } from "spotify-api.js";
-import { textColour } from "../utils/colours";
 import useSpotifyAuth from "../hooks/spotifyAuthenticator";
 import useSpotifyPlaylists from "../hooks/spotifyPlaylists";
 import useSpotifyClient from "../hooks/spotifyClient";
 import { renderFluxifyLogin, renderFluxifyLogout } from "../components/fluxify/fluxifyButtons";
 import { renderFluxifyLoading } from "../components/fluxify/fluxifyLoading";
 import { getSpotifyImage } from "../components/fluxify/fluxifyImages";
+import FluxifyPlaylist from "../components/fluxify/fluxifyPlaylist";
 
 export const getFirstTruthy = <T,>(...list : Array<T | null>) => {
     for (const item of list) if (item) return item;
@@ -41,17 +40,6 @@ export default function Fluxify() {
         if (!client || !playlists) {
             return renderFluxifyLoading();
         }
-
-        const renderPlaylist = (playlist : Playlist) => {
-            return (
-                <PlaylistContainer key={ playlist.id }>
-                    { getSpotifyImage(playlist.images) }
-                    <PlaylistInfo>
-                        { playlist.name }
-                    </PlaylistInfo>
-                </PlaylistContainer>
-            );
-        }
         return (
             <>
                 <HeaderContainer>
@@ -63,7 +51,7 @@ export default function Fluxify() {
                     </TitleContainer>
                 </HeaderContainer>
                 <PlaylistsContainer>
-                    { playlists.map(renderPlaylist) }
+                    { playlists.map(FluxifyPlaylist) }
                 </PlaylistsContainer>
                 <ButtonContainer>
                     { renderFluxifyLogout(logout) }
@@ -114,39 +102,24 @@ const HeaderContainer = styled.div`
     display: flex;
     margin-bottom: ${spacing2};
 `;
-
 const UserImageContainer = styled.div`
     margin-right: ${spacing2};
-    ${ifSmall} {
+    ${ifSuperSmall} {
         display: none;
     }
 `;
-
 const TitleContainer = styled.h1`
     margin: 0px;
 `;
 
 const PlaylistsContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-bottom: ${spacing2};
 `;
 
-const PlaylistContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin-bottom: ${spacing1};
-    padding: ${spacing1};
-
-    border: 5px solid ${textColour};
-`;
-
-const PlaylistInfo = styled.div`
-    margin-left: ${spacing2};
-    flex-grow: 1;
-`;
-
-const ButtonContainer = styled.div`
-`;
-
+const ButtonContainer = styled.div``;
 const TextContainer = styled.p`
     text-align: center;
     margin-bottom: ${spacing2};

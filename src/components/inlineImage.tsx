@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components"
-import { ifLarge, spacing1, spacing3 } from "../utils/dimensions";
+import { ifLarge, ifSuperSmall, spacing1, spacing3 } from "../utils/dimensions";
 import { flip, Side } from "../utils/types";
 
 type InlineImageProps = {
@@ -19,22 +19,25 @@ export default function InlineImage({ path, alt, side } : InlineImageProps) {
 const smallWidth = `200px`;
 const largeWidth = `250px`;
 
-const ImageContainer = styled.span<{ side : Side }>`
-    float: ${props => props.side};
-
+const imageSizing = `
     width: ${smallWidth};
+    ${ifSuperSmall} {
+        width: 100%;
+    }
     ${ifLarge} {
         width: ${largeWidth};
     }
+`;
+const ImageContainer = styled.span<{ side : Side }>`
+    float: ${props => props.side};
+
+    ${imageSizing}
 
     margin-bottom: ${spacing1};
     margin-${props => flip(props.side)}: ${spacing3};
 
     img {
         border-radius: 16px;
-        width: ${smallWidth};
-        ${ifLarge} {
-            width: ${largeWidth};
-        }
+        ${imageSizing}
     }
 `;
