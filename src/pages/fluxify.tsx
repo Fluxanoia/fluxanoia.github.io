@@ -8,7 +8,7 @@ import useSpotifyClient from "../hooks/spotifyClient";
 import { renderFluxifyLogin, renderFluxifyLogout } from "../components/fluxify/fluxifyButtons";
 import { renderFluxifyLoading } from "../components/fluxify/fluxifyLoading";
 import { getSpotifyImage } from "../components/fluxify/fluxifyImages";
-import FluxifyPlaylist from "../components/fluxify/fluxifyPlaylist";
+import useFluxifyPlaylists from "../components/fluxify/fluxifyPlaylist";
 
 export const getFirstTruthy = <T,>(...list : Array<T | null>) => {
     for (const item of list) if (item) return item;
@@ -28,9 +28,8 @@ export default function Fluxify() {
         loadedPlaylists,
         errorPlaylists,
         resetPlaylists
-    ] = useSpotifyPlaylists(
-        token, logout, client
-    );
+    ] = useSpotifyPlaylists(token, logout, client);
+    const [playlistComponents, selectedPlaylists] = useFluxifyPlaylists(playlists, playlistData);
 
     useEffect(() => {
         setLogoutCallbacks([resetClient, resetPlaylists])
@@ -51,7 +50,7 @@ export default function Fluxify() {
                     </TitleContainer>
                 </HeaderContainer>
                 <PlaylistsContainer>
-                    { playlists.map(FluxifyPlaylist) }
+                    { playlistComponents }
                 </PlaylistsContainer>
                 <ButtonContainer>
                     { renderFluxifyLogout(logout) }

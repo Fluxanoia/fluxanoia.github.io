@@ -3,9 +3,10 @@ import Client, { Playlist, UnexpectedError } from "spotify-api.js";
 import { isLoaded, LoadingState } from "../utils/types";
 import useSpotifyErrorHandler from "./spotifyErrorHandler";
 
-type PlaylistData = { 
+export type PlaylistData = { 
     limit : number,
     offset : number,
+    total : number,
 }
 
 export default function useSpotifyPlaylists(
@@ -32,6 +33,7 @@ export default function useSpotifyPlaylists(
             setPlaylistData({
                 limit: data.limit,
                 offset: data.offset,
+                total: data.total,
             });
         } else {
             handleError(new UnexpectedError("Failed to load data."));
