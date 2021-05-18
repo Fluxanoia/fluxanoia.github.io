@@ -44,10 +44,10 @@ const createSection = (title : string, content : string | JSX.Element) => {
     );
 };
 
-const createIcons = (icons : Array<String>) => {
+const createIcons = (icons : Array<string>) => {
     return (
         <IconContainer>
-            { icons.map((i) => <Icon>{ i }</Icon>) }
+            { icons.map(i => <Icon key={ i }>{ i }</Icon>) }
         </IconContainer>
     );
 };
