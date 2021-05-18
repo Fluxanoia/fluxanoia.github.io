@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { getAuthUrl } from "../../../hooks/spotifyAuthenticator";
-import { spacing2 } from "../../../utils/dimensions";
-import Button from "../../button";
+import { getAuthUrl } from "../../hooks/spotifyAuthenticator";
+import { spacing2 } from "../../utils/dimensions";
+import Button from "../button";
 
 type FluxifyLoginProps = {
     window : Window,

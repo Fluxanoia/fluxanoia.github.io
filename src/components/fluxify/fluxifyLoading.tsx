@@ -1,9 +1,9 @@
 import React from "react";
 import { TailSpin } from "react-loading-icons";
 import styled from "styled-components";
-import { containerBorderColour } from "../../../utils/colours";
-import { spacing2 } from "../../../utils/dimensions";
-import { StyledProps } from "../../../utils/types";
+import { containerBorderColour } from "../../utils/colours";
+import { spacing2 } from "../../utils/dimensions";
+import { StyledProps } from "../../utils/types";
 
 export default function FluxifyLoading({ className } : StyledProps) {
     return (

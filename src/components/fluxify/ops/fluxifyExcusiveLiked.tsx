@@ -1,37 +1,58 @@
 import React from "react";
-import { Playlist } from "spotify-api.js";
 import styled from "styled-components";
+import useFluxifyPlaylists from "../../../hooks/fluxifyPlaylists";
+import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
 import { spacing2, ifSuperSmall, spacing1 } from "../../../utils/dimensions";
 import Button from "../../button";
 import Collapse from "../../collapse";
+import FluxifyLoading from "../fluxifyLoading";
+import FluxifyOp, { FluxifyOpProps } from "./fluxifyOp";
 
-type FluxifyExclusiveLikedProps = {
-    selectedPlaylists : Array<Playlist>,
-    playlistComponents : Array<JSX.Element>,
-    selectAll : () => void,
-    selectNone : () => void,
-}
+export const exclusiveLikedOp = new FluxifyOp(
+    `exclusiveLiked`,
+    `Find exclusive liked songs`,
+    FluxifyExclusiveLiked,
+);
 
 export default function FluxifyExclusiveLiked({
-    selectedPlaylists,
-    playlistComponents,
-    selectAll,
-    selectNone,
-} : FluxifyExclusiveLikedProps) {
-    return (
-        <CollapseContainer title="Select Playlists">
-            <SelectInfoContainer>
-                <SelectTextContainer>
-                    { `${selectedPlaylists.length} playlists selected` }
-                </SelectTextContainer>
-                <SelectButton key="selectAll" onClick={ selectAll }>{ `All` }</SelectButton>
-                <SelectButton key="selectNone" onClick={ selectNone }>{ `None` }</SelectButton>
-            </SelectInfoContainer>
-            <PlaylistsContainer>
-                { playlistComponents }
-            </PlaylistsContainer>
-        </CollapseContainer>
-    );
+    token,
+    client,
+    throwError,
+} : FluxifyOpProps) {
+    const [
+        playlists,
+        metadata,
+        loaded,
+        error,
+    ] = useSpotifyPlaylists(token, client);
+    const [
+        components,
+        selected,
+        selectAll,
+        selectNone,
+    ] = useFluxifyPlaylists(playlists, metadata);
+
+    if (error) {
+        throwError(error);
+        return <FluxifyLoading />;
+    } else if (loaded) {
+        return (
+            <CollapseContainer title="Select Playlists">
+                <SelectInfoContainer>
+                    <SelectTextContainer>
+                        { `${selected.length} playlists selected` }
+                    </SelectTextContainer>
+                    <SelectButton key="selectAll" onClick={ selectAll }>{ `All` }</SelectButton>
+                    <SelectButton key="selectNone" onClick={ selectNone }>{ `None` }</SelectButton>
+                </SelectInfoContainer>
+                <PlaylistsContainer>
+                    { components }
+                </PlaylistsContainer>
+            </CollapseContainer>
+        );
+    } else {
+        return <FluxifyLoading />;
+    }
 }
 
 const CollapseContainer = styled(Collapse)`

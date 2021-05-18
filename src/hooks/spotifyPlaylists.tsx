@@ -11,13 +11,12 @@ export type PlaylistData = {
 
 export default function useSpotifyPlaylists(
     token : string | null,
-    logout : () => void,
     client : Client | null,
 ) : [Array<Playlist> | null, PlaylistData | null, boolean, string | null, () => void] {
     const [loadState, setLoadState] = useState(LoadingState.NONE);
     const [playlists, setPlaylists] = useState<Array<Playlist> | null>(null);
     const [playlistData, setPlaylistData] = useState<PlaylistData | null>(null);
-    const [error, handleError, clearError] = useSpotifyErrorHandler(logout);
+    const [error, handleError, clearError] = useSpotifyErrorHandler();
 
     const reset = useCallback(() => {
         clearError();

@@ -61,11 +61,9 @@ export const getCookieToken = () => {
     return cookie ? Cookies.get(cookie) ?? null : null;
 };
 
-export default function useSpotifyAuth() 
-    : [string | null, () => void, React.Dispatch<React.SetStateAction<(() => void)[]>>] {
+export default function useSpotifyAuth() : [string | null, () => void] {
     const [hashToken, setHashToken] = useState(getHashToken(window));
     const [cookieToken, setCookieToken] = useState(getCookieToken());
-    const [logoutCallbacks, setLogoutCallbacks] = useState<Array<() => void>>([]);
 
     removeHash(window);
 
@@ -74,8 +72,7 @@ export default function useSpotifyAuth()
         if (cookie) Cookies.remove(cookie);
         setHashToken(getHashToken(window));
         setCookieToken(getCookieToken());
-        for (const f of logoutCallbacks) f();
     }
 
-    return [hashToken ?? cookieToken, logout, setLogoutCallbacks];
+    return [hashToken ?? cookieToken, logout];
 }

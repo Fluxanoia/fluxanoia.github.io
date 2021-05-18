@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { spacing2 } from "../../../utils/dimensions";
-import Button from "../../button";
+import { spacing2 } from "../../utils/dimensions";
+import Button from "../button";
 
 type FluxifyLogoutProps = {
     logout : () => void,
