@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { buttonHoverStyling } from "../utils/globalStyling";
 
 type ButtonProps = {
-    href : string | undefined;
+    href? : string;
     forceHover? : boolean;
     newTab? : boolean;
     onClick? : () => void;

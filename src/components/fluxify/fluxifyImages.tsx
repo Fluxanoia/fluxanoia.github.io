@@ -12,7 +12,7 @@ export const getSpotifyImage = (images : Array<Image>, options? : ImageOptions) 
     options = options ?? {};
     return (
         images.length === 0 ? (
-            <PseudoImageContainer {...options}>
+            <PseudoImageContainer className="img" {...options}>
                 <BsMusicNoteBeamed color={ containerColour } />
             </PseudoImageContainer>
         ) : (

@@ -12,7 +12,7 @@ export const cvSpacing2 = '2mm';
 export const cvSpacing3 = '4mm';
 export const cvSpacing4 = '8mm';
 
-export const ifSuperSmall = '@media (max-width: 400px)';
+export const ifSuperSmall = '@media (max-width: 500px)';
 export const ifSmall = '@media (max-width: 768px)';
 export const ifLarge = '@media (min-width: 768px)';
 

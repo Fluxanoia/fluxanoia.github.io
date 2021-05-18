@@ -1,41 +1,42 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { Playlist } from "spotify-api.js";
 import styled from "styled-components";
-import { PlaylistData } from "../../hooks/spotifyPlaylists";
 import { ifSmall, spacing1, spacing2 } from "../../utils/dimensions";
 import { getSpotifyImage } from "./fluxifyImages";
 
-export default function useFluxifyPlaylists(
-    playlists : Array<Playlist> | null,
-    playlistData : PlaylistData | null,
-) : [Array<JSX.Element>, Array<Playlist>] {
-    const [components, setComponents] = useState<Array<JSX.Element>>([]);
-    const [selected, setSelected] = useState<Array<string>>([]);
+const imageId = "image";
+const titleId = "title";
+const checkId = "check";
 
-    const isSelected = useCallback((checkId : string) => {
-        return selected.some((id : string) => checkId === id);
-    }, [selected]);
-    const updateSelected = useCallback((newId : string, isSelected : boolean) => {
-        if (isSelected) {
-            setSelected(selected.concat([newId]));
-        } else {
-            setSelected(selected.filter((id : string) => id !== newId));
-        }
-    }, [selected, setSelected]);
-
-    useEffect(() => {
-        setComponents((playlists ?? [])
-            .map((p : Playlist) => FluxifyPlaylist(p, isSelected(p.id), updateSelected)));
-    }, [playlists, setComponents, selected, isSelected, updateSelected])
-    
-    const selectedPlaylists = (playlists ?? []).filter((p : Playlist) => isSelected(p.id));
-    return [components, selectedPlaylists];
+export default function FluxifyPlaylist(
+    playlist : Playlist,
+    selected : boolean,
+    onClick : (id : string, selected : boolean) => void
+) {
+    return (
+        <PlaylistContainer 
+            key={ playlist.id }
+            onClick={ () => onClick(playlist.id, !selected) }
+        >
+            <LayerContainer>
+                <ImageLayer id={ imageId }>
+                    { getSpotifyImage(playlist.images) }
+                </ImageLayer>
+                <TitleLayer id={ titleId }>
+                    <Title>
+                        { playlist.name }
+                    </Title>
+                </TitleLayer>
+                <CheckLayer id={ checkId }>
+                    <Check selected={ selected }/>
+                </CheckLayer>
+            </LayerContainer>
+        </PlaylistContainer>
+    );
 }
 
-const imageId = "image";
-const infoId = "info";
-const sizing = `
+const Sized = styled.div`
     width: 150px;
     height: 150px;
     ${ifSmall} {
@@ -44,90 +45,74 @@ const sizing = `
     }
 `;
 
-const FluxifyPlaylist = (
-    playlist : Playlist,
-    selected : boolean,
-    onClick : (id : string, selected : boolean) => void
-) => {
-    return (
-        <PlaylistContainer 
-            key={ playlist.id }
-            onClick={ () => onClick(playlist.id, !selected) }
-        >
-            <ImageContainer id={ imageId }>
-                { getSpotifyImage(playlist.images, { sizingCss: sizing }) }
-            </ImageContainer>
-            <PlaylistTitleContainer id={ infoId }>
-                <PlaylistTitle>
-                    { playlist.name }
-                </PlaylistTitle>
-            </PlaylistTitleContainer>
-            <SelectCheckContainer selected={ selected }>
-                <SelectCheck />
-            </SelectCheckContainer>
-        </PlaylistContainer>
-    );
-}
-
-const PlaylistContainer = styled.div`
+const PlaylistContainer = styled(Sized)`
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    ${sizing}
     margin-left: ${spacing1};
     margin-right: ${spacing1};
     margin-bottom: ${spacing2};
     padding: ${spacing1};
 
     cursor: pointer;
-    overflow: hidden;
 
-    &:hover {
-        #${imageId} {
-            filter: brightness(30%) drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
-        }
-        
-        #${infoId} {
-            opacity: 1;
-        }
+    #${imageId} {
+        filter: none;
+        transition: filter 0.25s;
+    }
+    &:hover #${imageId} {
+        filter: brightness(30%) drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+    }
+    #${titleId} {
+        opacity: 0;
+        transition: opacity 0.25s;
+    }
+    &:hover #${titleId} {
+        opacity: 1;
     }
 `;
-const ImageContainer = styled.div`
-    ${sizing}
 
-    filter: none;
-    transition: filter 0.25s;
+const LayerContainer = styled(Sized)`
+    position: relative;
 `;
-
-const SelectCheckContainer = styled.div<{ selected : boolean }>`
-    display: ${props => props.selected ? `flex` : `none` };
-    justify-content: flex-end;
-
-    ${sizing}
-
+const Layer = styled(Sized)`
     position: absolute;
 `;
-const SelectCheck = styled(AiFillCheckCircle)`
-    margin-top: ${spacing1};
-    margin-right: ${spacing1};
-    
-    filter: drop-shadow(0px 0px 6px #000000);
+
+const ImageLayer = styled(Layer)`
+    img, .img {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
-const PlaylistTitleContainer = styled.div`
+const TitleLayer = styled(Layer)`
     display: flex;
     justify-content: center;
     align-items: center;    
-
-    ${sizing}
-
-    opacity: 0;
-    transition: opacity 0.25s;
-
-    position: absolute;
     overflow: hidden;
 `;
-const PlaylistTitle = styled.div`
+const Title = styled.div`
     text-align: center;
+`;
+
+const CheckLayer = styled(Layer)`
+    display: flex;
+    justify-content: flex-end;
+`;
+const Check = styled(AiFillCheckCircle)<{ selected : boolean }>`
+    margin-top: ${spacing1};
+    margin-right: ${spacing1};
+
+    ${props => props.selected ? `
+        opacity: 1;
+        transform: scale(1);
+    ` : `
+        opacity: 0;
+        transform: scale(1.5) rotate(180deg);
+    `}
+    transition: opacity 0.1s, transform 0.25s;
+    
+    filter: drop-shadow(0px 0px 6px #000000);
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { ifSuperSmall, spacing2 } from "../utils/dimensions";
+import { ifSuperSmall, spacing1, spacing2 } from "../utils/dimensions";
 import Page from "./pages";
 import useSpotifyAuth from "../hooks/spotifyAuthenticator";
 import useSpotifyPlaylists from "../hooks/spotifyPlaylists";
@@ -8,7 +8,9 @@ import useSpotifyClient from "../hooks/spotifyClient";
 import { renderFluxifyLogin, renderFluxifyLogout } from "../components/fluxify/fluxifyButtons";
 import { renderFluxifyLoading } from "../components/fluxify/fluxifyLoading";
 import { getSpotifyImage } from "../components/fluxify/fluxifyImages";
-import useFluxifyPlaylists from "../components/fluxify/fluxifyPlaylist";
+import Collapse from "../components/collapse";
+import useFluxifyPlaylists from "../hooks/fluxifyPlaylists";
+import Button from "../components/button";
 
 export const getFirstTruthy = <T,>(...list : Array<T | null>) => {
     for (const item of list) if (item) return item;
@@ -29,7 +31,12 @@ export default function Fluxify() {
         errorPlaylists,
         resetPlaylists
     ] = useSpotifyPlaylists(token, logout, client);
-    const [playlistComponents, selectedPlaylists] = useFluxifyPlaylists(playlists, playlistData);
+    const [
+        playlistComponents,
+        selectedPlaylists,
+        selectAll,
+        selectNone,
+    ] = useFluxifyPlaylists(playlists, playlistData);
 
     useEffect(() => {
         setLogoutCallbacks([resetClient, resetPlaylists])
@@ -49,9 +56,29 @@ export default function Fluxify() {
                         { `${client.user.name}` }
                     </TitleContainer>
                 </HeaderContainer>
-                <PlaylistsContainer>
-                    { playlistComponents }
-                </PlaylistsContainer>
+                <MainContainer>
+                    <Collapse title="Select Function">
+                        <Button key="likedExclusive" onClick={ () => {} }>
+                            { `Find exclusive liked songs` }
+                        </Button>
+                    </Collapse>
+                    <Collapse title="Select Playlists">
+                        <SelectInfoContainer>
+                            <SelectTextContainer>
+                                { `${selectedPlaylists.length} playlists selected` }
+                            </SelectTextContainer>
+                            <SelectButtonContainer>
+                                <Button key="selectAll" onClick={ selectAll }>{ `All` }</Button>
+                            </SelectButtonContainer>
+                            <SelectButtonContainer>
+                                <Button key="selectNone" onClick={ selectNone }>{ `None` }</Button>
+                            </SelectButtonContainer>
+                        </SelectInfoContainer>
+                        <PlaylistsContainer>
+                            { playlistComponents }
+                        </PlaylistsContainer>
+                    </Collapse>
+                </MainContainer>
                 <ButtonContainer>
                     { renderFluxifyLogout(logout) }
                 </ButtonContainer>
@@ -111,11 +138,40 @@ const TitleContainer = styled.h1`
     margin: 0px;
 `;
 
+const MainContainer = styled.div`
+    margin-bottom: ${spacing2};
+`;
+
 const PlaylistsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: ${spacing2};
+`;
+const SelectInfoContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: ${spacing2} 0;
+    padding: 0 ${spacing2};
+
+    ${ifSuperSmall} {
+        flex-direction: column;
+    }
+`;
+const SelectTextContainer = styled.div`
+    margin-left: ${spacing2};
+    margin-right: auto;
+    ${ifSuperSmall} {
+        margin: ${spacing1} ${spacing2};
+    }
+`;
+const SelectButtonContainer = styled.div`
+    width: 100px;
+    margin-right: ${spacing2};
+    ${ifSuperSmall} {
+        width: 100%;
+        margin: ${spacing1} ${spacing2};
+    }
 `;
 
 const ButtonContainer = styled.div``;
@@ -127,4 +183,3 @@ const TextContainer = styled.p`
 const ErrorContainer = styled.div`
     align-text: center;
 `;
-
