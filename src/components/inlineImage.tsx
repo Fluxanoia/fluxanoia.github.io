@@ -4,28 +4,27 @@ import { ifLarge, ifSuperSmall, spacing1, spacing3 } from "../utils/dimensions";
 import { flip, Side } from "../utils/types";
 
 type InlineImageProps = {
-    path : string;
-    alt? : string;
-    side? : Side;
+    path : string,
+    alt? : string,
+    side? : Side,
+
+    className? : string,
 }
-export default function InlineImage({ path, alt, side } : InlineImageProps) {
+export default function InlineImage({ path, alt, side, className } : InlineImageProps) {
     return (
-        <ImageContainer side={ side ?? Side.LEFT }>
+        <ImageContainer className={ className } side={ side ?? Side.LEFT }>
             <img src={ path } alt={ alt ?? `` }/>
         </ImageContainer>
     );
 }
 
-const smallWidth = `200px`;
-const largeWidth = `250px`;
-
 const imageSizing = `
-    width: ${smallWidth};
     ${ifSuperSmall} {
         width: 100%;
     }
+    width: 200px;
     ${ifLarge} {
-        width: ${largeWidth};
+        width: 250px;
     }
 `;
 const ImageContainer = styled.span<{ side : Side }>`

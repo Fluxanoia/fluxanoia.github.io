@@ -7,12 +7,14 @@ import { containerBorderColour } from "../utils/colours";
 type CollapseProps = {
     title : string,
     value? : string,
+
+    className? : string,
     children? : React.ReactNode,
 }
-export default function Collapse({ title, value, children } : CollapseProps) {
+export default function Collapse({ title, value, className, children } : CollapseProps) {
     const [open, setOpen] = useState(false);
     return (
-        <MainContainer key={ title }>
+        <MainContainer key={ title } className={ className }>
             <TitleContainer onClick={ () => setOpen(o => !o) }>
                 <Arrow open={ open } />
                 { title }
@@ -27,8 +29,12 @@ export default function Collapse({ title, value, children } : CollapseProps) {
     );
 }
 
+
+const radius = spacing4;
+
 const MainContainer = styled.div`
-    border: 1px solid ${containerBorderColour};
+    border: 2px solid ${containerBorderColour};
+    border-radius: ${radius};
 `;
 const TitleContainer = styled.h3`
     display: flex;
@@ -43,9 +49,11 @@ const TitleContainer = styled.h3`
     white-space: nowrap;
     overflow: hidden;
 
-    background-color: rgba(255, 255, 255, 0);
+    border-radius: ${radius};
+
+    background: rgba(255, 255, 255, 0);
     &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.2);
     }
     transition: background-color 0.25s;
 `;
@@ -74,4 +82,5 @@ type ChildContainerProps = {
 const ChildContainer = styled.div<ChildContainerProps>`
     ${props => props.open ? `` : `height: 0px;`}
     overflow: hidden;
+    border-radius: ${radius};
 `;

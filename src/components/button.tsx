@@ -8,11 +8,16 @@ type ButtonProps = {
     forceHover? : boolean;
     newTab? : boolean;
     onClick? : () => void;
+
+    className? : string;
     children? : React.ReactNode;
 }
 export default function Button(props : ButtonProps) {
     const button = (
-        <ButtonContainer forceHover={ props.forceHover ?? false }>
+        <ButtonContainer
+            className={ props.className }
+            forceHover={ props.forceHover ?? false }
+        >
             { props.children }
         </ButtonContainer>
     );

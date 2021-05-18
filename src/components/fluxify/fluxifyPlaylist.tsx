@@ -3,7 +3,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { Playlist } from "spotify-api.js";
 import styled from "styled-components";
 import { ifSmall, spacing1, spacing2 } from "../../utils/dimensions";
-import { getSpotifyImage } from "./fluxifyImages";
+import SpotifyImage from "./fluxifyImages";
 
 const imageId = "image";
 const titleId = "title";
@@ -20,9 +20,7 @@ export default function FluxifyPlaylist(
             onClick={ () => onClick(playlist.id, !selected) }
         >
             <LayerContainer>
-                <ImageLayer id={ imageId }>
-                    { getSpotifyImage(playlist.images) }
-                </ImageLayer>
+                <Image id={ imageId } images={ playlist.images }/>
                 <TitleLayer id={ titleId }>
                     <Title>
                         { playlist.name }
@@ -36,7 +34,7 @@ export default function FluxifyPlaylist(
     );
 }
 
-const Sized = styled.div`
+const sizing = `
     width: 150px;
     height: 150px;
     ${ifSmall} {
@@ -44,6 +42,11 @@ const Sized = styled.div`
         height: 100px;
     }
 `;
+const layering = `position: absolute;`;
+
+const Sized = styled.div`${sizing}`;
+const LayerContainer = styled(Sized)`position: relative;`;
+const Layer = styled(Sized)`${layering}`;
 
 const PlaylistContainer = styled(Sized)`
     display: flex;
@@ -73,18 +76,9 @@ const PlaylistContainer = styled(Sized)`
     }
 `;
 
-const LayerContainer = styled(Sized)`
-    position: relative;
-`;
-const Layer = styled(Sized)`
-    position: absolute;
-`;
-
-const ImageLayer = styled(Layer)`
-    img, .img {
-        width: 100%;
-        height: 100%;
-    }
+const Image = styled(SpotifyImage)`
+    ${sizing}
+    ${layering}
 `;
 
 const TitleLayer = styled(Layer)`

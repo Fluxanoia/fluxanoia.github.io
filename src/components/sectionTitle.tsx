@@ -5,11 +5,12 @@ import Divider from "./divider";
 
 type SectionTitleProps = {
     accent? : boolean,
+    className? : string,
     children? : React.ReactNode,
 }
-export default function SectionTitle({ accent, children } : SectionTitleProps) {
+export default function SectionTitle({ accent, className, children } : SectionTitleProps) {
     return (
-        <SectionTitleContainer>
+        <SectionTitleContainer className={ className }>
             <TitleContainer className={ (accent ?? false) ? `accent` : `` }>
                 { children }
             </TitleContainer>

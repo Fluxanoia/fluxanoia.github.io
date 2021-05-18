@@ -33,12 +33,6 @@ export default class Page {
 
     public constructor(component : React.ComponentType<any>, props : PageProps) {
         this.component = component;
-        props.accentColour = props.accentColour ?? defaultBgColour;
-        props.local = props.local ?? true;
-        props.independent = props.independent ?? false;
-        props.onNavbar = props.onNavbar ?? false;
-        props.home = props.home ?? false;
-        props.notFound = props.notFound ?? false;
         props.link = props.link ?? `/` + props.name.toLowerCase();
         this.props = props;
     }
@@ -67,11 +61,11 @@ export default class Page {
     public getComponent() { return this.component; }
     public getColour() { return this.props.accentColour ?? defaultBgColour };
     public getName() { return this.props.name; }
-    public isLocal() { return this.props.local; }
-    public isOnNavbar() { return this.props.onNavbar; }
-    public isHome() { return this.props.home; }
-    public isNotFound() { return this.props.notFound; }
-    public isIndependent() { return this.props.independent; }
+    public isLocal() { return this.props.local ?? true; }
+    public isOnNavbar() { return this.props.onNavbar ?? false; }
+    public isHome() { return this.props.home ?? false; }
+    public isNotFound() { return this.props.notFound ?? false; }
+    public isIndependent() { return this.props.independent ?? false; }
 };
 
 const ButtonContainer = styled.div`

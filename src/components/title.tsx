@@ -6,16 +6,15 @@ import { textColour } from "../utils/colours";
 import { ifLarge, mainContainerWidth } from "../utils/dimensions";
 import { titleFontSettings } from "../utils/globalStyling";
 
-type TitleProps = { page? : Page };
-export default function Title({ page } : TitleProps) {
-    let titleText = "Fluxanoia";
-    if (typeof page !== 'undefined' && !page.isOnNavbar() && !page.isNotFound()) {
-        titleText = page.getName();
-    }
+type TitleProps = {
+    page? : Page,
+    className? : string,
+};
+export default function Title({ page, className } : TitleProps) {
     return (
-        <TitleContainer>
+        <TitleContainer className={ className }>
             <TextContainer to="/">
-                { titleText }
+                { page && !page.isOnNavbar() && !page.isNotFound() ? page.getName() : "Fluxanoia" }
             </TextContainer>
         </TitleContainer>
     );

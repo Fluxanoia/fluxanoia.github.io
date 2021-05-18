@@ -2,39 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import { Image } from "spotify-api.js";
 import { BsMusicNoteBeamed } from "react-icons/bs";
-import { containerColour, textColour } from "../../utils/colours";
+import { containerBorderColour, containerColour } from "../../utils/colours";
 
-type ImageOptions = {
-    sizingCss? : string,
-    rounded? : boolean,
+type SpotifyImageProps = {
+    images : Array<Image>,
+
+    id? : string,
+    className? : string,
 }
-export const getSpotifyImage = (images : Array<Image>, options? : ImageOptions) => {
-    options = options ?? {};
+export default function SpotifyImage({ id, images, className } : SpotifyImageProps) {
     return (
         images.length === 0 ? (
-            <PseudoImageContainer className="img" {...options}>
-                <BsMusicNoteBeamed color={ containerColour } />
-            </PseudoImageContainer>
+            <PseudoImage id={ id } className={ className }>
+                <PseudoImageIcon color={ containerColour } />
+            </PseudoImage>
         ) : (
-            <ImageContainer src={ images[0].url } {...options}/>
+            <TrueImage id={ id } className={ className } alt={ `` } src={ images[0].url }/>
         )
     );
 }
-const getImageStyling = (options : ImageOptions) => {
-    return (`
-        ${ options.sizingCss ?? `
-            width: 64px;
-            height: 64px;
-        ` }
-        
-        ${ options.rounded ? `border-radius: 16px;` : `` }
-    `);
-}
-const PseudoImageContainer = styled.div<ImageOptions>`
+
+const PseudoImage = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${textColour};
-    ${ props => getImageStyling(props) }
+    background-color: ${containerBorderColour};
 `;
-const ImageContainer = styled.img<ImageOptions>`${ props => getImageStyling(props) }`;
+const PseudoImageIcon = styled(BsMusicNoteBeamed)`
+    width: 40%
+    height: auto;
+`;
+const TrueImage = styled.img``;

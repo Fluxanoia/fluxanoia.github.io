@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { containerStyling } from "../utils/colours";
 import { mainContainerSizeSettings, spacing1, spacing2 } from "../utils/dimensions";
+import { StyledProps } from "../utils/types";
 
-export default function Footer() {
+export default function Footer({ className } : StyledProps) {
     return (
-        <Container>
+        <Container className={ className }>
             <TextContainer>
                 Copyright © 2021 Fluxanoia
             </TextContainer>
