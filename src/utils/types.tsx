@@ -8,6 +8,7 @@ export enum LoadingState {
     NONE,
     LOADING,
     LOADED,
+    FAILED,
 }
 export const isLoaded = (...states : Array<LoadingState>) => {
     return states.every(state => state === LoadingState.LOADED);

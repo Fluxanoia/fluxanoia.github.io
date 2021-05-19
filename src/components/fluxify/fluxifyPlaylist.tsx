@@ -34,12 +34,14 @@ export default function FluxifyPlaylist(
     );
 }
 
+const largeSize = `150px`;
+const smallSize = `100px`;
 const sizing = `
-    width: 150px;
-    height: 150px;
+    width: ${largeSize};
+    height: ${largeSize};
     ${ifSmall} {
-        width: 100px;
-        height: 100px;
+        width: ${smallSize};
+        height: ${smallSize};
     }
 `;
 const layering = `position: absolute;`;
@@ -89,6 +91,10 @@ const TitleLayer = styled(Layer)`
 `;
 const Title = styled.div`
     text-align: center;
+    max-height: ${largeSize};
+    ${ifSmall} {
+        max-height: ${smallSize};
+    }
 `;
 
 const CheckLayer = styled(Layer)`

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import useFluxifyPlaylists from "../../../hooks/fluxifyPlaylists";
+import usePlaylistSelector from "../../../hooks/playlistSelector";
+import { discernError, getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
-import { spacing2, ifSuperSmall, spacing1 } from "../../../utils/dimensions";
+import { spacing2 } from "../../../utils/dimensions";
+import { createPlaylist, loadAllTracks, loadLiked, addToPlaylist } from "../../../utils/spotify";
 import Button from "../../button";
-import Collapse from "../../collapse";
 import FluxifyLoading from "../fluxifyLoading";
 import FluxifyOp, { FluxifyOpProps } from "./fluxifyOp";
 
@@ -13,80 +14,76 @@ export const exclusiveLikedOp = new FluxifyOp(
     `Find exclusive liked songs`,
     FluxifyExclusiveLiked,
 );
-
 export default function FluxifyExclusiveLiked({
     token,
     client,
     throwError,
+    disable,
+    finish,
 } : FluxifyOpProps) {
-    const [
-        playlists,
-        metadata,
-        loaded,
-        error,
-    ] = useSpotifyPlaylists(token, client);
-    const [
-        components,
-        selected,
-        selectAll,
-        selectNone,
-    ] = useFluxifyPlaylists(playlists, metadata);
+    const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const [selectorComponent, selected] = usePlaylistSelector(playlists, metadata);
+    const [localError, throwLocalError] = useError();
 
-    if (error) {
-        throwError(error);
+    useEffect(() => {
+        if (localError || playlistError) throwError(discernError(localError, playlistError));
+    }, [throwError, localError, playlistError]);
+    
+    const run = () => {
+        if (selected.length === 0) return;
+        disable();
+        (async () => {
+            const newPlaylist = await createPlaylist(
+                client,
+                throwLocalError,
+                `Fluxify-ExclusiveLiked`,
+                `gets the exclusive liked songs w.r.t.: ${selected.map(p => p.name).join(`, `)}`
+            );
+            if (newPlaylist) {
+                const likedTracks = await loadLiked(client, throwLocalError);
+                if (likedTracks) {
+                    const likedUris = new Set(likedTracks.items.map(t => t.track.uri));
+                    const trackUris = new Set(
+                        (await loadAllTracks(selected, throwLocalError)).map(t => t.track.uri));
+                    let exclusives = [];
+                    for (const liked of likedUris) {
+                        if (!trackUris.has(liked)) exclusives.push(liked);
+                    }
+                await addToPlaylist(newPlaylist, exclusives, throwLocalError);
+                finish();
+                }
+            }
+        })();
+    };
+
+
+    if (localError || playlistError) {
         return <FluxifyLoading />;
     } else if (loaded) {
+        if (!playlists) {
+            throwLocalError(getLoadingError(`FluxifyExclusiveLiked`));
+            return <FluxifyLoading />;
+        }
         return (
-            <CollapseContainer title="Select Playlists">
-                <SelectInfoContainer>
-                    <SelectTextContainer>
-                        { `${selected.length} playlists selected` }
-                    </SelectTextContainer>
-                    <SelectButton key="selectAll" onClick={ selectAll }>{ `All` }</SelectButton>
-                    <SelectButton key="selectNone" onClick={ selectNone }>{ `None` }</SelectButton>
-                </SelectInfoContainer>
-                <PlaylistsContainer>
-                    { components }
-                </PlaylistsContainer>
-            </CollapseContainer>
+            <>
+                <TextContainer>
+                    { `
+                        This operation will create a new playlist consisting of the songs in
+                        your Liked that aren't in any of the selected playlists.
+                    ` }
+                </TextContainer>
+                <SelectorWrapper>
+                    { selectorComponent }
+                </SelectorWrapper>
+                <Button onClick={ run }>{ `Generate` }</Button>
+            </>
         );
     } else {
         return <FluxifyLoading />;
     }
 }
 
-const CollapseContainer = styled(Collapse)`
+const TextContainer = styled.p``;
+const SelectorWrapper = styled.div`
     margin-bottom: ${spacing2};
-`;
-
-const PlaylistsContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-`;
-const SelectInfoContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin: ${spacing2} 0;
-    padding: 0 ${spacing2};
-
-    ${ifSuperSmall} {
-        flex-direction: column;
-    }
-`;
-const SelectTextContainer = styled.div`
-    margin-left: ${spacing2};
-    margin-right: auto;
-    ${ifSuperSmall} {
-        margin: ${spacing1} ${spacing2};
-    }
-`;
-const SelectButton = styled(Button)`
-    width: 100px;
-    margin-right: ${spacing2};
-    ${ifSuperSmall} {
-        width: 100%;
-        margin: ${spacing1} ${spacing2};
-    }
 `;

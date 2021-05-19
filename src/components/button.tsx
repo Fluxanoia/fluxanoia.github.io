@@ -10,12 +10,13 @@ type ButtonProps = {
     onClick? : () => void;
 
     className? : string;
+    buttonClassName? : string;
     children? : React.ReactNode;
 }
 export default function Button(props : ButtonProps) {
     const button = (
         <ButtonContainer
-            className={ props.className }
+            className={ props.buttonClassName }
             forceHover={ props.forceHover ?? false }
         >
             { props.children }
@@ -23,13 +24,19 @@ export default function Button(props : ButtonProps) {
     );
     if (props.href && props.href.startsWith(`/`)) {
         return (
-            <Link style={ linkStyling } to={ props.href } onClick={ props.onClick }>
+            <Link 
+                className={ props.className }
+                style={ linkStyling }
+                to={ props.href }
+                onClick={ props.onClick }
+            >
                 { button }
             </Link>
         );
     } else {
         return (
             <a
+                className={ props.className }
                 style={ linkStyling }
                 target={ props.newTab ? "_blank" : "_self" }
                 rel="noopener noreferrer"
@@ -43,8 +50,9 @@ export default function Button(props : ButtonProps) {
 }
 
 const linkStyling = {
-    textDecoration: 'none',
-    cursor: 'auto',
+    display: `block`,
+    textDecoration: `none`,
+    cursor: `auto`,
 };
 
 const ButtonContainer = styled.button<{ forceHover : boolean }>`

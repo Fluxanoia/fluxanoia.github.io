@@ -1,45 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
 import Client from "spotify-api.js";
 import { LoadingState, isLoaded } from "../utils/types";
-import useSpotifyErrorHandler from "./spotifyErrorHandler";
+import { useError } from "./spotifyError";
 
 export default function useSpotifyClient(token : string | null)
-    : [Client | null, boolean, string | null, () => void] {
+    : [Client | null, boolean, Error | null, () => void] {
+    const [loadState, setLoadState] = useState(LoadingState.NONE);
+    const [error, throwError, resetError] = useError();
+
     const [client, setClient] = useState<Client | null>(null);
-    const [loadUserState, setUserLoadState] = useState(LoadingState.NONE);
-    const [loadClientState, setClientLoadState] = useState(LoadingState.NONE);
-    const [error, handleError, resetError] = useSpotifyErrorHandler();
 
     const reset = useCallback(() => {
         resetError();
         setClient(null);
-        setUserLoadState(LoadingState.NONE);
-        setClientLoadState(LoadingState.NONE);
+        setLoadState(LoadingState.NONE);
     }, [resetError, setClient]);
 
     useEffect(() => {
-        if (token
-            && loadClientState === LoadingState.NONE) {
+        if (token && loadState === LoadingState.NONE) {
             (async () => {
-                setClientLoadState(LoadingState.LOADING);
-                setUserLoadState(LoadingState.LOADING);
-                const client = new Client(token, {
-                    cacheCurrentUser: true,
-                    ready: () => setUserLoadState(LoadingState.LOADED),
-                });
+                setLoadState(LoadingState.LOADING);
+                const client = new Client(token);
+                await client.user.info().catch(throwError);
                 setClient(client);
+                setLoadState(LoadingState.LOADED)
             })();
-            return () => setClientLoadState(LoadingState.LOADED);
         }
-    }, [
-        token,
-        loadUserState,
-        setUserLoadState,
-        loadClientState,
-        setClientLoadState,
-        handleError,
-        setClient,
-    ]);
+    }, [token, loadState, setLoadState, throwError, setClient]);
 
-    return [client, isLoaded(loadUserState, loadClientState), error, reset]
+    return [client, isLoaded(loadState), error, reset]
 }

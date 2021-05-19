@@ -1,54 +1,53 @@
 import { useCallback, useEffect, useState } from "react";
-import Client, { Playlist, UnexpectedError } from "spotify-api.js";
+import Client, { Playlist } from "spotify-api.js";
+import { loadPlaylists } from "../utils/spotify";
 import { isLoaded, LoadingState } from "../utils/types";
-import useSpotifyErrorHandler from "./spotifyErrorHandler";
+import { useError } from "./spotifyError";
 
 export type PlaylistData = { 
-    limit : number,
-    offset : number,
     total : number,
 }
 
 export default function useSpotifyPlaylists(
     token : string | null,
     client : Client | null,
-) : [Array<Playlist> | null, PlaylistData | null, boolean, string | null, () => void] {
+) : [Array<Playlist> | null, PlaylistData | null, boolean, Error | null, () => void] {
     const [loadState, setLoadState] = useState(LoadingState.NONE);
+    const [error, throwError, resetError] = useError();
+    
     const [playlists, setPlaylists] = useState<Array<Playlist> | null>(null);
     const [playlistData, setPlaylistData] = useState<PlaylistData | null>(null);
-    const [error, handleError, clearError] = useSpotifyErrorHandler();
 
     const reset = useCallback(() => {
-        clearError();
+        resetError();
         setPlaylists(null);
         setPlaylistData(null);
         setLoadState(LoadingState.NONE);
-    }, [clearError, setPlaylists, setPlaylistData, setLoadState]);
-
-    const loadPlaylists = useCallback(async (client : Client) => {
-        const data = await client.user.getPlaylists().catch(handleError);
-        if (data) {
-            setPlaylists(data.items);
-            setPlaylistData({
-                limit: data.limit,
-                offset: data.offset,
-                total: data.total,
-            });
-        } else {
-            handleError(new UnexpectedError("Failed to load data."));
-        }
-    }, [handleError, setPlaylists, setPlaylistData])
+    }, [resetError, setPlaylists, setPlaylistData, setLoadState]);
 
     useEffect(() => {
         if (token && client && loadState === LoadingState.NONE) {
+            setLoadState(LoadingState.LOADING);
             (async () => {
-                setLoadState(LoadingState.LOADING);
-                const loaders = [loadPlaylists];
-                for (const loader of loaders) await loader(client);
+                const data = await loadPlaylists(client, throwError);
+                if (data) {
+                    setPlaylists(data.items);
+                    setPlaylistData({
+                        total: data.total,
+                    });
+                    setLoadState(LoadingState.LOADED);
+                }
             })();
-            return () => setLoadState(LoadingState.LOADED);
         }
-    }, [token, client, loadState, setLoadState, loadPlaylists]);
+    }, [
+        token,
+        client,
+        loadState,
+        setLoadState,
+        throwError,
+        setPlaylists,
+        setPlaylistData,
+    ]);
 
     return [playlists, playlistData, isLoaded(loadState), error, reset];
 }

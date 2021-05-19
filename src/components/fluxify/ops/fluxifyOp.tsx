@@ -5,7 +5,11 @@ export type FluxifyOpProps = {
     token : string,
     client : Client,
 
-    throwError : (error : string) => void,
+    throwError : (error : Error) => void,
+    
+    disable : () => void,
+    enable : () => void,
+    finish : () => void,
 }
 export default class FluxifyOp {
     private key : string;
