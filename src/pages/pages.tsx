@@ -38,9 +38,13 @@ export default class Page {
     }
 
     public getButton(forceHover : boolean) {
+        const links = {
+            to: this.props.local ? this.props.link : undefined,
+            href: this.props.local ? undefined : this.props.link,
+        }
         return (
             <ButtonContainer key={ "link-" + this.props.name }>
-                <Button href={ this.props.link ?? "" } forceHover={ forceHover }>
+                <Button {...links} forceHover={ forceHover }>
                     { this.props.name }
                 </Button>
             </ButtonContainer>

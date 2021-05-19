@@ -2,14 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { containerStyling } from "../utils/colours";
 import { mainContainerSizeSettings, spacing1, spacing2 } from "../utils/dimensions";
-import { StyledProps } from "../utils/types";
+import { DivProps } from "../utils/types";
 
-export default function Footer({ className } : StyledProps) {
+export default function Footer(props : DivProps) {
     return (
-        <Container className={ className }>
-            <TextContainer>
-                Copyright © 2021 Fluxanoia
-            </TextContainer>
+        <Container {...props}>
+            <TextContainer>{ `Copyright © 2021 Fluxanoia` }</TextContainer>
         </Container>
     );
 }

@@ -5,14 +5,15 @@ import Page from "../pages/pages"
 import { textColour } from "../utils/colours";
 import { ifLarge, mainContainerWidth } from "../utils/dimensions";
 import { titleFontSettings } from "../utils/globalStyling";
+import { DivProps } from "../utils/types";
 
 type TitleProps = {
     page? : Page,
-    className? : string,
-};
-export default function Title({ page, className } : TitleProps) {
+} & DivProps;
+export default function Title(props : TitleProps) {
+    const { page, ...otherProps } = props;
     return (
-        <TitleContainer className={ className }>
+        <TitleContainer {...otherProps}>
             <TextContainer to="/">
                 { page && !page.isOnNavbar() && !page.isNotFound() ? page.getName() : "Fluxanoia" }
             </TextContainer>

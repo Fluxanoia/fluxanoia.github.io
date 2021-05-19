@@ -12,7 +12,7 @@ const checkId = "check";
 export default function FluxifyPlaylist(
     playlist : Playlist,
     selected : boolean,
-    onClick : (id : string, selected : boolean) => void
+    onClick : (id : string, selected : boolean) => void,
 ) {
     return (
         <PlaylistContainer 

@@ -17,7 +17,7 @@ export const homePage : Page = new Page(Home, {
 export default function Home() {
     return (
         <TextContainer>
-            <InlineImage path={ `res/me.png` } />
+            <InlineImage src={ `res/me.png` } />
             {
                 `I'm Tyler, a final-year Maths and Computer Scientist at the University of Bristol.
                 This website is the home of my various programming projects.`

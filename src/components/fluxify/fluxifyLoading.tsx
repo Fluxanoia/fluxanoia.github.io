@@ -3,11 +3,11 @@ import { TailSpin } from "react-loading-icons";
 import styled from "styled-components";
 import { containerBorderColour } from "../../utils/colours";
 import { spacing2 } from "../../utils/dimensions";
-import { StyledProps } from "../../utils/types";
+import { DivProps } from "../../utils/types";
 
-export default function FluxifyLoading({ className } : StyledProps) {
+export default function FluxifyLoading(props : DivProps) {
     return (
-        <LoadingContainer className={ className }>
+        <LoadingContainer {...props}>
             <LoadingIcon stroke={ containerBorderColour }></LoadingIcon>
         </LoadingContainer>
     );

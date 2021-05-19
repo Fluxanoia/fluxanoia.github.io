@@ -1,19 +1,16 @@
 import React from "react";
 import styled from "styled-components"
 import { ifLarge, ifSuperSmall, spacing1, spacing3 } from "../utils/dimensions";
-import { flip, Side } from "../utils/types";
+import { flip, ImgProps, Side } from "../utils/types";
 
 type InlineImageProps = {
-    path : string,
-    alt? : string,
     side? : Side,
-
-    className? : string,
-}
-export default function InlineImage({ path, alt, side, className } : InlineImageProps) {
+} & ImgProps;
+export default function InlineImage(props : InlineImageProps) {
+    const { className, ...otherProps } = props;
     return (
-        <ImageContainer className={ className } side={ side ?? Side.LEFT }>
-            <img src={ path } alt={ alt ?? `` }/>
+        <ImageContainer className={ className } side={ props.side ?? Side.LEFT }>
+            <Image {...otherProps}/>
         </ImageContainer>
     );
 }
@@ -34,9 +31,8 @@ const ImageContainer = styled.span<{ side : Side }>`
 
     margin-bottom: ${spacing1};
     margin-${props => flip(props.side)}: ${spacing3};
-
-    img {
-        border-radius: 16px;
-        ${imageSizing}
-    }
+`;
+const Image = styled.img`
+    width: 100%;
+    border-radius: 16px;
 `;

@@ -59,7 +59,7 @@ export default function Projects() {
             { renderProject(
                 `Chessr`, 
                 <>
-                    <InlineImage path={ `res/chessr.png` } side={ Side.RIGHT } />
+                    <InlineImage src={ `res/chessr.png` } side={ Side.RIGHT } />
                     {
                         `This is a chess game written in Python with PyGame, it's in
                         its early stages at the moment, but I plan for it to have a

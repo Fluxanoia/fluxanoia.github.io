@@ -63,7 +63,7 @@ export default function usePlaylistSelector(
                     { components }
                 </PlaylistsContainer>
             </CollapseContainer>
-        )
+        );
     }, [options, components, selected, playlists, playlistData, selectAll, selectNone])
 
     const selectedPlaylists = (playlists ?? []).filter((p : Playlist) => isSelected(p.id));

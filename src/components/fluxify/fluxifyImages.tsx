@@ -3,21 +3,20 @@ import styled from "styled-components";
 import { Image } from "spotify-api.js";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import { containerBorderColour, containerColour } from "../../utils/colours";
+import { DivProps } from "../../utils/types";
 
 type SpotifyImageProps = {
     images : Array<Image>,
-
-    id? : string,
-    className? : string,
-}
-export default function SpotifyImage({ id, images, className } : SpotifyImageProps) {
+} & DivProps;
+export default function SpotifyImage(props : SpotifyImageProps) {
+    const { images, ...otherProps } = props;
     return (
         images.length === 0 ? (
-            <PseudoImage id={ id } className={ className }>
+            <PseudoImage {...otherProps}>
                 <PseudoImageIcon color={ containerColour } />
             </PseudoImage>
         ) : (
-            <TrueImage id={ id } className={ className } alt={ `` } src={ images[0].url }/>
+            <TrueImage src={ images[0].url } alt={ `` } {...otherProps}/>
         )
     );
 }

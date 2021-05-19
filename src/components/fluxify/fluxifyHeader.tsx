@@ -2,16 +2,18 @@ import React from "react";
 import Client from "spotify-api.js";
 import styled from "styled-components";
 import { spacing2, ifSuperSmall } from "../../utils/dimensions";
+import { DivProps } from "../../utils/types";
 import SpotifyImage from "./fluxifyImages";
 import { FluxifyLogout } from "./fluxifyLogout";
 
 type FluxifyHeaderProps = {
     client : Client,
     logout : () => void,
-}
-export default function FluxifyHeader({ client, logout } : FluxifyHeaderProps) {
+} & DivProps;
+export default function FluxifyHeader(props : FluxifyHeaderProps) {
+    const { client, logout, ...otherProps } = props;
     return (
-        <HeaderContainer>
+        <HeaderContainer {...otherProps}>
             <UserImage images={ client.user.images }/>
             <TitleContainer>
                 { `${client.user.name}` }

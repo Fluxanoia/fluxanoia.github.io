@@ -2,46 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { buttonHoverStyling } from "../utils/globalStyling";
+import { AnchorProps } from "../utils/types";
 
 type ButtonProps = {
-    href? : string;
-    forceHover? : boolean;
+    to? : string,
     newTab? : boolean;
-    onClick? : () => void;
+    forceHover? : boolean;
+} & AnchorProps;
 
-    className? : string;
-    buttonClassName? : string;
-    children? : React.ReactNode;
-}
 export default function Button(props : ButtonProps) {
+    const { children, to, href, ...otherProps } = props;
     const button = (
-        <ButtonContainer
-            className={ props.buttonClassName }
-            forceHover={ props.forceHover ?? false }
-        >
-            { props.children }
+        <ButtonContainer forceHover={ props.forceHover ?? false }>
+            { children }
         </ButtonContainer>
     );
-    if (props.href && props.href.startsWith(`/`)) {
-        return (
-            <Link 
-                className={ props.className }
-                style={ linkStyling }
-                to={ props.href }
-                onClick={ props.onClick }
-            >
-                { button }
-            </Link>
-        );
+    if (to) {
+        return <Link style={ linkStyling } to={ to } {...otherProps}>{ button }</Link>;
     } else {
         return (
             <a
-                className={ props.className }
                 style={ linkStyling }
                 target={ props.newTab ? "_blank" : "_self" }
                 rel="noopener noreferrer"
-                href={ props.href }
-                onClick={ props.onClick }
+                href={ href }
+                {...otherProps}
             >
                 { button }
             </a>

@@ -2,15 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { getAuthUrl } from "../../hooks/spotifyAuthenticator";
 import { spacing2 } from "../../utils/dimensions";
+import { AnchorProps } from "../../utils/types";
 import Button from "../button";
 
 type FluxifyLoginProps = {
     window : Window,
-    className? : string,
-}
-export const FluxifyLogin = ({ window, className } : FluxifyLoginProps) => {
+} & AnchorProps;
+export const FluxifyLogin = (props : FluxifyLoginProps) => {
+    const { window, ...otherProps } = props;
     return (
-        <Button className={ className } href={ getAuthUrl(window) }>
+        <Button href={ getAuthUrl(window) } {...otherProps}>
             Log-in with Spotify
         </Button>
     );       

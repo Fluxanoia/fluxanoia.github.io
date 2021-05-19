@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { spacing2, spacing3 } from "../utils/dimensions";
+import { DivProps } from "../utils/types";
 import Divider from "./divider";
 
 type SectionTitleProps = {
     accent? : boolean,
-    className? : string,
-    children? : React.ReactNode,
-}
-export default function SectionTitle({ accent, className, children } : SectionTitleProps) {
+} & DivProps;
+export default function SectionTitle(props : SectionTitleProps) {
+    const { accent, children, ...otherProps } = props;
     return (
-        <SectionTitleContainer className={ className }>
+        <SectionTitleContainer {...otherProps}>
             <TitleContainer className={ (accent ?? false) ? `accent` : `` }>
                 { children }
             </TitleContainer>

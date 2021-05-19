@@ -1,27 +1,29 @@
 import React, { useState } from "react"
 import styled from "styled-components";
 import { HiOutlineArrowCircleRight } from "react-icons/hi";
-import { spacing1, spacing2, spacing4 } from "../utils/dimensions";
+import { spacing2, spacing4 } from "../utils/dimensions";
 import { containerBorderColour } from "../utils/colours";
+import Pill from "./pill";
+import { DivProps } from "../utils/types";
+
+const radius = spacing4;
 
 type CollapseProps = {
     title : string,
     value? : string,
-
-    className? : string,
-    children? : React.ReactNode,
-}
-export default function Collapse({ title, value, className, children } : CollapseProps) {
+} & DivProps;
+export default function Collapse(props : CollapseProps) {
     const [open, setOpen] = useState(false);
+    const { title, value, children, ...otherProps } = props;
     return (
-        <MainContainer key={ title } className={ className }>
-            <TitleContainer onClick={ () => setOpen(o => !o) }>
+        <MainContainer key={ props.title } {...otherProps}>
+            <Pill radius={ radius } onClick={ () => setOpen(o => !o) }>
                 <Arrow open={ open } />
                 { title }
                 <ValueContainer>
                     { value }
                 </ValueContainer>
-            </TitleContainer>
+            </Pill>
             <ChildContainer open={ open }>
                 { children }
             </ChildContainer>
@@ -29,33 +31,9 @@ export default function Collapse({ title, value, className, children } : Collaps
     );
 }
 
-
-const radius = spacing4;
-
 const MainContainer = styled.div`
     border: 2px solid ${containerBorderColour};
     border-radius: ${radius};
-`;
-const TitleContainer = styled.h3`
-    display: flex;
-    align-items: center;
-    margin: 0px;
-    padding-top: ${spacing1};
-    padding-bottom: ${spacing1};
-    padding-left: ${spacing2};
-
-    cursor: pointer;
-
-    white-space: nowrap;
-    overflow: hidden;
-
-    border-radius: ${radius};
-
-    background: rgba(255, 255, 255, 0);
-    &:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
-    transition: background-color 0.25s;
 `;
 const Arrow = styled(HiOutlineArrowCircleRight)<{ open : boolean }>`
     flex-shrink: 0;
