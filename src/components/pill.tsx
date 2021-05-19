@@ -1,5 +1,4 @@
 import React from "react";
-import { HTMLAttributes } from "react";
 import styled from "styled-components";
 import { spacing1, spacing2, spacing4 } from "../utils/dimensions";
 import { H3Props } from "../utils/types";

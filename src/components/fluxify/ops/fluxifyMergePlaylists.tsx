@@ -1,5 +1,7 @@
+import { shuffle, uniqBy } from "lodash";
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import useOptionSelector, { BooleanOptionComponent, BooleanOptionNextValue, Option } from "../../../hooks/optionsSelector";
 import usePlaylistSelector from "../../../hooks/playlistSelector";
 import { discernError, getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
@@ -8,6 +10,22 @@ import { addToPlaylist, createPlaylist, loadAllTracks } from "../../../utils/spo
 import Button from "../../button";
 import FluxifyLoading from "../fluxifyLoading";
 import FluxifyOp, { FluxifyOpProps } from "./fluxifyOp";
+
+const distinctOption : Option<boolean> = {
+    key: `distinct`,
+    name: `Remove duplicates`,
+    def: true,
+    getNextValue: BooleanOptionNextValue,
+    component: BooleanOptionComponent,
+};
+const shuffleOption : Option<boolean> = {
+    key: `shuffle`,
+    name: `Shuffle`,
+    def: false,
+    getNextValue: BooleanOptionNextValue,
+    component: BooleanOptionComponent,
+};
+const optionInfo : Array<Option<any>> = [distinctOption, shuffleOption];
 
 export const mergeOp = new FluxifyOp(
     `merge`,
@@ -23,6 +41,7 @@ export default function FluxifyMerge({
 } : FluxifyOpProps) {
     const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
     const [selectorComponent, selected] = usePlaylistSelector(playlists, metadata);
+    const [optionsComponent, options] = useOptionSelector(optionInfo);
     const [localError, throwLocalError] = useError();
 
     useEffect(() => {
@@ -40,8 +59,11 @@ export default function FluxifyMerge({
                 `merges: ${selected.map(p => p.name).join(`, `)}`
             );
             if (newPlaylist) {
-                const tracks = await loadAllTracks(selected, throwLocalError);
-                await addToPlaylist(newPlaylist, tracks.map(t => t.track.uri), throwLocalError);
+                let tracks = (await loadAllTracks(selected, throwLocalError))
+                    .map(t => t.track.uri);
+                if (options[distinctOption.key]) tracks = uniqBy(tracks, t => t);
+                if (options[shuffleOption.key]) tracks = shuffle(tracks);
+                await addToPlaylist(newPlaylist, tracks, throwLocalError);
                 finish();
             }
         })();
@@ -64,6 +86,9 @@ export default function FluxifyMerge({
                 </TextContainer>
                 <SelectorWrapper>
                     { selectorComponent }
+                </SelectorWrapper>
+                <SelectorWrapper>
+                    { optionsComponent }
                 </SelectorWrapper>
                 { selected.length > 0 ? <Button onClick={ run }>{ `Generate` }</Button> : `` }
             </>

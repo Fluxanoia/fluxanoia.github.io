@@ -17,7 +17,3 @@ export const randomString = (length : number) => {
     }
     return result.join('');
 }
-
-export const removeDuplicates = <T,>(list : Array<T>) => {
-    return [...new Set(list)];
-}

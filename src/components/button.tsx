@@ -11,9 +11,9 @@ type ButtonProps = {
 } & AnchorProps;
 
 export default function Button(props : ButtonProps) {
-    const { children, to, href, ...otherProps } = props;
+    const { children, to, href, newTab, forceHover, ...otherProps } = props;
     const button = (
-        <ButtonContainer forceHover={ props.forceHover ?? false }>
+        <ButtonContainer forceHover={ forceHover ?? false }>
             { children }
         </ButtonContainer>
     );
@@ -23,7 +23,7 @@ export default function Button(props : ButtonProps) {
         return (
             <a
                 style={ linkStyling }
-                target={ props.newTab ? "_blank" : "_self" }
+                target={ newTab ? "_blank" : "_self" }
                 rel="noopener noreferrer"
                 href={ href }
                 {...otherProps}
