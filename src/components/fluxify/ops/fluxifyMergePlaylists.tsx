@@ -87,10 +87,16 @@ export default function FluxifyMerge({
                 <SelectorWrapper>
                     { selectorComponent }
                 </SelectorWrapper>
-                <SelectorWrapper>
+                <SelectorWrapper removeMargin={ true }>
                     { optionsComponent }
                 </SelectorWrapper>
-                { selected.length > 0 ? <Button onClick={ run }>{ `Generate` }</Button> : `` }
+                { 
+                    selected.length > 0 ? (
+                        <GenerateButton onClick={ run }>
+                            { `Generate` }
+                        </GenerateButton>
+                    ) : `` 
+                }
             </>
         );
     } else {
@@ -99,6 +105,9 @@ export default function FluxifyMerge({
 }
 
 const TextContainer = styled.p``;
-const SelectorWrapper = styled.div`
-    margin-bottom: ${spacing2};
+const SelectorWrapper = styled.div<{ removeMargin? : boolean }>`
+    ${props => props.removeMargin ? `` : `margin-bottom: ${spacing2};`}
+`;
+const GenerateButton = styled(Button)`
+    margin-top: ${spacing2};
 `;

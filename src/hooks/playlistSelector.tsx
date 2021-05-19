@@ -70,9 +70,7 @@ export default function usePlaylistSelector(
     return [component, selectedPlaylists];
 }
 
-const CollapseContainer = styled(Collapse)`
-    margin-bottom: ${spacing2};
-`;
+const CollapseContainer = styled(Collapse)``;
 
 const PlaylistsContainer = styled.div`
     display: flex;

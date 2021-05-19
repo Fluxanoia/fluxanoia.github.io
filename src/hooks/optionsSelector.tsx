@@ -82,10 +82,7 @@ export default function useOptionSelector(
     return [component, data];
 }
 
-const CollapseContainer = styled(Collapse)`
-    margin-bottom: ${spacing2};
-`;
-
+const CollapseContainer = styled(Collapse)``;
 const OptionsContainer = styled.div`
     display: flex;
     flex-direction: column;

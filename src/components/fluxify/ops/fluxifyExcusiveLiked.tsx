@@ -72,10 +72,16 @@ export default function FluxifyExclusiveLiked({
                         your Liked that aren't in any of the selected playlists.
                     ` }
                 </TextContainer>
-                <SelectorWrapper>
+                <SelectorWrapper removeMargin>
                     { selectorComponent }
                 </SelectorWrapper>
-                <Button onClick={ run }>{ `Generate` }</Button>
+                { 
+                    selected.length > 0 ? (
+                        <GenerateButton onClick={ run }>
+                            { `Generate` }
+                        </GenerateButton>
+                    ) : `` 
+                }
             </>
         );
     } else {
@@ -84,6 +90,9 @@ export default function FluxifyExclusiveLiked({
 }
 
 const TextContainer = styled.p``;
-const SelectorWrapper = styled.div`
-    margin-bottom: ${spacing2};
+const SelectorWrapper = styled.div<{ removeMargin? : boolean }>`
+    ${props => props.removeMargin ? `` : `margin-bottom: ${spacing2};`}
+`;
+const GenerateButton = styled(Button)`
+    margin-top: ${spacing2};
 `;
