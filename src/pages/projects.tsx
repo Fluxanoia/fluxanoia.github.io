@@ -1,7 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import InlineImage from "../components/inlineImage";
 import SectionTitle from "../components/sectionTitle";
 import { spacing2 } from "../utils/dimensions";
+import { Side } from "../utils/types";
+import { fluxifyLink } from "./fluxify";
 import Page from "./pages";
 
 const helixUrl = `https://github.com/Fluxanoia/Helix`;
@@ -38,6 +42,36 @@ export default function Projects() {
 
     return (
         <>
+            { renderProject(
+                `Fluxify`, 
+                <>
+                    {
+                        `This is a Spotify app created to allow for some more niche playlist
+                        operations, like getting the songs you've liked that don't exist on
+                        any of your playlists, or merging multiple playlists easily. It's hosted `
+                    }
+                    <Link to={ fluxifyLink }>{ `here` }</Link>
+                    {
+                        `.`
+                    } 
+                </>
+            ) }
+            { renderProject(
+                `Chessr`, 
+                <>
+                    <InlineImage path={ `res/chessr.png` } side={ Side.RIGHT } />
+                    {
+                        `This is a chess game written in Python with PyGame, it's in
+                        its early stages at the moment, but I plan for it to have a
+                        whole host of features!
+                        It can be found on my `
+                    }
+                    <a href={ helixUrl }>GitHub</a>
+                    {
+                        `.`
+                    } 
+                </>
+            ) }
             { renderProject(
                 `Helix`, 
                 <>

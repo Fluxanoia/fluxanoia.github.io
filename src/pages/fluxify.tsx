@@ -20,9 +20,13 @@ const ops : Array<FluxifyOp> = [
     exclusiveLikedOp,
 ]
 
+export const fluxifyLink = `/fluxify`;
 export const fluxifyPage : Page = new Page(Fluxify, {
-    accentColour: "#FF74D9",
+    accentColour: "#1DB954",
     name: "Fluxify",
+    link: fluxifyLink,
+
+    onNavbar: true,
 });
 export default function Fluxify() {
     const [error, throwError, resetError] = useError();

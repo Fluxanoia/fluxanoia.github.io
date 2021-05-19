@@ -22,6 +22,7 @@ import { fluxifyPage } from "./pages/fluxify";
 const pages : Array<Page> = [
     homePage,
     projectsPage,
+    fluxifyPage,
     cvPage,
     githubPage,
     discordPage,
@@ -29,8 +30,6 @@ const pages : Array<Page> = [
     teelaiPage,
 
     cvTyler,
-
-    fluxifyPage,
 
     notFoundPage,
 ];
