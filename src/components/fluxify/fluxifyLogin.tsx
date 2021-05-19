@@ -24,7 +24,11 @@ export default function FluxifyLoginPage({ window } : FluxifyLoginPageProps) {
     return (
         <>
             <TextContainer>
-                This app requires you to log into Spotify:
+                {
+                    `This is a Spotify app created to allow for some more niche playlist
+                    operations, like getting the songs you've liked that don't exist on
+                    any of your playlists, or merging multiple playlists easily.`
+                }
             </TextContainer>
             <FluxifyLogin window={ window }/>
         </>
@@ -32,6 +36,5 @@ export default function FluxifyLoginPage({ window } : FluxifyLoginPageProps) {
 }
 
 const TextContainer = styled.p`
-    text-align: center;
     margin-bottom: ${spacing2};
 `;
