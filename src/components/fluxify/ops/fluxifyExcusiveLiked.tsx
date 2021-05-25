@@ -50,6 +50,8 @@ export default function FluxifyExclusiveLiked({
                         if (!trackUris.has(liked)) exclusives.push(liked);
                     }
                 await addToPlaylist(newPlaylist, exclusives, throwLocalError);
+                // await newPlaylist.uploadImage(`${window.location.origin}/res/fluxify.jpg`)
+                //     .catch(throwLocalError)
                 finish();
                 }
             }

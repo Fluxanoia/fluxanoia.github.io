@@ -3,13 +3,14 @@ import { parse } from "query-string";
 import { useState } from "react";
 
 const scopes = [
-    `playlist-modify-public`,
     `playlist-read-private`,
+    `playlist-modify-public`,
     `playlist-modify-private`,
     `user-library-read`,
     `user-library-modify`,
     `user-read-email`,
     `user-read-private`,
+    `ugc-image-upload`,
 ];
 
 export const getRedirect = (w : Window) => {
