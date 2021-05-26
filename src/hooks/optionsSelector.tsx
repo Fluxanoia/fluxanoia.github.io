@@ -46,6 +46,7 @@ type OptionSelectorOptions = {
     title? : string,
 }
 export default function useOptionSelector(
+    key : string,
     optionInfo : Array<Option<any>>,
     options? : OptionSelectorOptions,
 ) : [JSX.Element, { [key : string] : any }] {
@@ -61,7 +62,7 @@ export default function useOptionSelector(
     }, [data, setData])
 
     const component = useMemo(() => (
-        <CollapseContainer title={ (options ?? {}).title ?? `Choose Options` }>
+        <CollapseContainer key={ key } title={ (options ?? {}).title ?? `Choose Options` }>
             <OptionsContainer>
                 { optionInfo.map(o => {
                     const key = o.key;
@@ -77,7 +78,7 @@ export default function useOptionSelector(
                 }) }
             </OptionsContainer>
         </CollapseContainer>
-    ), [optionInfo, options, data, updateData]);
+    ), [key, optionInfo, options, data, updateData]);
     
     return [component, data];
 }
@@ -86,6 +87,5 @@ const CollapseContainer = styled(Collapse)``;
 const OptionsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: ${spacing2};
 `;

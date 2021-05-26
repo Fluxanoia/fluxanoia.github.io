@@ -1,4 +1,5 @@
-import Client, { CreatePlaylist, Paging, PagingOptions, Playlist, SpotifyURI, UnexpectedError } from "spotify-api.js";
+import { createCanvas } from "canvas";
+import Client, { CreatePlaylist, Paging, PagingOptions, Playlist, SpotifyURI } from "spotify-api.js";
 import { randomString } from "./misc";
 
 export const spotifyPlaylistTitleLimit = 100;
@@ -9,23 +10,47 @@ export const spotifyTrackLimit = 50;
 
 export const spotifyTrackAddLimit = 50;
 
+export const createColourUri = (
+    colour : string
+) => {
+    const size = 128;
+    const canvas = createCanvas(size, size);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = colour;
+    ctx.rect(0, 0, size, size);
+    ctx.fill();
+    return canvas.toDataURL(`image/jpeg`).replace(`data:image/jpeg;base64,`, ``);
+}
+
 export const createPlaylist = async (
     client : Client,
     throwError : (error : Error) => void,
     name : string,
     desc : string,
+    image? : string | null,
     options? : {
         public?: boolean,
         collab?: boolean,
-    }
+    },
 ) => {
     const playlistOptions : CreatePlaylist = {
-        name: `${name}-${randomString(10)}`.slice(0, spotifyPlaylistTitleLimit),
+        name: `Fluxify-${name}-${randomString(10)}`.slice(0, spotifyPlaylistTitleLimit),
         description: `Playlist created by Fluxify, ${desc}`.slice(0, spotifyPlaylistDescLimit),
         public: options ? options.public : false,
         collaborative: options ? options.collab : false,
     };
-    return await client.playlists.create(playlistOptions).catch(throwError);
+    const playlist = await client.playlists.create(playlistOptions).catch(throwError);
+    if (!playlist) return null;
+    if (image || image === null) {
+        const imageUri = image ? (
+            createColourUri(image)
+        ) : (
+            await fetch(`res/fluxify.uri`).then(r => r.text()).catch(throwError)
+        );
+        if (!imageUri) return null;
+        if (!(await playlist.uploadImage(imageUri).catch(throwError))) return null;
+    }
+    return playlist;
 }
 
 export const load = async <T,>(
@@ -40,10 +65,7 @@ export const load = async <T,>(
             limit: hitLimit,
             offset: offset,
         }).catch(throwError);
-        if (!data) {
-            throwError(new UnexpectedError("Failed to load (useSpotifyPlaylists)."));
-            return null;
-        }
+        if (!data) return null;
         items.push(...data.items);
         offset += hitLimit;
         total = data.total;
@@ -76,7 +98,8 @@ export const loadAllTracks = async (
     let tracks = [];
     for (const playlist of playlists) {
         const data = await loadTracks(playlist, throwError);
-        if (data) tracks.push(...data.items);
+        if (!data) return null;
+        tracks.push(...data.items);
     }
     return tracks;
 }
@@ -88,7 +111,10 @@ export const addToPlaylist = async (
 ) => {
     let offset = 0;
     do {
-        await playlist.add(uris.slice(offset, offset + spotifyTrackAddLimit)).catch(throwError);
+        const result = await playlist.add(uris.slice(offset, offset + spotifyTrackAddLimit))
+                                     .catch(throwError);
+        if (!result) return false;
         offset += spotifyTrackAddLimit;
     } while (offset < uris.length);
+    return true;
 }

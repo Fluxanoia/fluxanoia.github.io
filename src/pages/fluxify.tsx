@@ -14,10 +14,12 @@ import FluxifyOp from "../components/fluxify/ops/fluxifyOp";
 import { discernErrorMessage, getLoadingError, useError } from "../hooks/spotifyError";
 import { exclusiveLikedOp } from "../components/fluxify/ops/fluxifyExcusiveLiked";
 import { mergeOp } from "../components/fluxify/ops/fluxifyMergePlaylists";
+import { unfollowFluxifyOp } from "../components/fluxify/ops/fluxifyUnfollowFluxify";
 
 const ops : Array<FluxifyOp> = [
     mergeOp,
     exclusiveLikedOp,
+    unfollowFluxifyOp,
 ]
 
 export const fluxifyLink = `/fluxify`;
@@ -56,7 +58,7 @@ export default function Fluxify() {
             throwError(getLoadingError(`Fluxify`));
             return <FluxifyLoading />;
         }
-        const currentOpData = currentOp ? ops.find(op => op.getKey() === currentOp) : undefined;
+        const currentOpData = currentOp ? ops.find(op => op.getName() === currentOp) : undefined;
         const CurrentOpComponent = currentOpData ? currentOpData.getComponent() : undefined;
         return (
             <>
@@ -64,15 +66,15 @@ export default function Fluxify() {
                 <InterfaceWrapper disabled={ disabled }>
                     <SelectCollapse 
                         title={ `Select an Operation` }
-                        value={ currentOpData ? currentOpData.getName() : `` }
+                        value={ currentOpData ? currentOpData.getDescription() : `` }
                     >
                         <SelectWrapper>
                             { ops.map(op => (
                                 <SelectButton
-                                    key={ op.getKey() }
-                                    onClick={ () => setCurrentOp(op.getKey()) }
+                                    key={ op.getName() }
+                                    onClick={ () => setCurrentOp(op.getName()) }
                                 >
-                                    { op.getName() }
+                                    { op.getDescription() }
                                 </SelectButton>
                             )) }
                         </SelectWrapper>
@@ -82,7 +84,7 @@ export default function Fluxify() {
                             <CurrentOpComponent
                                 token={ token }
                                 client={ client }
-                                throwError={ e => throwError(e) }
+                                throwGlobalError={ e => throwError(e) }
                                 disable={ () => setDisabled(true) }
                                 enable={ () => setDisabled(false) }
                                 finish={ () => {

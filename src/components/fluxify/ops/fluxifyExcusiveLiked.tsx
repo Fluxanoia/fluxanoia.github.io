@@ -1,100 +1,83 @@
-import React, { useEffect } from "react";
+import { shuffle } from "lodash";
+import React from "react";
 import styled from "styled-components";
+import useOptionSelector, { Option, BooleanOptionComponent, BooleanOptionNextValue } from "../../../hooks/optionsSelector";
+import usePlaylistImageSelector from "../../../hooks/playlistImageSelector";
 import usePlaylistSelector from "../../../hooks/playlistSelector";
-import { discernError, getLoadingError, useError } from "../../../hooks/spotifyError";
+import { getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
-import { spacing2 } from "../../../utils/dimensions";
 import { createPlaylist, loadAllTracks, loadLiked, addToPlaylist } from "../../../utils/spotify";
-import Button from "../../button";
 import FluxifyLoading from "../fluxifyLoading";
-import FluxifyOp, { FluxifyOpProps } from "./fluxifyOp";
+import FluxifyOp, { FluxifyOpProps, renderOp, useErrorAggregator } from "./fluxifyOp";
 
-export const exclusiveLikedOp = new FluxifyOp(
-    `exclusiveLiked`,
-    `Find exclusive liked songs`,
-    FluxifyExclusiveLiked,
-);
+const shuffleOption : Option<boolean> = {
+    key: `shuffle`,
+    name: `Shuffle`,
+    def: false,
+    getNextValue: BooleanOptionNextValue,
+    component: BooleanOptionComponent,
+};
+const optionInfo : Array<Option<any>> = [shuffleOption];
+
+const opName = `ExclusivelyLiked`;
+const opDesc = `Find exclusively liked songs`;
+export const exclusiveLikedOp = new FluxifyOp(opName, opDesc, FluxifyExclusiveLiked);
 export default function FluxifyExclusiveLiked({
     token,
     client,
-    throwError,
+    throwGlobalError,
     disable,
     finish,
 } : FluxifyOpProps) {
     const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
-    const [selectorComponent, selected] = usePlaylistSelector(playlists, metadata);
-    const [localError, throwLocalError] = useError();
+    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata);
+    const [optionsComponent, options] = useOptionSelector('options', optionInfo);
+    const [imageComponent, imageColour] = usePlaylistImageSelector('image');
+    const [localError, throwError] = useError();
+    const hasError = useErrorAggregator(throwGlobalError, [localError, playlistError])
 
-    useEffect(() => {
-        if (localError || playlistError) throwError(discernError(localError, playlistError));
-    }, [throwError, localError, playlistError]);
-    
-    const run = () => {
-        if (selected.length === 0) return;
-        disable();
-        (async () => {
-            const newPlaylist = await createPlaylist(
-                client,
-                throwLocalError,
-                `Fluxify-ExclusiveLiked`,
-                `gets the exclusive liked songs w.r.t.: ${selected.map(p => p.name).join(`, `)}`
-            );
-            if (newPlaylist) {
-                const likedTracks = await loadLiked(client, throwLocalError);
-                if (likedTracks) {
-                    const likedUris = new Set(likedTracks.items.map(t => t.track.uri));
-                    const trackUris = new Set(
-                        (await loadAllTracks(selected, throwLocalError)).map(t => t.track.uri));
-                    let exclusives = [];
-                    for (const liked of likedUris) {
-                        if (!trackUris.has(liked)) exclusives.push(liked);
-                    }
-                await addToPlaylist(newPlaylist, exclusives, throwLocalError);
-                // await newPlaylist.uploadImage(`${window.location.origin}/res/fluxify.jpg`)
-                //     .catch(throwLocalError)
-                finish();
-                }
-            }
-        })();
+    const run = async () => {
+        const newPlaylist = await createPlaylist(client, throwError, opName,
+            `gets the exclusive liked songs w.r.t.: ${selected.map(p => p.name).join(`, `)}`,
+            imageColour
+        );
+        if (!newPlaylist) return false;
+        const likedTracks = await loadLiked(client, throwError);
+        if (!likedTracks) return false;
+        const playlistTracks = await loadAllTracks(selected, throwError);
+        if (!playlistTracks) return false;
+        let exclusives = [];
+        const trackUris = new Set(playlistTracks.map(t => t.track.uri));
+        const likedUris = new Set(likedTracks.items.map(t => t.track.uri));
+        for (const liked of likedUris) {
+            if (!trackUris.has(liked)) exclusives.push(liked);
+        }
+        if (options[shuffleOption.key]) exclusives = shuffle(exclusives);
+        return await addToPlaylist(newPlaylist, exclusives, throwError);
     };
 
-
-    if (localError || playlistError) {
+    if (hasError) {
         return <FluxifyLoading />;
     } else if (loaded) {
         if (!playlists) {
-            throwLocalError(getLoadingError(`FluxifyExclusiveLiked`));
+            throwError(getLoadingError(opName));
             return <FluxifyLoading />;
         }
-        return (
-            <>
-                <TextContainer>
-                    { `
-                        This operation will create a new playlist consisting of the songs in
-                        your Liked that aren't in any of the selected playlists.
-                    ` }
-                </TextContainer>
-                <SelectorWrapper removeMargin>
-                    { selectorComponent }
-                </SelectorWrapper>
-                { 
-                    selected.length > 0 ? (
-                        <GenerateButton onClick={ run }>
-                            { `Generate` }
-                        </GenerateButton>
-                    ) : `` 
-                }
-            </>
-        );
+        const components = [
+            <TextContainer key={ `description `}>
+                { `
+                    This operation will create a new playlist consisting of the songs in
+                    your Liked that aren't in any of the selected playlists.
+                ` }
+            </TextContainer>,
+            selectorComponent,
+            optionsComponent,
+            imageComponent,
+        ]
+        return renderOp(components, selected.length > 0, run, disable, finish);
     } else {
         return <FluxifyLoading />;
     }
 }
 
 const TextContainer = styled.p``;
-const SelectorWrapper = styled.div<{ removeMargin? : boolean }>`
-    ${props => props.removeMargin ? `` : `margin-bottom: ${spacing2};`}
-`;
-const GenerateButton = styled(Button)`
-    margin-top: ${spacing2};
-`;

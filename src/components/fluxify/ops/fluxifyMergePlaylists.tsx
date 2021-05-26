@@ -1,15 +1,14 @@
 import { shuffle, uniqBy } from "lodash";
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import useOptionSelector, { BooleanOptionComponent, BooleanOptionNextValue, Option } from "../../../hooks/optionsSelector";
+import usePlaylistImageSelector from "../../../hooks/playlistImageSelector";
 import usePlaylistSelector from "../../../hooks/playlistSelector";
-import { discernError, getLoadingError, useError } from "../../../hooks/spotifyError";
+import { getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
-import { spacing2 } from "../../../utils/dimensions";
 import { addToPlaylist, createPlaylist, loadAllTracks } from "../../../utils/spotify";
-import Button from "../../button";
 import FluxifyLoading from "../fluxifyLoading";
-import FluxifyOp, { FluxifyOpProps } from "./fluxifyOp";
+import FluxifyOp, { FluxifyOpProps, renderOp, useErrorAggregator } from "./fluxifyOp";
 
 const distinctOption : Option<boolean> = {
     key: `distinct`,
@@ -27,87 +26,59 @@ const shuffleOption : Option<boolean> = {
 };
 const optionInfo : Array<Option<any>> = [distinctOption, shuffleOption];
 
-export const mergeOp = new FluxifyOp(
-    `merge`,
-    `Merge playlists`,
-    FluxifyMerge,
-);
+const opName = `Merge`;
+const opDesc = `Merge playlists`;
+export const mergeOp = new FluxifyOp(opName, opDesc, FluxifyMerge);
 export default function FluxifyMerge({
     token,
     client,
-    throwError,
+    throwGlobalError,
     disable,
     finish,
 } : FluxifyOpProps) {
     const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
-    const [selectorComponent, selected] = usePlaylistSelector(playlists, metadata);
-    const [optionsComponent, options] = useOptionSelector(optionInfo);
-    const [localError, throwLocalError] = useError();
+    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata);
+    const [optionsComponent, options] = useOptionSelector('options', optionInfo);
+    const [imageComponent, imageColour] = usePlaylistImageSelector('image');
+    const [localError, throwError] = useError();
+    const hasError = useErrorAggregator(throwGlobalError, [localError, playlistError])
 
-    useEffect(() => {
-        if (localError || playlistError) throwError(discernError(localError, playlistError));
-    }, [throwError, localError, playlistError]);
-
-    const run = () => {
-        if (selected.length === 0) return;
-        disable();
-        (async () => {
-            const newPlaylist = await createPlaylist(
-                client,
-                throwLocalError,
-                `Fluxify-Merge`,
-                `merges: ${selected.map(p => p.name).join(`, `)}`
-            );
-            if (newPlaylist) {
-                let tracks = (await loadAllTracks(selected, throwLocalError))
-                    .map(t => t.track.uri);
-                if (options[distinctOption.key]) tracks = uniqBy(tracks, t => t);
-                if (options[shuffleOption.key]) tracks = shuffle(tracks);
-                await addToPlaylist(newPlaylist, tracks, throwLocalError);
-                finish();
-            }
-        })();
+    const run = async () => {
+        const newPlaylist = await createPlaylist(client, throwError, opName,
+            `merges: ${selected.map(p => p.name).join(`, `)}`,
+            imageColour
+        );
+        if (!newPlaylist) return false;
+        const tracks = await loadAllTracks(selected, throwError);
+        if (!tracks) return false;
+        let trackUris = tracks.map(t => t.track.uri);
+        if (options[distinctOption.key]) trackUris = uniqBy(trackUris, t => t);
+        if (options[shuffleOption.key]) trackUris = shuffle(trackUris);
+        return await addToPlaylist(newPlaylist, trackUris, throwError);
     };
 
-    if (localError || playlistError) {
+    if (hasError) {
         return <FluxifyLoading />;
     } else if (loaded) {
         if (!playlists) {
-            throwLocalError(getLoadingError(`FluxifyExclusiveLiked`));
+            throwError(getLoadingError(opName));
             return <FluxifyLoading />;
         }
-        return (
-            <>
-                <TextContainer>
-                    { `
-                        This operation will create a new playlist which contains all the
-                        selected playlists.
-                    ` }
-                </TextContainer>
-                <SelectorWrapper>
-                    { selectorComponent }
-                </SelectorWrapper>
-                <SelectorWrapper removeMargin={ true }>
-                    { optionsComponent }
-                </SelectorWrapper>
-                { 
-                    selected.length > 0 ? (
-                        <GenerateButton onClick={ run }>
-                            { `Generate` }
-                        </GenerateButton>
-                    ) : `` 
-                }
-            </>
-        );
+        const components = [
+            <TextContainer key={ `description` }>
+                { `
+                    This operation will create a new playlist which contains all the
+                    selected playlists.
+                ` }
+            </TextContainer>,
+            selectorComponent,
+            optionsComponent,
+            imageComponent,
+        ]
+        return renderOp(components, selected.length > 0, run, disable, finish);
     } else {
         return <FluxifyLoading />;
     }
 }
 
 const TextContainer = styled.p``;
-const SelectorWrapper = styled.div<{ removeMargin? : boolean }>`
-    ${props => props.removeMargin ? `` : `margin-bottom: ${spacing2};`}
-`;
-const GenerateButton = styled(Button)`
-    margin-top: ${spacing2};
-`;

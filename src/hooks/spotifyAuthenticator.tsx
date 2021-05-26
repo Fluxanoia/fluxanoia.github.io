@@ -14,7 +14,7 @@ const scopes = [
 ];
 
 export const getRedirect = (w : Window) => {
-    return (typeof w !== "undefined") ? w.location.href : "https://fluxanoia.co.uk/fluxify";
+    return (typeof w !== "undefined") ? w.location.href : `https://fluxanoia.co.uk/fluxify`;
 }
 export const getAuthUrl = (w : Window) => {
     return (

@@ -13,6 +13,7 @@ type PlaylistSelectorOptions = {
     title? : string,
 }
 export default function usePlaylistSelector(
+    key : string,
     playlists : Array<Playlist> | null,
     playlistData : PlaylistData | null,
     options? : PlaylistSelectorOptions,
@@ -46,7 +47,8 @@ export default function usePlaylistSelector(
     const component = useMemo(() => {
         if (!playlists || !playlistData) return <></>;
         return (
-            <CollapseContainer 
+            <CollapseContainer
+                key={ key }
                 title={ (options ?? {}).title ?? `Select Playlists` }
                 value={ `${quantityText(selected.length, playlists.length, `playlist`)} selected` }
             >
@@ -64,7 +66,7 @@ export default function usePlaylistSelector(
                 </PlaylistsContainer>
             </CollapseContainer>
         );
-    }, [options, components, selected, playlists, playlistData, selectAll, selectNone])
+    }, [key, options, components, selected, playlists, playlistData, selectAll, selectNone])
 
     const selectedPlaylists = (playlists ?? []).filter((p : Playlist) => isSelected(p.id));
     return [component, selectedPlaylists];
