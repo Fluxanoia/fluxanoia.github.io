@@ -1,9 +1,9 @@
 import { shuffle } from "lodash";
 import React from "react";
 import styled from "styled-components";
+import { usePlaylistSelector } from "../../../hooks/elementSelector";
 import useOptionSelector, { Option, BooleanOptionComponent, BooleanOptionNextValue } from "../../../hooks/optionsSelector";
 import usePlaylistImageSelector from "../../../hooks/playlistImageSelector";
-import usePlaylistSelector from "../../../hooks/playlistSelector";
 import { getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
 import { createPlaylist, loadAllTracks, loadLiked, addToPlaylist } from "../../../utils/spotify";
@@ -29,8 +29,8 @@ export default function FluxifyExclusiveLiked({
     disable,
     finish,
 } : FluxifyOpProps) {
-    const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
-    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata);
+    const [playlists, loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists);
     const [optionsComponent, options] = useOptionSelector('options', optionInfo);
     const [imageComponent, imageColour] = usePlaylistImageSelector('image');
     const [localError, throwError] = useError();

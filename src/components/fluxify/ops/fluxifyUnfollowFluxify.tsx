@@ -15,7 +15,7 @@ export default function FluxifyUnfollowFluxify({
     disable,
     finish,
 } : FluxifyOpProps) {
-    const [playlists, , loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const [playlists, loaded, playlistError] = useSpotifyPlaylists(token, client);
     const [localError, throwError] = useError();
     const hasError = useErrorAggregator(throwGlobalError, [localError, playlistError]);
     

@@ -1,9 +1,9 @@
 import { shuffle, uniqBy } from "lodash";
 import React from "react";
 import styled from "styled-components";
+import { usePlaylistSelector } from "../../../hooks/elementSelector";
 import useOptionSelector, { BooleanOptionComponent, BooleanOptionNextValue, Option } from "../../../hooks/optionsSelector";
 import usePlaylistImageSelector from "../../../hooks/playlistImageSelector";
-import usePlaylistSelector from "../../../hooks/playlistSelector";
 import { getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
 import { addToPlaylist, createPlaylist, loadAllTracks } from "../../../utils/spotify";
@@ -36,8 +36,8 @@ export default function FluxifyMerge({
     disable,
     finish,
 } : FluxifyOpProps) {
-    const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
-    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata, {
+    const [playlists, loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, {
         includeLiked: true,
     });
     const [optionsComponent, options] = useOptionSelector('options', optionInfo);

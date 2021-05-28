@@ -1,6 +1,6 @@
 import React from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
-import { Image, Playlist } from "spotify-api.js";
+import { Image, SpotifyURI } from "spotify-api.js";
 import styled from "styled-components";
 import { ifSmall, spacing1, spacing2 } from "../../utils/dimensions";
 import { clearButtonStyling } from "../../utils/globalStyling";
@@ -10,51 +10,43 @@ const imageId = "image";
 const titleId = "title";
 const checkId = "check";
 
-export type LikedSongs = {
-    collaborative : boolean,
-    description : string, 
+export type Element<T> = {
     id : string,
-    images : Array<Image>,
     name : string,
-    public : boolean,
-} 
-export const LikedSongsPlaylist : LikedSongs = {
-    collaborative: false,
-    description: ``, 
-    id: `likedSongs`,
-    images: [],
-    name: `Liked Songs`,
-    public: false,
+    images : Array<Image>,
+    uri? : SpotifyURI,
+    raw? : T,
+    data? : { [key : string] : any },
 };
 
-export default function FluxifyPlaylist(
-    playlist : Playlist | LikedSongs,
+export default function FluxifyElement<T>(
+    element : Element<T>,
     selected : boolean,
     onClick : (id : string, selected : boolean) => void,
 ) {
     return (
-        <PlaylistContainer 
-            key={ playlist.id }
-            onClick={ () => onClick(playlist.id, !selected) }
+        <ElementContainer 
+            key={ element.id }
+            onClick={ () => onClick(element.id, !selected) }
         >
             <LayerContainer>
                 <ImageLayer>
                     <ImageElement
                         id={ imageId }
-                        liked={ !(playlist instanceof Playlist) }
-                        images={ playlist.images }
+                        images={ element.images }
+                        {...element.data}
                     />
                 </ImageLayer>
                 <TitleLayer id={ titleId }>
                     <Title>
-                        { playlist.name }
+                        { element.name }
                     </Title>
                 </TitleLayer>
                 <CheckLayer id={ checkId }>
                     <Check selected={ selected }/>
                 </CheckLayer>
             </LayerContainer>
-        </PlaylistContainer>
+        </ElementContainer>
     );
 }
 
@@ -86,7 +78,7 @@ const Layer = styled(Sized)`
     right: auto;
 `;
 
-const PlaylistContainer = styled.button`
+const ElementContainer = styled.button`
     display: flex;
     flex-direction: column;
     align-items: flex-start;

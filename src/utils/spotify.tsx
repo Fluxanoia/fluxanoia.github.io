@@ -1,6 +1,6 @@
 import { createCanvas } from "canvas";
-import Client, { CreatePlaylist, Paging, PagingOptions, Playlist, SpotifyURI } from "spotify-api.js";
-import { LikedSongs } from "../components/fluxify/fluxifyPlaylist";
+import Client, { CreatePlaylist, Paging, PagingOptions, Playlist, PlaylistTrackType, SpotifyURI } from "spotify-api.js";
+import { Element } from "../components/fluxify/fluxifyElement";
 import { randomString } from "./misc";
 
 export const spotifyPlaylistTitleLimit = 100;
@@ -84,15 +84,26 @@ export const loadPlaylists = async (
 
 export const loadTracks = async (
     client : Client,
-    playlist : Playlist | LikedSongs,
+    playlist : Playlist | Element<Playlist>,
     throwError : (error : Error) => void,
 ) => {
+    const args = (p : Playlist) : [
+        (options?: PagingOptions) => Promise<Paging<PlaylistTrackType>>,
+        (error : Error) => void,
+        number,
+    ] => [
+        (o?: PagingOptions) => p.getTracks(o),
+        throwError,
+        spotifyTrackLimit,
+    ];
     if (playlist instanceof Playlist) {
-        return load((o?: PagingOptions) => playlist.getTracks(o), throwError, spotifyTrackLimit);
+        return load(...args(playlist));
+    } else if (playlist.raw) {
+        return load(...args(playlist.raw));
     } else {
         return loadLiked(client, throwError);
     }
-}
+};
 
 export const loadLiked = async (
     client : Client,
@@ -101,7 +112,7 @@ export const loadLiked = async (
 
 export const loadAllTracks = async (
     client : Client,
-    playlists : Array<Playlist | LikedSongs>,
+    playlists : Array<Playlist | Element<Playlist>>,
     throwError : (error : Error) => void,
 ) => {
     let tracks = [];

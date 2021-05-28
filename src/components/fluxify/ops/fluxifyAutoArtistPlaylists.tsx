@@ -1,8 +1,8 @@
 import React from "react";
 import { Artist, SpotifyURI, Track } from "spotify-api.js";
 import styled from "styled-components";
+import { usePlaylistSelector } from "../../../hooks/elementSelector";
 import usePlaylistImageSelector from "../../../hooks/playlistImageSelector";
-import usePlaylistSelector from "../../../hooks/playlistSelector";
 import { getLoadingError, useError } from "../../../hooks/spotifyError";
 import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
 import { createPlaylist, loadAllTracks, addToPlaylist } from "../../../utils/spotify";
@@ -19,8 +19,8 @@ export default function FluxifyAutoArtistPlaylists({
     disable,
     finish,
 } : FluxifyOpProps) {
-    const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
-    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata, {
+    const [playlists, loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, {
         includeLiked: true,
     });
     const [imageComponent, imageColour] = usePlaylistImageSelector('image');
