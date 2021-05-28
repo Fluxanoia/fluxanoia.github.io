@@ -4,20 +4,21 @@ import { Playlist } from "spotify-api.js";
 import styled from "styled-components";
 import Button from "../components/button";
 import Collapse from "../components/collapse";
-import FluxifyPlaylist from "../components/fluxify/fluxifyPlaylist";
+import FluxifyPlaylist, { LikedSongs, LikedSongsPlaylist } from "../components/fluxify/fluxifyPlaylist";
 import { spacing2, ifSuperSmall, spacing1 } from "../utils/dimensions";
 import { quantityText } from "../utils/misc";
 import { PlaylistData } from "./spotifyPlaylists";
 
 type PlaylistSelectorOptions = {
     title? : string,
+    includeLiked? : boolean,
 }
 export default function usePlaylistSelector(
     key : string,
     playlists : Array<Playlist> | null,
     playlistData : PlaylistData | null,
     options? : PlaylistSelectorOptions,
-) : [JSX.Element, Array<Playlist>] {
+) : [JSX.Element, Array<Playlist | LikedSongs>] {
     const [components, setComponents] = useState<Array<JSX.Element>>([]);
     const [selected, setSelected] = useState<Array<string>>([]);
 
@@ -33,9 +34,16 @@ export default function usePlaylistSelector(
     }, [selected, setSelected]);
 
     useEffect(() => {
-        setComponents((playlists ?? [])
-            .map((p : Playlist) => FluxifyPlaylist(p, isSelected(p.id), updateSelected)));
-    }, [playlists, setComponents, selected, isSelected, updateSelected])
+        let components = []
+        if (options?.includeLiked) {
+            const p = LikedSongsPlaylist;
+            components.push(FluxifyPlaylist(p, isSelected(p.id), updateSelected));
+        }
+        components.push(...(playlists ?? []).map((p : Playlist) => (
+            FluxifyPlaylist(p, isSelected(p.id), updateSelected)
+        )));
+        setComponents(components);
+    }, [playlists, options?.includeLiked, setComponents, selected, isSelected, updateSelected])
     
     const selectAll = useCallback(() => {
         setSelected((playlists ?? []).map(p => p.id));
@@ -68,7 +76,9 @@ export default function usePlaylistSelector(
         );
     }, [key, options, components, selected, playlists, playlistData, selectAll, selectNone])
 
-    const selectedPlaylists = (playlists ?? []).filter((p : Playlist) => isSelected(p.id));
+    const selectedPlaylists = Array<Playlist | LikedSongs>(...(playlists ?? []))
+        .concat(options && options.includeLiked ? [LikedSongsPlaylist] : [])
+        .filter((p : Playlist | LikedSongs) => isSelected(p.id));
     return [component, selectedPlaylists];
 }
 
@@ -78,6 +88,7 @@ const PlaylistsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: ${spacing1};
 `;
 const SelectInfoContainer = styled.div`
     display: flex;

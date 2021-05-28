@@ -1,16 +1,34 @@
 import React from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
-import { Playlist } from "spotify-api.js";
+import { Image, Playlist } from "spotify-api.js";
 import styled from "styled-components";
 import { ifSmall, spacing1, spacing2 } from "../../utils/dimensions";
+import { clearButtonStyling } from "../../utils/globalStyling";
 import SpotifyImage from "./fluxifyImages";
 
 const imageId = "image";
 const titleId = "title";
 const checkId = "check";
 
+export type LikedSongs = {
+    collaborative : boolean,
+    description : string, 
+    id : string,
+    images : Array<Image>,
+    name : string,
+    public : boolean,
+} 
+export const LikedSongsPlaylist : LikedSongs = {
+    collaborative: false,
+    description: ``, 
+    id: `likedSongs`,
+    images: [],
+    name: `Liked Songs`,
+    public: false,
+};
+
 export default function FluxifyPlaylist(
-    playlist : Playlist,
+    playlist : Playlist | LikedSongs,
     selected : boolean,
     onClick : (id : string, selected : boolean) => void,
 ) {
@@ -20,7 +38,13 @@ export default function FluxifyPlaylist(
             onClick={ () => onClick(playlist.id, !selected) }
         >
             <LayerContainer>
-                <Image id={ imageId } images={ playlist.images }/>
+                <ImageLayer>
+                    <ImageElement
+                        id={ imageId }
+                        liked={ !(playlist instanceof Playlist) }
+                        images={ playlist.images }
+                    />
+                </ImageLayer>
                 <TitleLayer id={ titleId }>
                     <Title>
                         { playlist.name }
@@ -47,20 +71,32 @@ const sizing = `
 const layering = `position: absolute;`;
 
 const Sized = styled.div`${sizing}`;
-const LayerContainer = styled(Sized)`position: relative;`;
-const Layer = styled(Sized)`${layering}`;
+const LayerContainer = styled(Sized)`
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+`;
+const Layer = styled(Sized)`
+    ${layering}
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+`;
 
-const PlaylistContainer = styled(Sized)`
+const PlaylistContainer = styled.button`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 
+    ${clearButtonStyling}
+
+    ${sizing}
     margin-left: ${spacing1};
     margin-right: ${spacing1};
     margin-bottom: ${spacing2};
-    padding: ${spacing1};
-
-    cursor: pointer;
 
     #${imageId} {
         filter: none;
@@ -78,7 +114,12 @@ const PlaylistContainer = styled(Sized)`
     }
 `;
 
-const Image = styled(SpotifyImage)`
+const ImageLayer = styled(Layer)`
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+`;
+const ImageElement = styled(SpotifyImage)`
     ${sizing}
     ${layering}
 `;

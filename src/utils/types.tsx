@@ -16,6 +16,7 @@ export const isLoaded = (...states : Array<LoadingState>) => {
 
 export type AnchorProps = React.ComponentPropsWithoutRef<"a">;
 export type DivProps = React.ComponentPropsWithoutRef<"div">;
+export type ButtonProps = React.ComponentPropsWithoutRef<"button">;
 export type ImgProps = React.ComponentPropsWithoutRef<"img">;
 export type H1Props = React.ComponentPropsWithoutRef<"h1">;
 export type H2Props = React.ComponentPropsWithoutRef<"h2">;

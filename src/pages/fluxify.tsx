@@ -15,10 +15,12 @@ import { discernErrorMessage, getLoadingError, useError } from "../hooks/spotify
 import { exclusiveLikedOp } from "../components/fluxify/ops/fluxifyExcusiveLiked";
 import { mergeOp } from "../components/fluxify/ops/fluxifyMergePlaylists";
 import { unfollowFluxifyOp } from "../components/fluxify/ops/fluxifyUnfollowFluxify";
+import { autoArtistPlaylistsOp } from "../components/fluxify/ops/fluxifyAutoArtistPlaylists";
 
 const ops : Array<FluxifyOp> = [
     mergeOp,
     exclusiveLikedOp,
+    autoArtistPlaylistsOp,
     unfollowFluxifyOp,
 ]
 

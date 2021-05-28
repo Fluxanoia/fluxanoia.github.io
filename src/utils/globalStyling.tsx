@@ -24,13 +24,28 @@ export const buttonStyling = `
 
     display: block;
     width: 100%;
-    color: ${textColour};
-    background-color: ${containerColour};
+    padding: 0;
+
     text-align: center;
     cursor: pointer;
 
+    color: ${textColour};
+    background-color: ${containerColour};
     &:hover {
         ${buttonHoverStyling}
+    }
+`;
+export const clearButtonStyling = `
+    width: auto;
+
+    border: none;
+    box-shadow: none;
+
+    color: inherit;
+    background-color: transparent;
+    &:hover {
+        color: inherit;
+        background-color: transparent;
     }
 `;
 

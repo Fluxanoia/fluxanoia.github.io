@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components";
 import { HiOutlineArrowCircleRight } from "react-icons/hi";
-import { spacing2, spacing4 } from "../utils/dimensions";
+import { spacing1, spacing2, spacing4 } from "../utils/dimensions";
 import { containerBorderColour } from "../utils/colours";
 import Pill from "./pill";
 import { DivProps } from "../utils/types";
@@ -17,13 +17,15 @@ export default function Collapse(props : CollapseProps) {
     const { title, value, children, ...otherProps } = props;
     return (
         <MainContainer key={ props.title } {...otherProps}>
-            <Pill radius={ radius } onClick={ () => setOpen(o => !o) }>
-                <Arrow open={ open } />
-                { title }
-                <ValueContainer>
-                    { value }
-                </ValueContainer>
-            </Pill>
+            <PillContainer>
+                <Pill radius={ radius } onClick={ () => setOpen(o => !o) }>
+                    <Arrow open={ open } />
+                    { title }
+                    <ValueContainer>
+                        { value }
+                    </ValueContainer>
+                </Pill>
+            </PillContainer>
             <ChildContainer open={ open }>
                 { children }
             </ChildContainer>
@@ -34,6 +36,9 @@ export default function Collapse(props : CollapseProps) {
 const MainContainer = styled.div`
     border: 2px solid ${containerBorderColour};
     border-radius: ${radius};
+`;
+const PillContainer = styled.div`
+    padding: ${spacing1};
 `;
 const Arrow = styled(HiOutlineArrowCircleRight)<{ open : boolean }>`
     flex-shrink: 0;

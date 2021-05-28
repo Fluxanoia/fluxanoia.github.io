@@ -37,7 +37,9 @@ export default function FluxifyMerge({
     finish,
 } : FluxifyOpProps) {
     const [playlists, metadata, loaded, playlistError] = useSpotifyPlaylists(token, client);
-    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata);
+    const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, metadata, {
+        includeLiked: true,
+    });
     const [optionsComponent, options] = useOptionSelector('options', optionInfo);
     const [imageComponent, imageColour] = usePlaylistImageSelector('image');
     const [localError, throwError] = useError();
@@ -49,7 +51,7 @@ export default function FluxifyMerge({
             imageColour
         );
         if (!newPlaylist) return false;
-        const tracks = await loadAllTracks(selected, throwError);
+        const tracks = await loadAllTracks(client, selected, throwError);
         if (!tracks) return false;
         let trackUris = tracks.map(t => t.track.uri);
         if (options[distinctOption.key]) trackUris = uniqBy(trackUris, t => t);

@@ -44,7 +44,7 @@ export default function FluxifyExclusiveLiked({
         if (!newPlaylist) return false;
         const likedTracks = await loadLiked(client, throwError);
         if (!likedTracks) return false;
-        const playlistTracks = await loadAllTracks(selected, throwError);
+        const playlistTracks = await loadAllTracks(client, selected, throwError);
         if (!playlistTracks) return false;
         let exclusives = [];
         const trackUris = new Set(playlistTracks.map(t => t.track.uri));

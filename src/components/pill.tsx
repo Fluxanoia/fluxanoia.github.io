@@ -1,25 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { spacing1, spacing2, spacing4 } from "../utils/dimensions";
-import { H3Props } from "../utils/types";
+import { clearButtonStyling } from "../utils/globalStyling";
+import { ButtonProps } from "../utils/types";
 
 type PillProps = {
     radius? : string,
-} & H3Props;
+} & ButtonProps;
 export default function Pill(props : PillProps) {
     return <PillContainer {...props} />
 }
 
-const PillContainer = styled.h3<PillProps>`
+const PillContainer = styled.button<PillProps>`
     display: flex;
     align-items: center;
-    margin: 0px;
+
+    ${clearButtonStyling}
+    width: 100%;
     padding-top: ${spacing1};
     padding-bottom: ${spacing1};
     padding-left: ${spacing2};
 
-    cursor: pointer;
-
+    font-size: 24px;
     white-space: nowrap;
     overflow: hidden;
 
