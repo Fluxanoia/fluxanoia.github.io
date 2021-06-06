@@ -29,8 +29,6 @@ export const fluxifyPage : Page = new Page(Fluxify, {
     accentColour: "#1DB954",
     name: "Fluxify",
     link: fluxifyLink,
-
-    onNavbar: true,
 });
 export default function Fluxify() {
     const [error, throwError, resetError] = useError();

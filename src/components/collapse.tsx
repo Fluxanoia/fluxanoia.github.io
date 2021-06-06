@@ -8,7 +8,7 @@ import { DivProps } from "../utils/types";
 
 const radius = spacing4;
 
-type CollapseProps = {
+export type CollapseProps = {
     title : string,
     value? : string,
 } & DivProps;

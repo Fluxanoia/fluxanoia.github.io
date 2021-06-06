@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 export const cvFilePath = "/cv/tyler";
 export const cvTyler : Page = new Page(CvPdf, {
-    name: "CV",
+    name: "Tyler's CV",
     link: cvFilePath,
     independent: true,
 });

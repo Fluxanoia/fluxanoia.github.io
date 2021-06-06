@@ -18,16 +18,19 @@ import { githubPage } from "./pages/external";
 import { cvTyler } from "./pages/cv/cvTyler";
 import { teelaiPage } from "./pages/teelai";
 import { fluxifyPage } from "./pages/fluxify";
+import { contactMePage } from "./pages/contact";
 
 const pages : Array<Page> = [
     homePage,
     projectsPage,
-    fluxifyPage,
     cvPage,
-    githubPage,
+    contactMePage,
     discordPage,
     specsPage,
     teelaiPage,
+
+    fluxifyPage,
+    githubPage,
 
     cvTyler,
 
@@ -38,6 +41,17 @@ const getCurrentIndex = (link : string) => {
     let currentPageIndex = pages.findIndex(p => p.hasLink(link));
     return (currentPageIndex < 0) ? getNotFoundIndex() : currentPageIndex;
 };
+
+const getNavbarButtonRenderer = (pageIndex : number) => {
+    return (page : Page, index : number) => {
+        if (!page.isOnNavbar()) return null;
+        return page.getButton(pageIndex === index);
+    }
+}
+const renderRoute = (page : Page) => {
+    if (!page.isLocal()) return null;
+    return page.getRoute();
+}
 
 type AppProps = {
     history  : History<LocationState>,
@@ -52,22 +66,16 @@ const App = (props : AppProps) => {
         setPageIndex(currentPageIndex);
     }, [props, pageIndex]);
 
-    const renderNavbarButton = (page : Page, index : number) => {
-        if (!page.isOnNavbar) console.error("Rendering as navbar button illegally.")
-        return page.getButton(pageIndex === index);
-    }
-    const renderRoute = (page : Page) => {
-        if (!page.isLocal()) console.error("Rendering external route.")
-        return page.getRoute();
-    }
-
-    const routes = pages.filter((page : Page) => page.isLocal()).map(renderRoute);
+    const routes = pages.map(renderRoute).filter(p => p);
     if (pages[pageIndex].isIndependent()) {
         return (<Switch>{ routes }</Switch>);
     }
-
     const accentColour = pages[pageIndex].getColour();
-    const navbarButtons = pages.filter((page : Page) => page.isOnNavbar()).map(renderNavbarButton);
+    const navbarButtons = pages.map(getNavbarButtonRenderer(pageIndex)).filter(b => b);
+
+    console.log(routes);
+    console.log(navbarButtons);
+
     return (
         <AppContainer>
             <GlobalStyling bgColour={ accentColour } />
@@ -80,7 +88,6 @@ const App = (props : AppProps) => {
                     { routes }
                 </Switch>
             </MainContainer> 
-            <Spacer />
             <Footer />
         </AppContainer>
     );
@@ -130,8 +137,4 @@ const MainContainer = styled.div<{ accentColour : string }>`
         color: ${props => props.accentColour};
         transition: color ${bgTransitionTime};
     }
-`;
-
-const Spacer = styled.div`
-    flex-grow: 1;
 `;
