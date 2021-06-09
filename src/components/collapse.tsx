@@ -63,7 +63,7 @@ type ChildContainerProps = {
     height? : string,
 }
 const ChildContainer = styled.div<ChildContainerProps>`
-    ${props => props.open ? `` : `height: 0px;`}
+    ${props => props.open ? `` : `display: none;`}
     overflow: hidden;
     border-radius: ${radius};
 `;
