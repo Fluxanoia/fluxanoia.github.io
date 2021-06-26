@@ -14,9 +14,9 @@ export default function useSpotifyPlaylists(
     const [playlists, setPlaylists] = useState<Array<Playlist> | null>(null);
 
     const reset = useCallback(() => {
+        setLoadState(LoadingState.NONE);
         resetError();
         setPlaylists(null);
-        setLoadState(LoadingState.NONE);
     }, [resetError, setPlaylists, setLoadState]);
 
     useEffect(() => {

@@ -16,6 +16,7 @@ import { exclusiveLikedOp } from "../components/fluxify/ops/fluxifyExcusiveLiked
 import { mergeOp } from "../components/fluxify/ops/fluxifyMergePlaylists";
 import { unfollowFluxifyOp } from "../components/fluxify/ops/fluxifyUnfollowFluxify";
 import { autoArtistPlaylistsOp } from "../components/fluxify/ops/fluxifyAutoArtistPlaylists";
+import useSpotifyPlaylists from "../hooks/spotifyPlaylists";
 
 const ops : Array<FluxifyOp> = [
     mergeOp,
@@ -34,7 +35,9 @@ export default function Fluxify() {
     const [error, throwError, resetError] = useError();
     const [token, _logout] = useSpotifyAuth();
     const [client, loaded, clientError, resetClient] = useSpotifyClient(token);
-   
+    
+    const [playlists, playlistLoaded, playlistError, resetPlaylists] = useSpotifyPlaylists(token, client);
+
     const [currentOp, setCurrentOp] = useState<string | null>(null);
     const [disabled, setDisabled] = useState(false);
 
@@ -42,24 +45,32 @@ export default function Fluxify() {
         _logout();
         resetError();
         resetClient();
-    }, [_logout, resetError, resetClient]);
+        resetPlaylists();
+    }, [_logout, resetError, resetClient, resetPlaylists]);
 
-    if (error || clientError) {
+    if (error || clientError || playlistError) {
         return (
             <FluxifyLogoutPage
                 logout={ logout }
-                message={ discernErrorMessage(error, clientError) }
+                message={ discernErrorMessage(error, clientError, playlistError) }
             />
         );
     } else if (!token) {
         return <FluxifyLoginPage window={ window } />;
-    } else if (loaded) {
-        if (!client) {
+    } else if (loaded && playlistLoaded) {
+        if (!client || !playlists) {
             throwError(getLoadingError(`Fluxify`));
             return <FluxifyLoading />;
         }
         const currentOpData = currentOp ? ops.find(op => op.getName() === currentOp) : undefined;
         const CurrentOpComponent = currentOpData ? currentOpData.getComponent() : undefined;
+        const disable = () => setDisabled(true);
+        const enable = () => setDisabled(false);
+        const finish = () => {
+            setCurrentOp(null);
+            resetPlaylists();
+            setDisabled(false);
+        };
         return (
             <>
                 <FluxifyHeader client={ client } logout={ logout }/>
@@ -82,15 +93,17 @@ export default function Fluxify() {
                     { CurrentOpComponent ? (
                         <CurrentOpWrapper>
                             <CurrentOpComponent
-                                token={ token }
-                                client={ client }
+                                data={
+                                    {
+                                        token : token,
+                                        client : client,
+                                        playlists : playlists,
+                                    }
+                                }
                                 throwGlobalError={ e => throwError(e) }
-                                disable={ () => setDisabled(true) }
-                                enable={ () => setDisabled(false) }
-                                finish={ () => {
-                                    setDisabled(false);
-                                    setCurrentOp(null);
-                                }}
+                                disable={ disable }
+                                enable={ enable }
+                                finish={ finish }
                             />
                         </CurrentOpWrapper>
                     ) : `` }

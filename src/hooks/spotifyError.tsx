@@ -1,20 +1,11 @@
 import { useCallback, useState } from "react";
 import { UnexpectedError } from "spotify-api.js";
 
-const requireLoginStatus = 401;
-export const requiresRelog = (...errors : Array<Error | null>) => {
-    const check = (e : Error | null) => {
-        if (e && e instanceof UnexpectedError && e.response) {
-            return e.response.status === requireLoginStatus;
-        }
-        return false;
-    }
-    return errors.some(check);
-}
 export const getLoadingError = (componentName : string) => {
-    return new UnexpectedError(`Loading inconsistencies (in ${componentName}).`);
+    return new UnexpectedError(`Loading inconsistencies (in ${componentName})`);
 } 
 
+const requireLoginStatus = 401;
 export const getErrorMessage = (e : Error) => {
     if (e instanceof UnexpectedError && e.response) {
         if (e.response.status === requireLoginStatus) {
@@ -24,7 +15,7 @@ export const getErrorMessage = (e : Error) => {
     return `${e.name}: ${e.message}.`;
 }
 export const discernError = (...errors : Array<Error | null>) : Error => {
-    return errors.find(e => e) ?? new UnexpectedError(`Expected an error.`);
+    return errors.find(e => e) ?? new UnexpectedError(`Expected an error`);
 }
 export const discernErrorMessage = (...errors : Array<Error | null>) : string => {
     return getErrorMessage(discernError(...errors));

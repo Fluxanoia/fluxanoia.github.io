@@ -23,7 +23,7 @@ export default function usePlaylistImageSelector(
 
     const component = useMemo(() => {
         return (
-            <CollapseContainer key={ key } title={ (options ?? {}).title ?? `Choose Image` }>
+            <CollapseContainer key={ key } title={ (options ?? {}).title ?? `Choose image` }>
                 <InnerContainer>
                     <BooleanOptionComponent
                         key={ `image` }

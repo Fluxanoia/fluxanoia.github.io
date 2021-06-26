@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Client from "spotify-api.js";
+import Client, { Playlist } from "spotify-api.js";
 import styled from "styled-components";
 import { spacing2 } from "../../../utils/dimensions";
 import Button from "../../button";
 
-export type FluxifyOpProps = {
+export type FluxifyOpData = {
     token : string,
     client : Client,
+    playlists : Array<Playlist>,
+}
+export type FluxifyOpProps = {
+    data : FluxifyOpData,
 
     throwGlobalError : (error : Error) => void,
     

@@ -20,7 +20,11 @@ export default function useSpotifyClient(token : string | null)
         if (token && loadState === LoadingState.NONE) {
             (async () => {
                 setLoadState(LoadingState.LOADING);
-                const client = new Client(token);
+                const client = new Client(token, {
+                    cacheTracks: true,
+                    cacheArtists: true,
+                    cacheAlbums: true,
+                });
                 await client.user.info().catch(throwError);
                 setClient(client);
                 setLoadState(LoadingState.LOADED)

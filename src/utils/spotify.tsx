@@ -1,5 +1,6 @@
 import { createCanvas } from "canvas";
-import Client, { CreatePlaylist, Paging, PagingOptions, Playlist, PlaylistTrackType, SpotifyURI } from "spotify-api.js";
+import { shuffle, uniqBy } from "lodash";
+import Client, { CreatePlaylist, Paging, PagingOptions, Playlist, PlaylistTrackType, SpotifyURI, Track } from "spotify-api.js";
 import { Element } from "../components/fluxify/fluxifyElement";
 import { randomString } from "./misc";
 
@@ -114,14 +115,14 @@ export const loadAllTracks = async (
     client : Client,
     playlists : Array<Playlist | Element<Playlist>>,
     throwError : (error : Error) => void,
-) => {
+) : Promise<Array<Track> | null> => {
     let tracks = [];
     for (const playlist of playlists) {
         const data = await loadTracks(client, playlist, throwError);
         if (!data) return null;
         tracks.push(...data.items);
     }
-    return tracks;
+    return tracks.map(t => t.track).filter(t => t instanceof Track) as Array<Track>;
 }
 
 export const addToPlaylist = async (
@@ -137,4 +138,55 @@ export const addToPlaylist = async (
         offset += spotifyTrackAddLimit;
     } while (offset < uris.length);
     return true;
+}
+
+export enum ReorderMetric {
+    ALBUM = `Album`,
+    ARTIST = `Artist`,
+    DURATION = `Track duration`,
+    NAME = `Track name`,
+    SHUFFLE = `Random`,
+
+    NONE = `Default order`,
+};
+
+export const reorderTracks = (
+    tracks : Array<Track>,
+    metric : ReorderMetric,
+    removeDuplicates? : boolean,
+) => {
+    if (removeDuplicates) tracks = uniqBy(tracks, t => t.uri);
+
+    let order = (a : Track, b : Track) => 0;
+    switch (metric) {
+        case ReorderMetric.SHUFFLE:
+            return shuffle(tracks);
+
+        case ReorderMetric.ALBUM:
+            order = (a : Track, b : Track) => {
+                const albumComp = a.album.name.localeCompare(b.album.name);
+                if (albumComp !== 0) return albumComp;
+                return a.trackNumber - b.trackNumber;
+            };
+            break;
+        case ReorderMetric.ARTIST:
+            order = (a : Track, b : Track) => {
+                if (a.artists.length === 0 || b.artists.length === 0) {
+                    return a.artists.length - b.artists.length;
+                }
+                const artistComp = a.artists[0].name.localeCompare(b.artists[0].name);
+                if (artistComp !== 0) return artistComp;
+                const albumComp = a.album.name.localeCompare(b.album.name);
+                if (albumComp !== 0) return albumComp;
+                return a.trackNumber - b.trackNumber;
+            }
+            break;
+        case ReorderMetric.DURATION:
+            order = (a : Track, b : Track) => a.duration - b.duration;
+            break;
+        case ReorderMetric.NAME:
+            order = (a : Track, b : Track) => a.name.localeCompare(b.name);
+            break;
+    }
+    return tracks.sort(order);
 }

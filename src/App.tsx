@@ -73,9 +73,6 @@ const App = (props : AppProps) => {
     const accentColour = pages[pageIndex].getColour();
     const navbarButtons = pages.map(getNavbarButtonRenderer(pageIndex)).filter(b => b);
 
-    console.log(routes);
-    console.log(navbarButtons);
-
     return (
         <AppContainer>
             <GlobalStyling bgColour={ accentColour } />

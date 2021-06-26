@@ -1,11 +1,10 @@
 import React from "react";
-import { Artist, SpotifyURI, Track } from "spotify-api.js";
+import { Artist, SpotifyURI } from "spotify-api.js";
 import styled from "styled-components";
 import { usePlaylistSelector } from "../../../hooks/elementSelector";
 import usePlaylistImageSelector from "../../../hooks/playlistImageSelector";
-import { getLoadingError, useError } from "../../../hooks/spotifyError";
-import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
-import { createPlaylist, loadAllTracks, addToPlaylist } from "../../../utils/spotify";
+import { useError } from "../../../hooks/spotifyError";
+import { createPlaylist, loadAllTracks, addToPlaylist, reorderTracks, ReorderMetric } from "../../../utils/spotify";
 import FluxifyLoading from "../fluxifyLoading";
 import FluxifyOp, { FluxifyOpProps, renderOp, useErrorAggregator } from "./fluxifyOp";
 
@@ -13,30 +12,29 @@ const opName = `AutoArtistPlaylists`;
 const opDesc = `Automatically generate artist playlists`;
 export const autoArtistPlaylistsOp = new FluxifyOp(opName, opDesc, FluxifyAutoArtistPlaylists);
 export default function FluxifyAutoArtistPlaylists({
-    token,
-    client,
+    data,
     throwGlobalError,
     disable,
     finish,
 } : FluxifyOpProps) {
-    const [playlists, loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const { client, playlists } = data;
     const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists, {
         includeLiked: true,
     });
     const [imageComponent, imageColour] = usePlaylistImageSelector('image');
     const [localError, throwError] = useError();
-    const hasError = useErrorAggregator(throwGlobalError, [localError, playlistError])
+    const hasError = useErrorAggregator(throwGlobalError, [localError])
 
     const run = async () => {
         const rawTracks = await loadAllTracks(client, selected, throwError);
         if (!rawTracks) return false;
         const tracks : Set<{ uri : SpotifyURI, artists : Array<Artist> }> = new Set(
-            rawTracks.map(t => t.track)
-                     .filter(t => t instanceof Track)
-                     .map(t => { return {
-                        uri: t.uri,
-                        artists: (t as Track).artists,
-                     }})
+            reorderTracks(rawTracks, ReorderMetric.ALBUM, true).map(t => {
+                return {
+                    uri: t.uri,
+                    artists: t.artists,
+                };
+            })
         );
         let directory : { [key : string] : { artist : Artist, tracks : Array<SpotifyURI> } } = {}
         for (const t of tracks) {
@@ -68,11 +66,7 @@ export default function FluxifyAutoArtistPlaylists({
 
     if (hasError) {
         return <FluxifyLoading />;
-    } else if (loaded) {
-        if (!playlists) {
-            throwError(getLoadingError(opName));
-            return <FluxifyLoading />;
-        }
+    } else {
         const components = [
             <TextContainer key={ `description `}>
                 { `
@@ -85,8 +79,6 @@ export default function FluxifyAutoArtistPlaylists({
             imageComponent,
         ]
         return renderOp(components, selected.length > 0, run, disable, finish);
-    } else {
-        return <FluxifyLoading />;
     }
 }
 

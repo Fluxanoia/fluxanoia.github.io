@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { getLoadingError, useError } from "../../../hooks/spotifyError";
-import useSpotifyPlaylists from "../../../hooks/spotifyPlaylists";
+import { useError } from "../../../hooks/spotifyError";
 import FluxifyLoading from "../fluxifyLoading";
 import FluxifyOp, { FluxifyOpProps, renderOp, useErrorAggregator } from "./fluxifyOp";
 
@@ -9,15 +8,14 @@ const opName = `UnfollowFluxify`;
 const opDesc = `Unfollow Fluxify playlists`;
 export const unfollowFluxifyOp = new FluxifyOp(opName, opDesc, FluxifyUnfollowFluxify);
 export default function FluxifyUnfollowFluxify({
-    token,
-    client,
+    data,
     throwGlobalError,
     disable,
     finish,
 } : FluxifyOpProps) {
-    const [playlists, loaded, playlistError] = useSpotifyPlaylists(token, client);
+    const { playlists } = data;
     const [localError, throwError] = useError();
-    const hasError = useErrorAggregator(throwGlobalError, [localError, playlistError]);
+    const hasError = useErrorAggregator(throwGlobalError, [localError]);
     
     const run = async () => {
         if (!playlists) return false;
@@ -29,11 +27,7 @@ export default function FluxifyUnfollowFluxify({
 
     if (hasError) {
         return <FluxifyLoading />;
-    } else if (loaded) {
-        if (!playlists) {
-            throwError(getLoadingError(opName));
-            return <FluxifyLoading />;
-        }
+    } else {
         const components = [
             <TextContainer key={ `description` }>
                 { `
@@ -43,8 +37,6 @@ export default function FluxifyUnfollowFluxify({
             </TextContainer>,
         ]
         return renderOp(components, true, run, disable, finish);
-    } else {
-        return <FluxifyLoading />;
     }
 }
 
