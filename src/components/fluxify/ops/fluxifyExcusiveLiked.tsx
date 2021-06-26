@@ -19,9 +19,7 @@ export default function FluxifyExclusiveLiked({
 } : FluxifyOpProps) {
     const { client, playlists } = data;
     const [selectorComponent, selected] = usePlaylistSelector('playlists', playlists);
-    const [orderComponent, orderMetric, distinct] = usePlaylistOrderSelector('order', { 
-        showDistinct: true,
-    });
+    const [orderComponent, orderMetric] = usePlaylistOrderSelector('order');
     const [imageComponent, imageColour] = usePlaylistImageSelector('image');
     const [localError, throwError] = useError();
     const hasError = useErrorAggregator(throwGlobalError, [localError])
@@ -35,7 +33,7 @@ export default function FluxifyExclusiveLiked({
         const rawLikedTracks = await loadLiked(client, throwError);
         if (!rawLikedTracks) return false;
         const likedTracks = reorderTracks(
-            rawLikedTracks.items.map(t => t.track), orderMetric, distinct);
+            rawLikedTracks.items.map(t => t.track), orderMetric, true);
         const playlistTracks = await loadAllTracks(client, selected, throwError);
         if (!playlistTracks) return false;
         let exclusives = [];
